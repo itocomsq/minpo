@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1a1814">
+<title>民法ノート</title>
+<style>
+:root{
+  --ink:#1a1814;--ink-muted:#5a5650;--ink-faint:#9a9590;
+  --paper:#f7f4ef;--paper-warm:#ede9e2;--card-bg:#faf8f5;
+  --rule:#d4cfc8;--accent:#8b2f2f;--accent-soft:#f5eded;
+  --ok:#2a6b3a;--ng:#8b2f2f;--tag-bg:#e8e4dd;
+  --serif:'Noto Serif JP',Georgia,serif;
+  --sans:'Noto Sans JP','Hiragino Kaku Gothic ProN',system-ui,sans-serif;
+  --r:6px;
+  --sb:env(safe-area-inset-bottom,0px);
+  --st:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px}
+
+/* APP SHELL */
+#app{display:flex;flex-direction:column;height:100%}
+
+/* TOPBAR */
+#topbar{
+  background:var(--ink);color:#fff;
+  padding:10px 14px 10px;
+  padding-top:calc(10px + var(--st));
+  display:flex;align-items:center;gap:10px;flex-shrink:0;z-index:50;
+}
+#logo{font-family:var(--serif);font-size:16px;letter-spacing:.06em;white-space:nowrap;flex-shrink:0}
+#logo em{color:#c08080;font-style:normal}
+#sw{flex:1;position:relative}
+#si{
+  width:100%;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);
+  border-radius:18px;color:#fff;font-family:var(--sans);font-size:14px;
+  padding:7px 32px 7px 13px;outline:none;appearance:none;
+}
+#si::placeholder{color:rgba(255,255,255,.4)}
+#si:focus{background:rgba(255,255,255,.2)}
+#clr{position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:rgba(255,255,255,.5);font-size:15px;cursor:pointer;display:none;padding:2px 4px}
+
+/* CONTENT */
+#content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.page{display:none;min-height:100%;padding:12px 13px calc(72px + var(--sb))}
+.page.active{display:block}
+
+/* TABBAR */
+#tabbar{
+  display:flex;background:var(--ink);
+  border-top:1px solid rgba(255,255,255,.1);flex-shrink:0;
+}
+.tab{
+  flex:1;padding:8px 0;padding-bottom:calc(8px + var(--sb));
+  background:none;border:none;color:rgba(255,255,255,.45);
+  font-family:var(--sans);font-size:11px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:1px;transition:color .15s;
+}
+.tab .ic{font-size:20px;line-height:1.2}
+.tab.on{color:#fff}
+
+/* LIST */
+.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.cnt{font-size:12px;color:var(--ink-faint)}
+.tag-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;margin-bottom:12px}
+.tag-row::-webkit-scrollbar{display:none}
+.chip{background:var(--tag-bg);border:1px solid transparent;border-radius:18px;
+  white-space:nowrap;font-size:12px;padding:4px 11px;color:var(--ink-muted);cursor:pointer;flex-shrink:0;transition:all .12s}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clist{display:flex;flex-direction:column;gap:9px}
+.card{background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);
+  padding:13px;cursor:pointer;transition:opacity .12s}
+.card:active{opacity:.75}
+.c-term{font-family:var(--serif);font-size:15px;font-weight:600;letter-spacing:.03em;margin-bottom:3px}
+.c-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}
+.c-tag{background:var(--tag-bg);border-radius:10px;font-size:11px;padding:2px 7px;color:var(--ink-muted)}
+.c-body{font-size:13px;color:var(--ink-muted);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.empty{text-align:center;padding:60px 16px;color:var(--ink-faint)}
+.empty .big{font-size:40px;margin-bottom:10px}
+
+/* FAB */
+#fab{position:fixed;bottom:calc(64px + var(--sb) + 10px);right:16px;
+  width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;
+  border:none;font-size:26px;cursor:pointer;z-index:40;
+  box-shadow:0 4px 16px rgba(139,47,47,.45);display:flex;align-items:center;justify-content:center;
+  transition:transform .15s}
+#fab:active{transform:scale(.9)}
+
+/* QUIZ PAGE */
+.q-title{font-family:var(--serif);font-size:20px;margin-bottom:4px}
+.q-sub{font-size:13px;color:var(--ink-muted);margin-bottom:18px}
+.qfield{margin-bottom:13px}
+.qfield label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px}
+.qfield select{width:100%;background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);
+  color:var(--ink);font-family:var(--sans);font-size:14px;padding:9px 12px;outline:none;appearance:none}
+.sbtn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--r);
+  font-family:var(--sans);font-size:16px;padding:13px;cursor:pointer;font-weight:600;margin-top:4px}
+.q-prog{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.pbar{flex:1;height:4px;background:var(--rule);border-radius:2px;overflow:hidden}
+.pfill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.ptext{font-size:12px;color:var(--ink-muted);white-space:nowrap}
+.qcard{background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);
+  padding:22px 18px;min-height:190px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  box-shadow:0 4px 18px rgba(26,24,20,.1);margin-bottom:12px;cursor:pointer}
+.qcard:active{opacity:.85}
+.qmode{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+.qq{font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.5;color:var(--ink)}
+.qtap{font-size:12px;color:var(--ink-faint);margin-top:12px}
+.qans{display:none;width:100%;margin-top:14px;padding-top:12px;border-top:1px dashed var(--rule);text-align:left}
+.qans.show{display:block}
+.qa-lbl{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
+.qa-txt{font-size:14px;color:var(--ink);line-height:1.75;white-space:pre-wrap}
+.qbtns{display:flex;gap:10px;justify-content:center}
+.qbok{background:#e8f5ea;border:1px solid #88cc88;color:var(--ok);
+  border-radius:var(--r);padding:12px 0;font-size:15px;font-weight:700;
+  cursor:pointer;font-family:var(--sans);flex:1;max-width:150px}
+.qbok:active{background:#d0eed4}
+.qbng{background:var(--accent-soft);border:1px solid #cc8888;color:var(--ng);
+  border-radius:var(--r);padding:12px 0;font-size:15px;font-weight:700;
+  cursor:pointer;font-family:var(--sans);flex:1;max-width:150px}
+.qbng:active{background:#f0dada}
+.qresult{text-align:center;padding:40px 16px}
+.qscore{font-family:var(--serif);font-size:68px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px}
+.qsl{font-size:13px;color:var(--ink-muted);margin-bottom:24px}
+.bdown{display:flex;justify-content:center;gap:28px;margin-bottom:24px}
+.bi{text-align:center}
+.bn{font-size:30px;font-weight:700}
+.bn.ok{color:var(--ok)}.bn.ng{color:var(--ng)}
+.bl{font-size:12px;color:var(--ink-faint)}
+.rbtns{display:flex;flex-direction:column;gap:10px;max-width:260px;margin:0 auto}
+
+/* SHEETS */
+.ov{display:none;position:fixed;inset:0;background:rgba(26,24,20,.5);z-index:100;align-items:flex-end}
+.ov.open{display:flex}
+.sheet{background:var(--card-bg);border-radius:14px 14px 0 0;width:100%;
+  max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:0 16px calc(16px + var(--sb));animation:su .22s ease}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.handle{width:34px;height:4px;background:var(--rule);border-radius:2px;margin:11px auto 16px}
+.sh-title{font-family:var(--serif);font-size:17px;margin-bottom:16px;padding-bottom:13px;border-bottom:1px solid var(--rule)}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px}
+.field input,.field textarea{
+  width:100%;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);
+  color:var(--ink);font-family:var(--sans);font-size:15px;padding:10px 12px;
+  outline:none;appearance:none;resize:vertical;
+}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field textarea{min-height:88px}
+.fhint{font-size:12px;color:var(--ink-faint);margin-top:3px}
+
+.itabs{display:flex;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
+.itab{flex:1;background:none;border:none;padding:9px;font-size:13px;cursor:pointer;font-family:var(--sans);color:var(--ink-muted);transition:all .15s}
+.itab.on{background:var(--accent);color:#fff}
+
+/* AI prompt panel */
+.pbox{background:var(--paper-warm);border:1px solid var(--rule);border-radius:var(--r);padding:12px;margin-bottom:12px}
+.pbox-lbl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
+.pbox-txt{font-size:12px;color:var(--ink);line-height:1.6;white-space:pre-wrap;word-break:break-all;max-height:120px;overflow-y:auto}
+.cpbtn{width:100%;background:var(--ink);color:#fff;border:none;border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;padding:10px;cursor:pointer;margin-top:8px;font-weight:600}
+.cpbtn:active{opacity:.75}
+.paste-hint{font-size:12px;color:var(--ink-muted);margin:10px 0 4px;text-align:center}
+.ai-prev{background:var(--paper-warm);border:1px solid var(--rule);border-radius:var(--r);padding:12px;margin-bottom:6px;display:none}
+.ai-prev-lbl{font-size:11px;color:var(--ink-faint);margin-bottom:8px}
+
+.sh-act{display:flex;gap:10px;margin-top:18px}
+.bsave{flex:1;background:var(--accent);color:#fff;border:none;border-radius:var(--r);
+  font-family:var(--sans);font-size:15px;padding:12px;cursor:pointer;font-weight:600}
+.bcancel{background:var(--paper-warm);color:var(--ink-muted);border:1px solid var(--rule);
+  border-radius:var(--r);font-family:var(--sans);font-size:15px;padding:12px 16px;cursor:pointer}
+
+/* DETAIL */
+.d-term{font-family:var(--serif);font-size:21px;font-weight:700;margin-bottom:7px}
+.d-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
+.d-body{font-size:14px;line-height:1.8;white-space:pre-wrap;color:var(--ink)}
+.d-act{display:flex;gap:8px;margin-top:16px;padding-top:13px;border-top:1px solid var(--rule)}
+.bedit{flex:1;background:var(--paper-warm);color:var(--ink);border:1px solid var(--rule);border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;padding:11px;cursor:pointer}
+.bdel{background:var(--accent-soft);color:var(--ng);border:1px solid #cc8888;border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;padding:11px 14px;cursor:pointer}
+.bclose{background:var(--paper-warm);color:var(--ink-muted);border:1px solid var(--rule);border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;padding:11px 14px;cursor:pointer}
+
+mark{background:#f9d87a;color:inherit;border-radius:2px;padding:0 1px}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="topbar">
+    <div id="logo">民法<em>ノート</em></div>
+    <div id="sw">
+      <input id="si" type="search" placeholder="検索…" autocomplete="off" autocorrect="off" spellcheck="false">
+      <button id="clr" onclick="clrSearch()">✕</button>
+    </div>
+  </div>
+
+  <div id="content">
+    <!-- LIST -->
+    <div class="page active" id="listPage">
+      <div class="toolbar">
+        <span class="cnt" id="cnt">0件</span>
+      </div>
+      <div class="tag-row" id="tagRow"></div>
+      <div class="clist" id="clist"></div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="page" id="quizPage">
+      <div id="qSetup">
+        <div class="q-title">クイズ</div>
+        <div class="q-sub">用語↔説明をランダムに出題します</div>
+        <div class="qfield">
+          <label>タグでしぼる</label>
+          <select id="qts"><option value="">すべて</option></select>
+        </div>
+        <div class="qfield">
+          <label>出題数</label>
+          <select id="qc">
+            <option value="10">10問</option>
+            <option value="20">20問</option>
+            <option value="30">30問</option>
+            <option value="0">全問</option>
+          </select>
+        </div>
+        <button class="sbtn" onclick="startQuiz()">開始する</button>
+      </div>
+      <div id="qPlay" style="display:none">
+        <div class="q-prog">
+          <div class="pbar"><div class="pfill" id="pf"></div></div>
+          <span class="ptext" id="pt"></span>
+        </div>
+        <div class="qcard" id="qcard" onclick="reveal()">
+          <div class="qmode" id="qm"></div>
+          <div class="qq" id="qq"></div>
+          <div class="qtap" id="qtap">タップして答えを確認</div>
+          <div class="qans" id="qans">
+            <div class="qa-lbl">答え</div>
+            <div class="qa-txt" id="qat"></div>
+          </div>
+        </div>
+        <div class="qbtns" id="qbtns" style="display:none">
+          <button class="qbok" onclick="judge(true)">✓ 正解</button>
+          <button class="qbng" onclick="judge(false)">✗ 不正解</button>
+        </div>
+      </div>
+      <div id="qRes" style="display:none" class="qresult">
+        <div class="qscore" id="rs"></div>
+        <div class="qsl">正解率</div>
+        <div class="bdown">
+          <div class="bi"><div class="bn ok" id="rok"></div><div class="bl">正解</div></div>
+          <div class="bi"><div class="bn ng" id="rng"></div><div class="bl">不正解</div></div>
+          <div class="bi"><div class="bn" id="rt"></div><div class="bl">合計</div></div>
+        </div>
+        <div class="rbtns">
+          <button class="sbtn" onclick="resetQ()">もう一度</button>
+          <button class="bcancel" style="width:100%;padding:12px" onclick="sw('list')">一覧に戻る</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tabbar">
+    <button class="tab on" id="tab-list" onclick="sw('list')">
+      <span class="ic">📋</span>一覧
+    </button>
+    <button class="tab" id="tab-quiz" onclick="sw('quiz')">
+      <span class="ic">🎯</span>クイズ
+    </button>
+  </div>
+</div>
+
+<button id="fab" onclick="openAdd()">＋</button>
+
+<!-- EDIT SHEET -->
+<div class="ov" id="editOv" onclick="bgClick(event,'editOv')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <div class="sh-title" id="edTitle">カードを追加</div>
+    <div class="itabs">
+      <button class="itab on" id="itText" onclick="sitab('text')">✏ テキスト</button>
+      <button class="itab" id="itAI" onclick="sitab('ai')">🤖 AIで変換</button>
+    </div>
+
+    <!-- TEXT -->
+    <div id="pText">
+      <div class="field">
+        <label>用語・条文番号 <span style="color:var(--accent)">*</span></label>
+        <input id="fTerm" type="text" placeholder="例：意思表示、民法93条">
+      </div>
+      <div class="field">
+        <label>内容・説明</label>
+        <textarea id="fBody" placeholder="定義、条文テキスト、解説メモなど"></textarea>
+      </div>
+      <div class="field">
+        <label>タグ</label>
+        <input id="fTags" type="text" placeholder="総則, 意思表示（カンマ区切り）">
+        <div class="fhint">カンマ区切りで複数入力できます</div>
+      </div>
+    </div>
+
+    <!-- AI -->
+    <div id="pAI" style="display:none">
+      <div class="field">
+        <label>教科書・ノートのテキストを貼る</label>
+        <textarea id="fSrc" placeholder="教科書のページをそのまま貼り付けてください。&#10;（カメラAIでOCRした結果でもOK）" style="min-height:100px"></textarea>
+      </div>
+      <div class="pbox" id="pbox" style="display:none">
+        <div class="pbox-lbl">このプロンプトをコピーして使っているAIに投げてください</div>
+        <div class="pbox-txt" id="ptxt"></div>
+        <button class="cpbtn" onclick="copyP()">📋 プロンプトをコピー</button>
+      </div>
+      <button class="sbtn" style="margin-bottom:10px" onclick="genPrompt()">プロンプトを生成する</button>
+      <div class="paste-hint">↓ AIの回答（JSON）をここに貼る</div>
+      <div class="field">
+        <textarea id="fAR" placeholder='{"term":"意思表示","body":"...","tags":["総則"]}' style="min-height:70px" oninput="parseAR()"></textarea>
+      </div>
+      <div class="ai-prev" id="aiPrev">
+        <div class="ai-prev-lbl">プレビュー（編集できます）</div>
+        <div class="field" style="margin-bottom:9px">
+          <label>用語</label><input id="fTA" type="text">
+        </div>
+        <div class="field" style="margin-bottom:9px">
+          <label>内容</label><textarea id="fBA" style="min-height:66px"></textarea>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>タグ</label><input id="fGA" type="text">
+        </div>
+      </div>
+    </div>
+
+    <div class="sh-act">
+      <button class="bcancel" onclick="closeOv('editOv')">キャンセル</button>
+      <button class="bsave" onclick="saveCard()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL SHEET -->
+<div class="ov" id="detOv" onclick="bgClick(event,'detOv')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <div class="d-term" id="dTerm"></div>
+    <div class="d-tags" id="dTags"></div>
+    <div class="d-body" id="dBody"></div>
+    <div class="d-act">
+      <button class="bedit" onclick="editFD()">編集</button>
+      <button class="bdel" onclick="delFD()">削除</button>
+      <button class="bclose" onclick="closeOv('detOv')">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SK='minpo_v3';
+let cards=[],activeTag='',searchQ='',editingId=null,inputTab='text',detailId=null;
+let deck=[],qi=0,qOk=0,qNg=0,qShown=false;
+
+function load(){try{cards=JSON.parse(localStorage.getItem(SK)||'[]')}catch{cards=[]}renderAll()}
+function save(){localStorage.setItem(SK,JSON.stringify(cards))}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+function hl(t,q){if(!q)return esc(t);return esc(t).replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`,'gi'),'<mark>$1</mark>')}
+function allTags(){const s=new Set();cards.forEach(c=>(c.tags||[]).forEach(t=>s.add(t)));return[...s].sort()}
+function shuf(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b}
+
+function sw(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById(name+'Page').classList.add('active');
+  document.getElementById('tab-'+name).classList.add('on');
+  if(name==='quiz')renderQSetup();
+  if(name==='list')renderAll();
+}
+
+function renderAll(){renderTagRow();renderCards()}
+
+function renderTagRow(){
+  const tags=allTags();
+  document.getElementById('tagRow').innerHTML=
+    `<span class="chip ${activeTag===''?'on':''}" onclick="ftag('')">すべて</span>`+
+    tags.map(t=>`<span class="chip ${activeTag===t?'on':''}" onclick="ftag('${esc(t)}')">${esc(t)}</span>`).join('');
+}
+function ftag(t){activeTag=t;renderAll()}
+
+function renderCards(){
+  const q=searchQ.trim().toLowerCase();
+  const shown=cards.filter(c=>{
+    if(activeTag&&!(c.tags||[]).includes(activeTag))return false;
+    if(!q)return true;
+    return(c.term+' '+(c.body||'')+' '+(c.tags||[]).join(' ')).toLowerCase().includes(q);
+  });
+  document.getElementById('cnt').textContent=shown.length+'件';
+  const el=document.getElementById('clist');
+  if(!shown.length){el.innerHTML=`<div class="empty"><div class="big">📜</div><p>${q?'検索結果なし':'＋でカードを追加してください'}</p></div>`;return}
+  el.innerHTML=shown.map(c=>`<div class="card" onclick="openDet('${c.id}')">
+    <div class="c-term">${hl(c.term,q)}</div>
+    <div class="c-tags">${(c.tags||[]).map(t=>`<span class="c-tag">${esc(t)}</span>`).join('')}</div>
+    <div class="c-body">${hl(c.body||'',q)}</div>
+  </div>`).join('');
+}
+
+document.getElementById('si').addEventListener('input',e=>{
+  searchQ=e.target.value;
+  document.getElementById('clr').style.display=searchQ?'block':'none';
+  renderCards();
+});
+function clrSearch(){document.getElementById('si').value='';searchQ='';document.getElementById('clr').style.display='none';renderCards()}
+
+function openOv(id){document.getElementById(id).classList.add('open')}
+function closeOv(id){document.getElementById(id).classList.remove('open')}
+function bgClick(e,id){if(e.target===document.getElementById(id))closeOv(id)}
+
+function openAdd(){
+  editingId=null;
+  document.getElementById('edTitle').textContent='カードを追加';
+  ['fTerm','fBody','fTags','fSrc','fAR','fTA','fGA'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fBA').value='';
+  document.getElementById('aiPrev').style.display='none';
+  document.getElementById('pbox').style.display='none';
+  sitab('text');openOv('editOv');
+}
+function openEdit(id){
+  const c=cards.find(x=>x.id===id);if(!c)return;
+  editingId=id;
+  document.getElementById('edTitle').textContent='カードを編集';
+  document.getElementById('fTerm').value=c.term;
+  document.getElementById('fBody').value=c.body||'';
+  document.getElementById('fTags').value=(c.tags||[]).join(', ');
+  sitab('text');closeOv('detOv');openOv('editOv');
+}
+function sitab(t){
+  inputTab=t;
+  document.getElementById('pText').style.display=t==='text'?'block':'none';
+  document.getElementById('pAI').style.display=t==='ai'?'block':'none';
+  document.getElementById('itText').classList.toggle('on',t==='text');
+  document.getElementById('itAI').classList.toggle('on',t==='ai');
+}
+function saveCard(){
+  let term,body,tags;
+  if(inputTab==='ai'&&document.getElementById('aiPrev').style.display!=='none'){
+    term=document.getElementById('fTA').value.trim();
+    body=document.getElementById('fBA').value.trim();
+    tags=document.getElementById('fGA').value.split(/[,、]/).map(t=>t.trim()).filter(Boolean);
+  }else{
+    term=document.getElementById('fTerm').value.trim();
+    body=document.getElementById('fBody').value.trim();
+    tags=document.getElementById('fTags').value.split(/[,、]/).map(t=>t.trim()).filter(Boolean);
+  }
+  if(!term){alert('用語を入力してください');return}
+  if(editingId){const i=cards.findIndex(x=>x.id===editingId);if(i>-1)cards[i]={...cards[i],term,body,tags,updatedAt:Date.now()}}
+  else{cards.unshift({id:uid(),term,body,tags,createdAt:Date.now()})}
+  save();closeOv('editOv');renderAll();
+}
+
+function genPrompt(){
+  const src=document.getElementById('fSrc').value.trim();
+  if(!src){alert('テキストを貼り付けてください');return}
+  const p=`以下の民法テキストを読み、学習カードとしてJSON形式で整理してください。\nJSON以外は出力しないでください（説明・マークダウン不要）。\n\n形式:\n{"term":"用語または条文番号","body":"定義や説明","tags":["タグ1","タグ2"]}\n\nタグは1〜3個（例: 総則, 物権, 債権, 条文, 判例, 用語）\n\n--- テキスト ---\n${src}`;
+  document.getElementById('ptxt').textContent=p;
+  document.getElementById('pbox').style.display='block';
+}
+function copyP(){
+  const t=document.getElementById('ptxt').textContent;
+  const btn=document.querySelector('.cpbtn');
+  navigator.clipboard.writeText(t).then(()=>{btn.textContent='✅ コピーしました';setTimeout(()=>btn.textContent='📋 プロンプトをコピー',2000)})
+  .catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);btn.textContent='✅ コピーしました';setTimeout(()=>btn.textContent='📋 プロンプトをコピー',2000)});
+}
+function parseAR(){
+  const raw=document.getElementById('fAR').value.trim();
+  if(!raw){document.getElementById('aiPrev').style.display='none';return}
+  try{
+    const d=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    document.getElementById('fTA').value=d.term||'';
+    document.getElementById('fBA').value=d.body||'';
+    document.getElementById('fGA').value=(d.tags||[]).join(', ');
+    document.getElementById('aiPrev').style.display='block';
+  }catch{document.getElementById('aiPrev').style.display='none'}
+}
+
+function openDet(id){
+  detailId=id;const c=cards.find(x=>x.id===id);if(!c)return;
+  document.getElementById('dTerm').textContent=c.term;
+  document.getElementById('dBody').textContent=c.body||'（内容なし）';
+  document.getElementById('dTags').innerHTML=(c.tags||[]).map(t=>`<span class="c-tag">${esc(t)}</span>`).join('');
+  openOv('detOv');
+}
+function editFD(){if(detailId)openEdit(detailId)}
+function delFD(){
+  if(!detailId)return;
+  const c=cards.find(x=>x.id===detailId);
+  if(!confirm(`「${c?.term}」を削除しますか？`))return;
+  cards=cards.filter(x=>x.id!==detailId);save();closeOv('detOv');renderAll();
+}
+
+function renderQSetup(){
+  document.getElementById('qSetup').style.display='block';
+  document.getElementById('qPlay').style.display='none';
+  document.getElementById('qRes').style.display='none';
+  const sel=document.getElementById('qts'),cur=sel.value;
+  sel.innerHTML='<option value="">すべて</option>'+allTags().map(t=>`<option value="${esc(t)}" ${cur===t?'selected':''}>${esc(t)}</option>`).join('');
+}
+function startQuiz(){
+  const tag=document.getElementById('qts').value,cnt=parseInt(document.getElementById('qc').value)||0;
+  let pool=tag?cards.filter(c=>(c.tags||[]).includes(tag)):[...cards];
+  if(!pool.length){alert('カードがありません');return}
+  pool=shuf(pool);
+  deck=(cnt>0?pool.slice(0,cnt):pool).map(c=>({...c,dir:Math.random()<.5?0:1}));
+  qi=0;qOk=0;qNg=0;
+  document.getElementById('qSetup').style.display='none';
+  document.getElementById('qPlay').style.display='block';
+  document.getElementById('qRes').style.display='none';
+  renderQCard();
+}
+function renderQCard(){
+  const c=deck[qi],tot=deck.length,fwd=c.dir===0;
+  document.getElementById('pf').style.width=(qi/tot*100)+'%';
+  document.getElementById('pt').textContent=`${qi+1} / ${tot}`;
+  document.getElementById('qm').textContent=fwd?'用語 → 説明':'説明 → 用語';
+  document.getElementById('qq').textContent=fwd?c.term:(c.body||'（内容なし）');
+  document.getElementById('qat').textContent=fwd?(c.body||'（内容なし）'):c.term;
+  document.getElementById('qans').classList.remove('show');
+  document.getElementById('qtap').style.display='block';
+  document.getElementById('qbtns').style.display='none';
+  qShown=false;
+}
+function reveal(){
+  if(qShown)return;qShown=true;
+  document.getElementById('qans').classList.add('show');
+  document.getElementById('qtap').style.display='none';
+  document.getElementById('qbtns').style.display='flex';
+}
+function judge(ok){
+  if(ok)qOk++;else qNg++;qi++;
+  if(qi>=deck.length)showRes();else renderQCard();
+}
+function showRes(){
+  document.getElementById('qPlay').style.display='none';
+  document.getElementById('qRes').style.display='block';
+  const tot=deck.length;
+  document.getElementById('rs').textContent=Math.round(qOk/tot*100)+'%';
+  document.getElementById('rok').textContent=qOk;
+  document.getElementById('rng').textContent=qNg;
+  document.getElementById('rt').textContent=tot;
+}
+function resetQ(){renderQSetup()}
+
+load();
+</script>
+</body>
+</html>
