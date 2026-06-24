@@ -12,183 +12,172 @@
   --ink:#1a1814;--ink-muted:#5a5650;--ink-faint:#9a9590;
   --paper:#f7f4ef;--paper-warm:#ede9e2;--card-bg:#faf8f5;
   --rule:#d4cfc8;--accent:#8b2f2f;--accent-soft:#f5eded;
-  --ok:#2a6b3a;--ng:#8b2f2f;--tag-bg:#e8e4dd;
+  --ok:#2a6b3a;--ok-bg:#e8f5ea;--ng:#8b2f2f;--ng-bg:#f5eded;--tag-bg:#e8e4dd;
+  --blue:#2c5777;--blue-bg:#e7eef4;
   --serif:'Noto Serif JP',Georgia,serif;
   --sans:'Noto Sans JP','Hiragino Kaku Gothic ProN',system-ui,sans-serif;
-  --r:6px;
-  --sb:env(safe-area-inset-bottom,0px);
-  --st:env(safe-area-inset-top,0px);
+  --r:6px;--sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px}
-
-/* APP SHELL */
 #app{display:flex;flex-direction:column;height:100%}
 
 /* TOPBAR */
-#topbar{
-  background:var(--ink);color:#fff;
-  padding:10px 14px 10px;
-  padding-top:calc(10px + var(--st));
-  display:flex;align-items:center;gap:10px;flex-shrink:0;z-index:50;
-}
+#topbar{background:var(--ink);color:#fff;padding:10px 14px;padding-top:calc(10px + var(--st));display:flex;align-items:center;gap:10px;flex-shrink:0;z-index:50}
 #logo{font-family:var(--serif);font-size:16px;letter-spacing:.06em;white-space:nowrap;flex-shrink:0}
 #logo em{color:#c08080;font-style:normal}
 #sw{flex:1;position:relative}
-#si{
-  width:100%;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);
-  border-radius:18px;color:#fff;font-family:var(--sans);font-size:14px;
-  padding:7px 32px 7px 13px;outline:none;appearance:none;
-}
+#si{width:100%;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:18px;color:#fff;font-family:var(--sans);font-size:14px;padding:7px 32px 7px 13px;outline:none;appearance:none}
 #si::placeholder{color:rgba(255,255,255,.4)}
 #si:focus{background:rgba(255,255,255,.2)}
-#clr{position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  background:none;border:none;color:rgba(255,255,255,.5);font-size:15px;cursor:pointer;display:none;padding:2px 4px}
+#clr{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.5);font-size:15px;cursor:pointer;display:none;padding:2px 4px}
 
-/* CONTENT */
 #content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .page{display:none;min-height:100%;padding:12px 13px calc(72px + var(--sb))}
 .page.active{display:block}
 
 /* TABBAR */
-#tabbar{
-  display:flex;background:var(--ink);
-  border-top:1px solid rgba(255,255,255,.1);flex-shrink:0;
-}
-.tab{
-  flex:1;padding:8px 0;padding-bottom:calc(8px + var(--sb));
-  background:none;border:none;color:rgba(255,255,255,.45);
-  font-family:var(--sans);font-size:11px;cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:1px;transition:color .15s;
-}
+#tabbar{display:flex;background:var(--ink);border-top:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.tab{flex:1;padding:8px 0;padding-bottom:calc(8px + var(--sb));background:none;border:none;color:rgba(255,255,255,.45);font-family:var(--sans);font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;transition:color .15s}
 .tab .ic{font-size:20px;line-height:1.2}
 .tab.on{color:#fff}
 
-/* LIST */
-.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.cnt{font-size:12px;color:var(--ink-faint)}
-.tag-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;margin-bottom:12px}
-.tag-row::-webkit-scrollbar{display:none}
-.chip{background:var(--tag-bg);border:1px solid transparent;border-radius:18px;
-  white-space:nowrap;font-size:12px;padding:4px 11px;color:var(--ink-muted);cursor:pointer;flex-shrink:0;transition:all .12s}
+/* CAT FILTER */
+.cat-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;margin-bottom:8px}
+.cat-row::-webkit-scrollbar{display:none}
+.chip{background:var(--tag-bg);border:1px solid transparent;border-radius:18px;white-space:nowrap;font-size:13px;padding:5px 13px;color:var(--ink-muted);cursor:pointer;flex-shrink:0;transition:all .12s;font-weight:500}
 .chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.type-row{display:flex;gap:5px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:10px}
+.type-row::-webkit-scrollbar{display:none}
+.tchip{background:none;border:1px solid var(--rule);border-radius:14px;white-space:nowrap;font-size:12px;padding:3px 11px;color:var(--ink-faint);cursor:pointer;flex-shrink:0;transition:all .12s}
+.tchip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.cnt{font-size:12px;color:var(--ink-faint);margin-bottom:8px}
+
+/* CARD */
 .clist{display:flex;flex-direction:column;gap:9px}
-.card{background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);
-  padding:13px;cursor:pointer;transition:opacity .12s}
+.card{background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);padding:13px;cursor:pointer;transition:opacity .12s;position:relative}
 .card:active{opacity:.75}
-.c-term{font-family:var(--serif);font-size:15px;font-weight:600;letter-spacing:.03em;margin-bottom:3px}
-.c-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}
-.c-tag{background:var(--tag-bg);border-radius:10px;font-size:11px;padding:2px 7px;color:var(--ink-muted)}
-.c-body{font-size:13px;color:var(--ink-muted);line-height:1.6;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-badges{display:flex;gap:5px;margin-bottom:5px;align-items:center}
+.badge{font-size:10px;padding:2px 7px;border-radius:9px;font-weight:600;letter-spacing:.02em}
+.badge.cat{background:var(--accent-soft);color:var(--accent)}
+.badge.type{background:var(--blue-bg);color:var(--blue)}
+.badge.hasq{background:var(--ok-bg);color:var(--ok)}
+.c-term{font-family:var(--serif);font-size:15px;font-weight:600;letter-spacing:.02em;margin-bottom:4px;line-height:1.4}
+.c-body{font-size:13px;color:var(--ink-muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .empty{text-align:center;padding:60px 16px;color:var(--ink-faint)}
 .empty .big{font-size:40px;margin-bottom:10px}
 
-/* FAB */
-#fab{position:fixed;bottom:calc(64px + var(--sb) + 10px);right:16px;
-  width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;
-  border:none;font-size:26px;cursor:pointer;z-index:40;
-  box-shadow:0 4px 16px rgba(139,47,47,.45);display:flex;align-items:center;justify-content:center;
-  transition:transform .15s}
+#fab{position:fixed;bottom:calc(64px + var(--sb) + 10px);right:16px;width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:26px;cursor:pointer;z-index:40;box-shadow:0 4px 16px rgba(139,47,47,.45);display:flex;align-items:center;justify-content:center;transition:transform .15s}
 #fab:active{transform:scale(.9)}
 
-/* QUIZ PAGE */
+/* QUIZ */
 .q-title{font-family:var(--serif);font-size:20px;margin-bottom:4px}
 .q-sub{font-size:13px;color:var(--ink-muted);margin-bottom:18px}
 .qfield{margin-bottom:13px}
 .qfield label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px}
-.qfield select{width:100%;background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);
-  color:var(--ink);font-family:var(--sans);font-size:14px;padding:9px 12px;outline:none;appearance:none}
-.sbtn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--r);
-  font-family:var(--sans);font-size:16px;padding:13px;cursor:pointer;font-weight:600;margin-top:4px}
+.qfield select{width:100%;background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);color:var(--ink);font-family:var(--sans);font-size:14px;padding:9px 12px;outline:none;appearance:none}
+.qtypes{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px}
+.qtype-btn{flex:1;min-width:70px;background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);padding:10px 6px;font-size:13px;cursor:pointer;font-family:var(--sans);color:var(--ink-muted);transition:all .12s;text-align:center}
+.qtype-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sbtn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-family:var(--sans);font-size:16px;padding:13px;cursor:pointer;font-weight:600;margin-top:4px}
+.sbtn:disabled{opacity:.4}
 .q-prog{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .pbar{flex:1;height:4px;background:var(--rule);border-radius:2px;overflow:hidden}
 .pfill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
 .ptext{font-size:12px;color:var(--ink-muted);white-space:nowrap}
-.qcard{background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);
-  padding:22px 18px;min-height:190px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;text-align:center;
-  box-shadow:0 4px 18px rgba(26,24,20,.1);margin-bottom:12px;cursor:pointer}
-.qcard:active{opacity:.85}
-.qmode{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
-.qq{font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.5;color:var(--ink)}
-.qtap{font-size:12px;color:var(--ink-faint);margin-top:12px}
-.qans{display:none;width:100%;margin-top:14px;padding-top:12px;border-top:1px dashed var(--rule);text-align:left}
+.qcard{background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);padding:22px 18px;min-height:200px;display:flex;flex-direction:column;box-shadow:0 4px 18px rgba(26,24,20,.1);margin-bottom:12px}
+.qbadge{align-self:flex-start;font-size:11px;letter-spacing:.06em;padding:3px 9px;border-radius:10px;margin-bottom:14px;font-weight:600}
+.qbadge.word{background:var(--blue-bg);color:var(--blue)}
+.qbadge.cloze{background:var(--accent-soft);color:var(--accent)}
+.qbadge.ox{background:var(--ok-bg);color:var(--ok)}
+.q-from{font-size:11px;color:var(--ink-faint);margin-bottom:8px}
+.qq{font-family:var(--serif);font-size:18px;font-weight:600;line-height:1.6;color:var(--ink);flex:1;display:flex;align-items:center}
+.qq .blank{color:var(--accent);font-weight:700;border-bottom:2px solid var(--accent);padding:0 18px}
+.ox-btns{display:flex;gap:10px;margin-top:16px}
+.ox-btn{flex:1;border:1px solid var(--rule);border-radius:var(--r);padding:14px 0;font-size:20px;cursor:pointer;font-family:var(--sans);background:var(--card-bg);transition:all .12s;font-weight:700}
+.ox-btn.o{color:var(--ok)}.ox-btn.x{color:var(--ng)}
+.ox-btn:active{transform:scale(.96)}
+.reveal-btn{margin-top:16px;background:var(--ink);color:#fff;border:none;border-radius:var(--r);padding:13px;font-size:15px;cursor:pointer;font-family:var(--sans);font-weight:600}
+.qans{display:none;margin-top:16px;padding-top:14px;border-top:1px dashed var(--rule)}
 .qans.show{display:block}
-.qa-lbl{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
-.qa-txt{font-size:14px;color:var(--ink);line-height:1.75;white-space:pre-wrap}
-.qbtns{display:flex;gap:10px;justify-content:center}
-.qbok{background:#e8f5ea;border:1px solid #88cc88;color:var(--ok);
-  border-radius:var(--r);padding:12px 0;font-size:15px;font-weight:700;
-  cursor:pointer;font-family:var(--sans);flex:1;max-width:150px}
-.qbok:active{background:#d0eed4}
-.qbng{background:var(--accent-soft);border:1px solid #cc8888;color:var(--ng);
-  border-radius:var(--r);padding:12px 0;font-size:15px;font-weight:700;
-  cursor:pointer;font-family:var(--sans);flex:1;max-width:150px}
-.qbng:active{background:#f0dada}
+.qa-label{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
+.qa-text{font-size:18px;color:var(--ink);line-height:1.6;font-weight:700;font-family:var(--serif)}
+.qa-exp{font-size:13px;color:var(--ink-muted);line-height:1.65;margin-top:10px;padding:10px;background:var(--paper-warm);border-radius:var(--r)}
+.qa-result{font-size:14px;font-weight:700;margin-bottom:10px}
+.qa-result.ok{color:var(--ok)}.qa-result.ng{color:var(--ng)}
+.grade-btns{display:flex;gap:10px;margin-top:14px}
+.gbtn{flex:1;border-radius:var(--r);padding:12px 0;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .12s}
+.gbtn.ok{background:var(--ok-bg);border:1px solid #88cc88;color:var(--ok)}
+.gbtn.ng{background:var(--ng-bg);border:1px solid #cc8888;color:var(--ng)}
+.gbtn:active{transform:scale(.97)}
+.detail-link{margin-top:12px;text-align:center}
+.detail-link button{background:none;border:none;color:var(--blue);font-size:13px;cursor:pointer;text-decoration:underline;font-family:var(--sans)}
 .qresult{text-align:center;padding:40px 16px}
 .qscore{font-family:var(--serif);font-size:68px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px}
 .qsl{font-size:13px;color:var(--ink-muted);margin-bottom:24px}
 .bdown{display:flex;justify-content:center;gap:28px;margin-bottom:24px}
-.bi{text-align:center}
-.bn{font-size:30px;font-weight:700}
-.bn.ok{color:var(--ok)}.bn.ng{color:var(--ng)}
-.bl{font-size:12px;color:var(--ink-faint)}
+.bi{text-align:center}.bn{font-size:30px;font-weight:700}.bn.ok{color:var(--ok)}.bn.ng{color:var(--ng)}.bl{font-size:12px;color:var(--ink-faint)}
 .rbtns{display:flex;flex-direction:column;gap:10px;max-width:260px;margin:0 auto}
 
 /* SHEETS */
 .ov{display:none;position:fixed;inset:0;background:rgba(26,24,20,.5);z-index:100;align-items:flex-end}
 .ov.open{display:flex}
-.sheet{background:var(--card-bg);border-radius:14px 14px 0 0;width:100%;
-  max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
-  padding:0 16px calc(16px + var(--sb));animation:su .22s ease}
+.sheet{background:var(--card-bg);border-radius:14px 14px 0 0;width:100%;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(16px + var(--sb));animation:su .22s ease}
 @keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .handle{width:34px;height:4px;background:var(--rule);border-radius:2px;margin:11px auto 16px}
 .sh-title{font-family:var(--serif);font-size:17px;margin-bottom:16px;padding-bottom:13px;border-bottom:1px solid var(--rule)}
-
 .field{margin-bottom:14px}
 .field label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px}
-.field input,.field textarea{
-  width:100%;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);
-  color:var(--ink);font-family:var(--sans);font-size:15px;padding:10px 12px;
-  outline:none;appearance:none;resize:vertical;
-}
+.field input,.field textarea,.field select{width:100%;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);color:var(--ink);font-family:var(--sans);font-size:15px;padding:10px 12px;outline:none;appearance:none;resize:vertical}
 .field input:focus,.field textarea:focus{border-color:var(--accent)}
 .field textarea{min-height:88px}
 .fhint{font-size:12px;color:var(--ink-faint);margin-top:3px}
-
 .itabs{display:flex;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
 .itab{flex:1;background:none;border:none;padding:9px;font-size:13px;cursor:pointer;font-family:var(--sans);color:var(--ink-muted);transition:all .15s}
 .itab.on{background:var(--accent);color:#fff}
-
-/* AI prompt panel */
 .pbox{background:var(--paper-warm);border:1px solid var(--rule);border-radius:var(--r);padding:12px;margin-bottom:12px}
 .pbox-lbl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
-.pbox-txt{font-size:12px;color:var(--ink);line-height:1.6;white-space:pre-wrap;word-break:break-all;max-height:120px;overflow-y:auto}
-.cpbtn{width:100%;background:var(--ink);color:#fff;border:none;border-radius:var(--r);
-  font-family:var(--sans);font-size:14px;padding:10px;cursor:pointer;margin-top:8px;font-weight:600}
+.pbox-txt{font-size:12px;color:var(--ink);line-height:1.6;white-space:pre-wrap;word-break:break-all;max-height:140px;overflow-y:auto}
+.cpbtn{width:100%;background:var(--ink);color:#fff;border:none;border-radius:var(--r);font-family:var(--sans);font-size:14px;padding:10px;cursor:pointer;margin-top:8px;font-weight:600}
 .cpbtn:active{opacity:.75}
 .paste-hint{font-size:12px;color:var(--ink-muted);margin:10px 0 4px;text-align:center}
 .ai-prev{background:var(--paper-warm);border:1px solid var(--rule);border-radius:var(--r);padding:12px;margin-bottom:6px;display:none}
 .ai-prev-lbl{font-size:11px;color:var(--ink-faint);margin-bottom:8px}
-
 .sh-act{display:flex;gap:10px;margin-top:18px}
-.bsave{flex:1;background:var(--accent);color:#fff;border:none;border-radius:var(--r);
-  font-family:var(--sans);font-size:15px;padding:12px;cursor:pointer;font-weight:600}
-.bcancel{background:var(--paper-warm);color:var(--ink-muted);border:1px solid var(--rule);
-  border-radius:var(--r);font-family:var(--sans);font-size:15px;padding:12px 16px;cursor:pointer}
+.bsave{flex:1;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-family:var(--sans);font-size:15px;padding:12px;cursor:pointer;font-weight:600}
+.bcancel{background:var(--paper-warm);color:var(--ink-muted);border:1px solid var(--rule);border-radius:var(--r);font-family:var(--sans);font-size:15px;padding:12px 16px;cursor:pointer}
 
-/* DETAIL */
-.d-term{font-family:var(--serif);font-size:21px;font-weight:700;margin-bottom:7px}
-.d-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
-.d-body{font-size:14px;line-height:1.8;white-space:pre-wrap;color:var(--ink)}
+/* DETAIL with collapsible sections */
+.d-badges{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+.d-term{font-family:var(--serif);font-size:21px;font-weight:700;margin-bottom:12px;line-height:1.4}
+.d-section{border:1px solid var(--rule);border-radius:var(--r);margin-bottom:8px;overflow:hidden;background:var(--paper)}
+.d-sec-head{padding:11px 13px;font-size:13px;font-weight:700;color:var(--accent);cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--accent-soft);user-select:none}
+.d-sec-head .arr{transition:transform .2s;font-size:11px;color:var(--ink-faint)}
+.d-sec-head.closed .arr{transform:rotate(-90deg)}
+.d-sec-body{padding:13px;font-size:14px;line-height:1.8;white-space:pre-wrap;color:var(--ink)}
+.d-sec-body.hidden{display:none}
+.d-plain{font-size:14px;line-height:1.8;white-space:pre-wrap;color:var(--ink)}
+.d-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)}
+.c-tag{background:var(--tag-bg);border-radius:10px;font-size:11px;padding:2px 8px;color:var(--ink-muted)}
+.d-quiz-info{margin-top:12px;font-size:12px;color:var(--ok);display:flex;align-items:center;gap:5px}
 .d-act{display:flex;gap:8px;margin-top:16px;padding-top:13px;border-top:1px solid var(--rule)}
-.bedit{flex:1;background:var(--paper-warm);color:var(--ink);border:1px solid var(--rule);border-radius:var(--r);
-  font-family:var(--sans);font-size:14px;padding:11px;cursor:pointer}
-.bdel{background:var(--accent-soft);color:var(--ng);border:1px solid #cc8888;border-radius:var(--r);
-  font-family:var(--sans);font-size:14px;padding:11px 14px;cursor:pointer}
-.bclose{background:var(--paper-warm);color:var(--ink-muted);border:1px solid var(--rule);border-radius:var(--r);
-  font-family:var(--sans);font-size:14px;padding:11px 14px;cursor:pointer}
+.bedit{flex:1;background:var(--paper-warm);color:var(--ink);border:1px solid var(--rule);border-radius:var(--r);font-family:var(--sans);font-size:14px;padding:11px;cursor:pointer}
+.bdel{background:var(--accent-soft);color:var(--ng);border:1px solid #cc8888;border-radius:var(--r);font-family:var(--sans);font-size:14px;padding:11px 14px;cursor:pointer}
+.bclose{background:var(--paper-warm);color:var(--ink-muted);border:1px solid var(--rule);border-radius:var(--r);font-family:var(--sans);font-size:14px;padding:11px 14px;cursor:pointer}
+
+/* DATA page */
+.data-sec{background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);padding:15px;margin-bottom:14px}
+.data-sec h3{font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.data-sec p{font-size:12px;color:var(--ink-muted);margin-bottom:12px;line-height:1.6}
+.data-stat{display:flex;gap:16px;margin-bottom:12px}
+.data-stat .num{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--accent);line-height:1}
+.data-stat .lbl{font-size:11px;color:var(--ink-faint)}
+.dbtn{width:100%;border:none;border-radius:var(--r);font-family:var(--sans);font-size:14px;padding:11px;cursor:pointer;font-weight:600;margin-bottom:8px}
+.dbtn.primary{background:var(--accent);color:#fff}
+.dbtn.dark{background:var(--ink);color:#fff}
+.dbtn.outline{background:none;border:1px solid var(--rule);color:var(--ink-muted)}
+.dstatus{font-size:12px;margin-top:6px;min-height:16px}
+.import-ta{width:100%;min-height:120px;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);color:var(--ink);font-family:monospace;font-size:12px;padding:10px;outline:none;resize:vertical;margin-bottom:8px}
 
 mark{background:#f9d87a;color:inherit;border-radius:2px;padding:0 1px}
 </style>
@@ -206,10 +195,9 @@ mark{background:#f9d87a;color:inherit;border-radius:2px;padding:0 1px}
   <div id="content">
     <!-- LIST -->
     <div class="page active" id="listPage">
-      <div class="toolbar">
-        <span class="cnt" id="cnt">0件</span>
-      </div>
-      <div class="tag-row" id="tagRow"></div>
+      <div class="cat-row" id="catRow"></div>
+      <div class="type-row" id="typeRow"></div>
+      <div class="cnt" id="cnt">0件</div>
       <div class="clist" id="clist"></div>
     </div>
 
@@ -217,39 +205,54 @@ mark{background:#f9d87a;color:inherit;border-radius:2px;padding:0 1px}
     <div class="page" id="quizPage">
       <div id="qSetup">
         <div class="q-title">クイズ</div>
-        <div class="q-sub">用語↔説明をランダムに出題します</div>
+        <div class="q-sub">思い出す訓練。用語・穴埋め・◯×をランダム出題します。</div>
         <div class="qfield">
-          <label>タグでしぼる</label>
-          <select id="qts"><option value="">すべて</option></select>
+          <label>範囲（大分類）</label>
+          <select id="qcat"><option value="">すべて</option></select>
+        </div>
+        <div class="qfield">
+          <label>出題形式（複数選択可）</label>
+          <div class="qtypes" id="qtypes">
+            <button class="qtype-btn on" data-t="word" onclick="toggleQType('word')">用語</button>
+            <button class="qtype-btn on" data-t="cloze" onclick="toggleQType('cloze')">穴埋め</button>
+            <button class="qtype-btn on" data-t="ox" onclick="toggleQType('ox')">◯×</button>
+          </div>
         </div>
         <div class="qfield">
           <label>出題数</label>
-          <select id="qc">
-            <option value="10">10問</option>
-            <option value="20">20問</option>
-            <option value="30">30問</option>
-            <option value="0">全問</option>
-          </select>
+          <select id="qc"><option value="10">10問</option><option value="20">20問</option><option value="30">30問</option><option value="0">全問</option></select>
         </div>
-        <button class="sbtn" onclick="startQuiz()">開始する</button>
+        <button class="sbtn" id="startBtn" onclick="startQuiz()">開始する</button>
+        <div id="qavail" style="font-size:12px;color:var(--ink-faint);text-align:center;margin-top:10px"></div>
       </div>
       <div id="qPlay" style="display:none">
         <div class="q-prog">
           <div class="pbar"><div class="pfill" id="pf"></div></div>
           <span class="ptext" id="pt"></span>
         </div>
-        <div class="qcard" id="qcard" onclick="reveal()">
-          <div class="qmode" id="qm"></div>
+        <div class="qcard">
+          <span class="qbadge" id="qbadge"></span>
+          <div class="q-from" id="qfrom"></div>
           <div class="qq" id="qq"></div>
-          <div class="qtap" id="qtap">タップして答えを確認</div>
-          <div class="qans" id="qans">
-            <div class="qa-lbl">答え</div>
-            <div class="qa-txt" id="qat"></div>
+          <!-- OX buttons -->
+          <div class="ox-btns" id="oxBtns" style="display:none">
+            <button class="ox-btn o" onclick="answerOX('○')">○</button>
+            <button class="ox-btn x" onclick="answerOX('×')">×</button>
           </div>
-        </div>
-        <div class="qbtns" id="qbtns" style="display:none">
-          <button class="qbok" onclick="judge(true)">✓ 正解</button>
-          <button class="qbng" onclick="judge(false)">✗ 不正解</button>
+          <!-- reveal for word/cloze -->
+          <button class="reveal-btn" id="revealBtn" onclick="revealAns()">答えを見る</button>
+          <!-- answer -->
+          <div class="qans" id="qans">
+            <div class="qa-result" id="qaResult"></div>
+            <div class="qa-label">答え</div>
+            <div class="qa-text" id="qaText"></div>
+            <div class="qa-exp" id="qaExp" style="display:none"></div>
+            <div class="detail-link"><button onclick="openDetFromQuiz()">📄 この項目の詳しい解説を見る</button></div>
+            <div class="grade-btns" id="gradeBtns">
+              <button class="gbtn ng" onclick="grade(false)">✗ 間違えた</button>
+              <button class="gbtn ok" onclick="grade(true)">✓ 正解</button>
+            </div>
+          </div>
         </div>
       </div>
       <div id="qRes" style="display:none" class="qresult">
@@ -261,45 +264,53 @@ mark{background:#f9d87a;color:inherit;border-radius:2px;padding:0 1px}
           <div class="bi"><div class="bn" id="rt"></div><div class="bl">合計</div></div>
         </div>
         <div class="rbtns">
+          <button class="sbtn" id="reviewBtn" onclick="reviewWrong()" style="display:none;background:var(--blue)">間違えた問題だけ復習</button>
           <button class="sbtn" onclick="resetQ()">もう一度</button>
           <button class="bcancel" style="width:100%;padding:12px" onclick="sw('list')">一覧に戻る</button>
         </div>
       </div>
     </div>
 
-    <!-- IMPORT PAGE -->
-    <div class="page" id="importPage">
-      <div class="q-title">インポート</div>
-      <div class="q-sub" style="margin-bottom:18px">カードデータ（JSON）を一括登録します</div>
+    <!-- DATA -->
+    <div class="page" id="dataPage">
+      <div class="q-title" style="margin-bottom:14px">データ管理</div>
 
-      <div style="background:var(--card-bg);border:1px solid var(--rule);border-radius:var(--r);padding:14px;margin-bottom:14px">
-        <div style="font-size:12px;font-weight:600;color:var(--ink-muted);letter-spacing:.05em;margin-bottom:8px">📋 JSONを貼り付け</div>
-        <textarea id="importJson" style="width:100%;min-height:140px;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);color:var(--ink);font-family:monospace;font-size:12px;padding:10px;outline:none;resize:vertical" placeholder='[{"term":"用語","body":"内容","tags":["タグ"]}]'></textarea>
-        <div id="importStatus" style="font-size:12px;color:var(--ink-faint);margin-top:6px"></div>
+      <div class="data-sec">
+        <div class="data-stat">
+          <div><div class="num" id="statTotal">0</div><div class="lbl">カード</div></div>
+          <div><div class="num" id="statQuiz">0</div><div class="lbl">クイズ問題</div></div>
+        </div>
       </div>
 
-      <button class="sbtn" onclick="doImport()" style="margin-bottom:10px">登録する</button>
-      <button class="bcancel" style="width:100%;padding:12px;margin-bottom:20px" onclick="document.getElementById('importJson').value='';document.getElementById('importStatus').textContent=''">クリア</button>
+      <div class="data-sec">
+        <h3>📤 エクスポート（バックアップ）</h3>
+        <p>全カードをJSONで書き出します。機種変更や別ブラウザへの移行、バックアップにお使いください。</p>
+        <button class="dbtn dark" onclick="exportCopy()">クリップボードにコピー</button>
+        <button class="dbtn primary" onclick="exportFile()">ファイルとしてダウンロード</button>
+        <div class="dstatus" id="expStatus" style="color:var(--ok)"></div>
+      </div>
 
-      <div style="border-top:1px solid var(--rule);padding-top:16px">
-        <div style="font-size:12px;font-weight:600;color:var(--ink-muted);letter-spacing:.05em;margin-bottom:8px">📤 現在のカードをエクスポート</div>
-        <button class="sbtn" style="background:var(--ink)" onclick="doExport()">JSONをコピーする</button>
-        <div id="exportStatus" style="font-size:12px;color:var(--ok);margin-top:6px"></div>
+      <div class="data-sec">
+        <h3>📥 インポート（追加・復元）</h3>
+        <p>JSONを貼り付けて一括登録します。同じ用語名のカードはスキップされます。</p>
+        <textarea class="import-ta" id="importJson" placeholder='[{"term":"用語","body":"内容","cat":"物権","type":"用語","tags":["タグ"],"quiz":[{"t":"word","q":"質問","a":"答え"}]}]'></textarea>
+        <button class="dbtn primary" onclick="doImport()">登録する</button>
+        <button class="dbtn outline" onclick="document.getElementById('importJson').value='';document.getElementById('impStatus').textContent=''">クリア</button>
+        <div class="dstatus" id="impStatus"></div>
+      </div>
+
+      <div class="data-sec">
+        <h3>⚠️ 全削除</h3>
+        <p>すべてのカードを削除して初期状態に戻します。元に戻せません。</p>
+        <button class="dbtn outline" style="color:var(--ng);border-color:#cc8888" onclick="resetAll()">全データを削除</button>
       </div>
     </div>
-
   </div>
 
   <div id="tabbar">
-    <button class="tab on" id="tab-list" onclick="sw('list')">
-      <span class="ic">📋</span>一覧
-    </button>
-    <button class="tab" id="tab-quiz" onclick="sw('quiz')">
-      <span class="ic">🎯</span>クイズ
-    </button>
-    <button class="tab" id="tab-import" onclick="sw('import')">
-      <span class="ic">📥</span>インポート
-    </button>
+    <button class="tab on" id="tab-list" onclick="sw('list')"><span class="ic">📋</span>一覧</button>
+    <button class="tab" id="tab-quiz" onclick="sw('quiz')"><span class="ic">🎯</span>クイズ</button>
+    <button class="tab" id="tab-data" onclick="sw('data')"><span class="ic">💾</span>データ</button>
   </div>
 </div>
 
@@ -311,33 +322,28 @@ mark{background:#f9d87a;color:inherit;border-radius:2px;padding:0 1px}
     <div class="handle"></div>
     <div class="sh-title" id="edTitle">カードを追加</div>
     <div class="itabs">
-      <button class="itab on" id="itText" onclick="sitab('text')">✏ テキスト</button>
+      <button class="itab on" id="itText" onclick="sitab('text')">✏ 手入力</button>
       <button class="itab" id="itAI" onclick="sitab('ai')">🤖 AIで変換</button>
     </div>
-
-    <!-- TEXT -->
     <div id="pText">
-      <div class="field">
-        <label>用語・条文番号 <span style="color:var(--accent)">*</span></label>
-        <input id="fTerm" type="text" placeholder="例：意思表示、民法93条">
+      <div class="field"><label>用語・条文番号 <span style="color:var(--accent)">*</span></label><input id="fTerm" type="text" placeholder="例：意思表示、民法93条"></div>
+      <div class="field" style="display:flex;gap:8px">
+        <div style="flex:1"><label>大分類</label>
+          <select id="fCat"><option>民法の本質</option><option>総則</option><option>物権</option><option>債権</option><option>相続</option><option>その他</option></select>
+        </div>
+        <div style="flex:1"><label>種別</label>
+          <select id="fType"><option>条文</option><option>用語</option><option>論点</option><option>体系</option><option>問題</option></select>
+        </div>
       </div>
-      <div class="field">
-        <label>内容・説明</label>
-        <textarea id="fBody" placeholder="定義、条文テキスト、解説メモなど"></textarea>
-      </div>
-      <div class="field">
-        <label>タグ</label>
-        <input id="fTags" type="text" placeholder="総則, 意思表示（カンマ区切り）">
-        <div class="fhint">カンマ区切りで複数入力できます</div>
+      <div class="field"><label>内容・説明</label><textarea id="fBody" placeholder="定義、条文テキスト、解説メモなど"></textarea></div>
+      <div class="field"><label>タグ（細目・任意）</label><input id="fTags" type="text" placeholder="民法93条, 意思表示（カンマ区切り）"></div>
+      <div class="field"><label>クイズ（任意・1行1問）</label>
+        <textarea id="fQuiz" placeholder="形式|問題|答え|解説（省略可）&#10;例：&#10;word|心裡留保とは何か|心裡留保&#10;cloze|民法90条:公序良俗に反する法律行為は（　）|無効&#10;ox|心裡留保は原則無効である|×|原則有効。相手方が悪意・有過失なら無効" style="min-height:80px;font-family:monospace;font-size:12px"></textarea>
+        <div class="fhint">形式は word（用語）/ cloze（穴埋め）/ ox（◯×）。区切りは縦棒 |</div>
       </div>
     </div>
-
-    <!-- AI -->
     <div id="pAI" style="display:none">
-      <div class="field">
-        <label>教科書・ノートのテキストを貼る</label>
-        <textarea id="fSrc" placeholder="教科書のページをそのまま貼り付けてください。&#10;（カメラAIでOCRした結果でもOK）" style="min-height:100px"></textarea>
-      </div>
+      <div class="field"><label>教科書・ノートのテキストを貼る</label><textarea id="fSrc" placeholder="教科書のページをそのまま貼り付け（カメラAIでOCRした結果でもOK）" style="min-height:100px"></textarea></div>
       <div class="pbox" id="pbox" style="display:none">
         <div class="pbox-lbl">このプロンプトをコピーして使っているAIに投げてください</div>
         <div class="pbox-txt" id="ptxt"></div>
@@ -345,23 +351,12 @@ mark{background:#f9d87a;color:inherit;border-radius:2px;padding:0 1px}
       </div>
       <button class="sbtn" style="margin-bottom:10px" onclick="genPrompt()">プロンプトを生成する</button>
       <div class="paste-hint">↓ AIの回答（JSON）をここに貼る</div>
-      <div class="field">
-        <textarea id="fAR" placeholder='{"term":"意思表示","body":"...","tags":["総則"]}' style="min-height:70px" oninput="parseAR()"></textarea>
-      </div>
+      <div class="field"><textarea id="fAR" placeholder='{"term":"...","cat":"物権","type":"条文","body":"...","tags":[...],"quiz":[...]}' style="min-height:70px" oninput="parseAR()"></textarea></div>
       <div class="ai-prev" id="aiPrev">
-        <div class="ai-prev-lbl">プレビュー（編集できます）</div>
-        <div class="field" style="margin-bottom:9px">
-          <label>用語</label><input id="fTA" type="text">
-        </div>
-        <div class="field" style="margin-bottom:9px">
-          <label>内容</label><textarea id="fBA" style="min-height:66px"></textarea>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <label>タグ</label><input id="fGA" type="text">
-        </div>
+        <div class="ai-prev-lbl">プレビュー（このまま保存できます）</div>
+        <div id="aiPrevContent" style="font-size:13px;line-height:1.6"></div>
       </div>
     </div>
-
     <div class="sh-act">
       <button class="bcancel" onclick="closeOv('editOv')">キャンセル</button>
       <button class="bsave" onclick="saveCard()">保存</button>
@@ -373,9 +368,12 @@ mark{background:#f9d87a;color:inherit;border-radius:2px;padding:0 1px}
 <div class="ov" id="detOv" onclick="bgClick(event,'detOv')">
   <div class="sheet">
     <div class="handle"></div>
+    <div class="d-badges" id="dBadges"></div>
     <div class="d-term" id="dTerm"></div>
+    <div id="dSections"></div>
+    <div class="d-quiz-info" id="dQuizInfo" style="display:none"></div>
+    <button id="dQuizBtn" style="display:none;width:100%;background:var(--blue);color:#fff;border:none;border-radius:var(--r);font-family:var(--sans);font-size:14px;padding:11px;cursor:pointer;font-weight:600;margin-top:8px" onclick="quizThisCard()">🎯 このカードのクイズを試す</button>
     <div class="d-tags" id="dTags"></div>
-    <div class="d-body" id="dBody"></div>
     <div class="d-act">
       <button class="bedit" onclick="editFD()">編集</button>
       <button class="bdel" onclick="delFD()">削除</button>
@@ -385,104 +383,99 @@ mark{background:#f9d87a;color:inherit;border-radius:2px;padding:0 1px}
 </div>
 
 <script>
-const SK='minpo_v5';
-let cards=[],activeTag='',searchQ='',editingId=null,inputTab='text',detailId=null;
-let deck=[],qi=0,qOk=0,qNg=0,qShown=false;
+const SK='minpo_v8';
+let cards=[],activeCat='',activeType='',searchQ='',editingId=null,inputTab='text',detailId=null;
+let aiParsed=null;
+let quizTypes={word:true,cloze:true,ox:true};
+let deck=[],qi=0,qOk=0,qNg=0,curQ=null,wrongCards=[];
 
 const SEED=[
-  /* ── 第1章：民法の本質 ── */
-  {id:"s001",term:"利益衡量",body:"【用語解説】\n「衡」とは、はかりを意味する。衡量とは「量をはかりにかけること」をいう。\n法的判断において当事者間の相対立する利益を比較し、より大きな利益をもたらす結論を導き出す作業のこと。\n\n【ポイント】\n民法理解の最重要概念。真理は2つある（善人2人・悪人1人）という構造を理解することが民法習得の第一歩。",tags:["民法の本質","用語","基本概念"],createdAt:1700000001000},
-  {id:"s005",term:"占有",body:"【用語解説】\n自己のためにする意思で物を所持すること。\n所持とは、物を事実上支配する状態をいう。\n\n【民法192条との関係】\n「動産の占有を始めた者」＝動産を手元に持っている者\n例：YがAから宝石の引渡しを受けている状態",tags:["物権","用語","占有","民法192条"],createdAt:1700000005000},
-  {id:"s006",term:"善意・悪意",body:"【用語解説】※日常用語と全く意味が異なる！\n\n善意＝ある事情を知らないこと\n悪意＝ある事情を知っていること\n\n【民法192条との関係】\n「善意・無過失」\n→ YがAに権利がないことを知らず（善意）、かつ知らないことに過失がない（無過失）ことが即時取得の要件",tags:["民法の本質","物権","用語","善意","悪意"],createdAt:1700000006000},
-  /* ── 基本原則 ── */
-  {id:"b001",term:"民法1条【基本原則・条文】",body:"【条文】\n①私権は、公共の福祉に適合しなければならない。\n②権利の行使及び義務の履行は、信義に従い誠実に行わなければならない。\n③権利の濫用は、これを許さない。\n\n【各項の内容】\n1項＝私権の公共性の原則\n2項＝信義誠実の原則（信義則）\n3項＝権利濫用の禁止\n\n個別の要件・効果を直接定めない一般条項。他の条文で解決できない場合に補充的に用いる。",tags:["民法の本質","基本原則","条文","民法1条"],createdAt:1700001001000},
-  {id:"b002",term:"信義則（信義誠実の原則）",body:"【根拠条文】民法1条2項\n\n【定義】\n社会生活上、相手方の信頼を裏切らないよう誠実に行動すべき原則。\n\n【派生原理】\n・禁反言（エストッペル）の法則\n・クリーンハンズの原則\n・事情変更の原則\n・権利失効の原則\n\n【90条との関係】\n90条（公序良俗）と並ぶ一般条項。最後の手段として補充的に使う。",tags:["民法の本質","用語","信義則","民法1条"],createdAt:1700001002000},
-  {id:"b003",term:"権利濫用",body:"【根拠条文】民法1条3項\n\n【定義】\n外形上は適法な権利行使だが、社会的に許容される限度を超えるもの。\n\n【判断基準】\n客観的要因：権利行使で得る利益と相手が害される利益の比較衡量\n主観的要因：加害目的の有無\n→両者を総合判断\n\n【代表判例】\n宇奈月温泉事件（大判昭和10年10月5日）\n温泉引用管が他人の土地を通過しているとして管の撤去を求めた事案。権利濫用として請求を棄却。",tags:["民法の本質","用語","権利濫用","民法1条"],createdAt:1700001003000},
-  /* ── 物権：総則 ── */
-  {id:"b004",term:"民法175条（物権法定主義）【条文】",body:"【条文】\n物権は、この法律その他の法律に定めるもののほか、創設することができない。\n\n【法律要件・効果】\n法律に定めのない物権を創設しようとしても無効（強行規定）。\n\n【趣旨】\n物権は排他的・絶対的な強力な権利であるため、根拠を法律に求める。\n\n【例外：判例が承認する慣習法上の物権】\n・流水利用権\n・温泉専用権（温泉権）\n・譲渡担保権",tags:["物権","条文","民法175条","物権法定主義"],createdAt:1700001004000},
-  {id:"b005",term:"物権法定主義・一物一権主義",body:"【物権法定主義】（民法175条）\n物権の種類・内容は法律で定めるものに限る原則。\n\n【民法上の物権10種】\n＜用益物権＞占有権・所有権・地上権・永小作権・地役権・入会権\n＜担保物権＞留置権・先取特権・質権・抵当権\n\n【一物一権主義】\n一個の物に同一内容の物権は一つしか成立しない。物権の排他性に由来。\n\n【物権 vs 債権】\n物権＝絶対的・排他的・誰にでも主張可能\n債権＝相対的・特定の相手方にのみ主張可能",tags:["物権","用語","物権法定主義","一物一権主義","民法175条"],createdAt:1700001005000},
-  {id:"b006",term:"民法176条（物権変動・意思主義）【条文】",body:"【条文】\n物権の設定及び移転は、当事者の意思表示のみによって、その効力を生ずる。\n\n【法律要件】\n物権変動を生じさせる当事者の意思表示（契約等）\n\n【法律効果】\n意思表示のみで物権変動の効力が生じる。登記・引渡し等の形式は不要。\n\n【所有権移転時期の判例】\n特定物売買：特約なき限り契約時に移転（最判昭和33年6月20日）\n不特定物売買：目的物が特定した時に移転（最判昭和35年6月24日）\n\n【176条と177条の関係】\n176条→当事者間の成立を規律\n177条→第三者への対抗を規律（役割分担）",tags:["物権","条文","民法176条","意思主義","物権変動"],createdAt:1700001006000},
-  {id:"b007",term:"意思主義・形式主義",body:"【意思主義】（日本・フランス法流）\n物権変動は当事者の意思表示のみで効力が生じる。根拠：民法176条\n\n【形式主義】（ドイツ法流）\n物権変動には意思表示に加えて登記や引渡しなどの形式的行為も要件とする。\n\n【意思主義の問題点と解決】\n問題：意思だけで権利が移転すると外部から権利関係が見えず第三者が不利益を受けうる。\n解決：177条・178条による対抗要件主義で補完。\n\n【体系の流れ】\n176条（成立）→ 177条/178条（対抗）",tags:["物権","用語","意思主義","形式主義","民法176条"],createdAt:1700001007000},
-  {id:"b008",term:"民法177条（不動産物権変動の対抗要件）【条文】",body:"【条文】\n不動産に関する物権の得喪及び変更は、不動産登記法その他の登記に関する法律の定めるところに従いその登記をしなければ、第三者に対抗することができない。\n\n【法律要件】\n①不動産に関する物権の得喪及び変更があること\n②登記を備えていないこと\n③相手方が「第三者」であること\n\n【法律効果】\n登記なければ物権変動を第三者に対抗できない。当事者間では登記なしに有効。\n\n【重要】\n「得喪及び変更」全般が対象（取消・解除・相続・時効も含む＝無制限説、大連判明治41年12月15日）\n日本の不動産登記には公信力なし（通説）",tags:["物権","条文","民法177条","対抗要件","不動産"],createdAt:1700001008000},
-  {id:"b009",term:"民法177条「第三者」の範囲",body:"【定義】（大連判明治41年12月15日・制限説）\n「当事者若クハ其包括承継人ニ非スシテ不動産ニ関スル物権ノ得喪及ヒ変更ノ登記欠缺ヲ主張スル正当ノ利益ヲ有スル者」\n\n【第三者に含まれる例】\n・二重譲受人\n・不動産の差押債権者\n・賃借人\n・単純悪意者（重要：悪意でも第三者に含まれる！）\n\n【第三者に含まれない例】\n・無権利者\n・不法占拠者\n・不法行為者\n・背信的悪意者\n\n【背信的悪意者排除の判例】\n最判昭和43年8月2日（民集22巻8号1571頁）\n「甲に高値で売りつけて利益を得る目的をもつて買い受けた丙は背信的悪意者として第三者にあたらない」\n\n【鉄則】単純悪意者は第三者に含まれる！",tags:["物権","民法177条","対抗要件","第三者","背信的悪意者"],createdAt:1700001009000},
-  {id:"b010",term:"民法178条（動産物権変動の対抗要件）【条文】",body:"【条文】\n動産に関する物権の譲渡は、その動産の引渡しがなければ、第三者に対抗することができない。\n\n【法律要件】\n①動産に関する物権の「譲渡」\n②引渡しを備えていないこと\n③相手方が「第三者」であること\n\n【法律効果】\n引渡しがなければ動産物権の譲渡を第三者に対抗できない。\n\n【177条との対比】\n177条＝不動産・「得喪及び変更」全般・登記で公示\n178条＝動産・「譲渡」のみ・引渡しで公示\n\n【引渡しの4類型すべてが対抗要件になる】\n現実の引渡し・簡易の引渡し・占有改定・指図による占有移転　→　全部OK\n\n【例外：登録制度があるもの】\n登録自動車・船舶・特別法上の動産→引渡しが対抗要件にならない",tags:["物権","条文","民法178条","対抗要件","動産"],createdAt:1700001010000},
-  {id:"b011",term:"対抗要件・公示の原則・公信の原則",body:"【対抗要件とは】\nすでに生じている物権変動を第三者に主張するための要件。\n\n【公示の原則とは】\n物権変動は外部から認識できる形で示さなければ第三者に対抗できないという原則。\n\n【公示方法】\n不動産→登記（177条）\n動産→引渡し（178条）\n\n【公示 vs 公信】\n公示の原則：公示があれば権利変動があったと推定できる\n公信の原則：公示を信頼した者を保護する（動産では即時取得192条として実現。不動産には公信力なし）\n\n【日本の不動産登記の特徴】\n公信力なし。登記を信頼して取引しても所有権を取得できない場合がある。\n→取引安全は94条2項類推適用で図る。",tags:["物権","用語","対抗要件","公示の原則","公信の原則"],createdAt:1700001011000},
-  /* ── 引渡しの4類型 ── */
-  {id:"b012",term:"民法182条1項（現実の引渡し）【条文】",body:"【条文】\n占有権の譲渡は、占有物の引渡しによってする。\n\n【意義】\n占有物の現実の支配（直接占有）を物理的に移転すること。最も一般的な引渡し。\n\n【例】\n店頭で商品を手渡す、鍵を渡す。\n\n【即時取得（192条）との関係】→ 成立する ✓\n\n【引渡し4類型における位置づけ】\n物の現実の移動：あり\n関与者：二者間（譲渡人↔譲受人）",tags:["物権","条文","民法182条","引渡し","現実の引渡し","占有"],createdAt:1700001012000},
-  {id:"b013",term:"民法182条2項（簡易の引渡し）【条文】",body:"【条文】\n譲受人又はその代理人が現に占有物を所持する場合には、占有権の譲渡は、当事者の意思表示のみによってすることができる。\n\n【意義】\n譲受人（またはその代理人）がすでに目的物を所持している場合に、意思表示のみで占有を移転する方法。\n\n【例】\n借りていた物を買い取る（賃借人が買主になる）\n\n【即時取得（192条）との関係】→ 成立する ✓\n\n【引渡し4類型における位置づけ】\n物の現実の移動：なし（譲受人がすでに所持）\n関与者：二者間\n\n【占有改定との違い】\n簡易の引渡し：譲受人がすでに所持\n占有改定：譲渡人が引き続き所持（方向が逆）",tags:["物権","条文","民法182条","引渡し","簡易の引渡し","占有"],createdAt:1700001013000},
-  {id:"b014",term:"民法183条（占有改定）【条文】",body:"【条文】\n代理人が自己の占有物を以後本人のために占有する意思を表示したときは、本人は、これによって占有権を取得する。\n\n【意義】\n譲渡人（代理人）が物を手元に置いたまま、以後譲受人（本人）のために占有する意思を表示することで、譲受人が占有権を取得する方法。物の現実の移動を伴わない。\n\n【例】\n売却後も売主が引き続き使用する場合、譲渡担保\n\n【即時取得（192条）との関係】★最重要★\n→ 成立しない ✗\n最判昭和35年2月11日\n「占有取得の方法が外観上の占有状態に変更を来たさない占有改定にとどまるときは、民法第192条の適用はない」\n理由：外観（物の所持）に変化がないため第三者が信頼できる外観が生じない\n\n【引渡し4類型における位置づけ】\n物の現実の移動：なし（譲渡人が引き続き所持）\n関与者：二者間",tags:["物権","条文","民法183条","引渡し","占有改定","即時取得"],createdAt:1700001014000},
-  {id:"b015",term:"民法184条（指図による占有移転）【条文】",body:"【条文】\n代理人によって占有をする場合において、本人がその代理人に対して以後第三者のためにその物を占有することを命じ、その第三者がこれを承諾したときは、その第三者は、占有権を取得する。\n\n【意義】\n占有代理人（直接占有者）が物を占有している状態で、本人（譲渡人）が代理人に「以後は譲受人のために占有せよ」と命じ、譲受人が承諾することで占有を移転する方法。\n\n【要件】\n①占有代理人が物を占有していること\n②本人（譲渡人）が代理人に指図すること\n③第三者（譲受人）が承諾すること\n※占有代理人の承諾は不要！\n\n【例】\n倉庫業者に預けた荷物を売却する際、倉庫業者に「以後Yのために占有せよ」と命じ、Yが承諾する。\n\n【即時取得（192条）との関係】→ 成立する ✓（最判昭和57年9月7日・民集36巻8号1527頁）\n\n【引渡し4類型における位置づけ】\n物の現実の移動：なし（占有代理人が所持）\n関与者：三者間（唯一の三者間方式）\n\n【頻出ひっかけ】\n指図するのは→譲渡人（本人）\n承諾するのは→譲受人（第三者）\n※主体を入れ替えた選択肢に注意！",tags:["物権","条文","民法184条","引渡し","指図による占有移転","即時取得"],createdAt:1700001015000},
-  {id:"b016",term:"引渡しの4類型【比較表】",body:"【4類型と即時取得の可否・一覧】\n\n①現実の引渡し（182条1項）\n　物の移動：あり　即時取得：○　関与者：二者\n\n②簡易の引渡し（182条2項）\n　物の移動：なし（譲受人が所持済）　即時取得：○　関与者：二者\n\n③占有改定（183条）\n　物の移動：なし（譲渡人が所持継続）　即時取得：✗　関与者：二者\n\n④指図による占有移転（184条）\n　物の移動：なし（占有代理人が所持）　即時取得：○　関与者：三者\n\n【鉄則】\n占有改定だけが即時取得を生じさせない！\n理由：外観に変更がなく第三者が信頼できる外観が生じないから\n\n【178条の対抗要件】\n4類型すべてが178条の「引渡し」に含まれる（対抗要件としてはすべてOK）",tags:["物権","引渡し","即時取得","比較","民法182条","民法183条","民法184条"],createdAt:1700001016000},
-  /* ── 即時取得・盗品遺失物 ── */
-  {id:"s002",term:"民法192条（即時取得）【条文】",body:"【条文】\n取引行為によって、平穏に、かつ、公然と動産の占有を始めた者は、善意であり、かつ、過失がないときは、即時にその動産について行使する権利を取得する。\n\n【趣旨】\n民法の原則「無からは無しか生じない」の例外。動産取引における取引の安全を守るための制度（公信の原則）。",tags:["物権","即時取得","条文","民法192条"],createdAt:1700000002000},
-  {id:"b017",term:"民法192条（即時取得）【要件・効果】",body:"【法律要件】\n①動産であること\n②有効な取引行為による取得（相続等の包括承継・事実行為は不可）\n③前主が無権利者・無権限者であること\n④平穏・公然・善意・無過失\n⑤占有を取得したこと\n\n【法律効果】\n所有権または質権を原始取得する。前主に付着していた負担は消滅。\n\n【適用対象外】\n・金銭（最判昭和39年1月24日）\n・登録自動車（最判昭和62年4月24日）\n・有価証券（別途善意取得制度）\n・伐採前の立木（不動産）\n\n【善意・無過失の推定】\n186条1項で平穏・公然・善意が推定\n188条により無過失も推定（最判昭和41年6月9日）",tags:["物権","条文","民法192条","即時取得","要件"],createdAt:1700001017000},
-  {id:"s003",term:"民法192条（即時取得）【成立要件・構造】",body:"【3要件すべてそろうと「無から有」が生じる】\n\n① 帰責事由：X→A→Yという流れで、Xに帰責事由がある\n② 取引の安全：動産の取引行為・平穏・公然\n③ 善意・無過失：YがAを権利者だと過失なく誤信\n\n【構造図】\nX（真の権利者）→ A（無権利者）→ Y（取得者）\n\n【争いの帰趨】\nYに過失あり→Xの勝ち\nYに過失なし→Yの勝ち",tags:["物権","即時取得","要件","民法192条"],createdAt:1700000003000},
-  {id:"s004",term:"民法192条（即時取得）【参考問題】",body:"【問題1】（S63-10-4改）\n立木法で登記された丙所有の樹木を無権利者乙から譲り受け伐採した場合、即時取得できるか？\n→ × 立木法で登記された立木は不動産。不動産には公信力なし（192条の適用なし）。\n\n【問題2】（H13-7-ア改）\n他人の山林を自分のものと誤信して立木を伐採した場合、即時取得が成立するか？\n→ × 伐採は事実行為。「取引行為」ではないので即時取得は成立しない。",tags:["物権","即時取得","参考問題","民法192条"],createdAt:1700000004000},
-  {id:"s007",term:"即時取得が成立しない場合",body:"【適用除外のケース】\n\n① 不動産には適用されない\n　根拠：192条に相当する規定が不動産には存在しない\n　例：立木法で登記された立木（不動産扱い）→ ×\n\n② 「取引行為」でない事実行為には適用されない\n　例：他人の山林の立木を伐採 → 事実行為 → ×\n\n③ 占有改定による取得には適用されない（最判昭和35年2月11日）\n　理由：外観上の占有状態に変更がないため\n\n【鉄則】動産の取引行為にのみ適用",tags:["物権","即時取得","例外","民法192条"],createdAt:1700000007000},
-  {id:"b018",term:"民法193条（盗品・遺失物の回復）【条文】",body:"【条文】\n前条の場合において、占有物が盗品又は遺失物であるときは、被害者又は遺失者は、盗難又は遺失の時から二年間、占有者に対してその物の回復を請求することができる。\n\n【法律要件】\n①192条の即時取得が成立していること（前提）\n②占有物が「盗品又は遺失物」であること\n③盗難・遺失時から2年以内\n④請求権者が「被害者又は遺失者」\n⑤相手方が「占有者」\n\n【法律効果】\n被害者・遺失者は占有者に対し物の回復を請求できる（即時取得の例外）\n\n【起算点】\n「盗難又は遺失の時」が起算点（占有者が占有を始めた時ではない！）\n\n【適用外】\n詐欺・恐喝・横領など原権利者の意思に基づき占有が移転した場合は適用なし（大判明治41年10月8日）\n\n【関連：194条】\n競売・公の市場・同種物を販売する商人から善意で買い受けた場合→代価弁償が必要",tags:["物権","条文","民法193条","盗品","遺失物","即時取得"],createdAt:1700001018000},
-  {id:"b019",term:"盗品・遺失物（用語）",body:"【盗品】\n窃盗・強盗により占有者の意思に反して占有を奪われた物。\n→193条の適用あり\n\n【遺失物】\n窃盗・強盗以外の方法で意思によらず占有を離れた物。\n→193条の適用あり\n\n【適用なし（意思に基づく離脱）】\n詐欺・恐喝・横領など原権利者の意思に基づいて占有が移転した場合\n→193条は適用されない（大判明治41年10月8日）\n→即時取得（192条）の要件を満たせば取得者が保護される\n\n【被害者・遺失者の範囲】\n所有者に限らず、賃借人・受寄者など占有権原のある者も含む（大判昭和4年12月11日）",tags:["物権","用語","民法193条","盗品","遺失物"],createdAt:1700001019000},
-  /* ── 占有関連 ── */
-  {id:"s008",term:"民法188条（権利適法推定）【条文】",body:"【条文】\n占有者が占有物について行使する権利は、適法に有するものと推定する。\n\n【趣旨】\n占有している者はその物について正当な権利を持つと法律上推定される。\n\n【民法192条との関係】\nAが占有しているという事実 → Yが「Aは権利者」と信頼することに合理性あり（188条の推定が働く）→ Yの善意・無過失が推定されやすい（最判昭和41年6月9日）",tags:["物権","占有","条文","民法188条"],createdAt:1700000008000},
-  /* ── 相続 ── */
-  {id:"b020",term:"民法896条（相続の一般的効力）【条文】",body:"【条文】\n相続人は、相続開始の時から、被相続人の財産に属した一切の権利義務を承継する。ただし、被相続人の一身に専属したものは、この限りでない。\n\n【法律要件】\n相続の開始（被相続人の死亡）\n\n【法律効果】\n相続人は相続開始時から被相続人の財産上の一切の権利義務を包括承継する。\n一身専属権は承継されない。\n\n【一身専属権の例】\n扶養請求権、生活保護受給権、委任契約上の地位（653条）\n\n【相続と対抗要件（177条との関係）】\n法定相続分の範囲内→登記なしに対抗可\n法定相続分を超える部分→登記等の対抗要件を備えなければ第三者に対抗できない（899条の2）",tags:["相続","条文","民法896条","包括承継","一身専属権"],createdAt:1700001020000},
-  {id:"b021",term:"包括承継・特定承継",body:"【包括承継（一般承継）】\n個々の権利義務を個別にではなく一括して承継すること。\n例：相続（896条）、合併\n→個別の移転行為が不要\n\n【特定承継】\n個々の権利義務を個別の行為（売買・贈与等）で承継すること。\n例：売買、贈与\n→個別の移転行為が必要\n\n【承継と対抗要件】\n包括承継人は177条の「第三者」に含まれない。\nただし法定相続分超過部分の取得は対抗要件が必要（899条の2）。\n\n【占有権も相続される】\n相続人は被相続人の占有を承継できる（187条）。",tags:["物権","相続","用語","包括承継","特定承継","民法896条"],createdAt:1700001021000},
-  /* ── 体系まとめ（物権） ── */
-  {id:"b022",term:"物権変動の体系【全体構造】",body:"【体系の流れ】\n175条（物権法定主義）\n↓\n176条（意思主義：契約のみで物権変動）\n↓\n177条・178条（対抗要件主義：公示なければ第三者に対抗不可）\n↓\n182〜184条（引渡しの4類型：対抗要件の具体的方法）\n↓\n192条（公信の原則：動産の即時取得）\n↓\n193条（盗品・遺失物：即時取得の例外）\n\n【二段構えの構造】\n①成立（176条）：意思表示のみでOK\n②対抗（177/178条）：公示が必要\n→矛盾ではなく役割分担\n\n【不動産 vs 動産の対比】\n不動産：登記（公信力なし）・177条\n動産　：引渡し（公信力あり＝192条）・178条",tags:["物権","体系","物権変動","対抗要件","即時取得"],createdAt:1700001022000},
-  /* ══════════════════════════════════
-     ── 総則：能力・意思表示 ──
-  ══════════════════════════════════ */
-  {id:"c001",term:"民法3条の2（意思能力）【条文】",body:"【条文】\n法律行為の当事者が意思表示をした時に意思能力を有しなかったときは、その法律行為は、無効とする。\n\n【法律要件】\n①法律行為時に②意思能力を有しなかったこと\n\n【法律効果】\n絶対的無効（追認不可）\n\n【意思能力とは】\n自己の行為の法的な結果を認識・判断できる能力。おおむね7〜10歳程度の判断力が基準。幼児・重度の認知症・泥酔状態などは欠如する。\n\n【改正のポイント】\n平成29年改正で新設（従来は大判明治38年5月11日の判例法理のみ）。\n\n【5条との違い】\n意思能力：個別的・実質的判断\n行為能力（5条）：年齢による画一的・形式的保護\n\n【返還範囲】\n意思無能力無効に基づく返還は現存利益に限定（121条の2第3項）",tags:["総則","条文","民法3条の2","意思能力","無効"],createdAt:1700002001000},
-  {id:"c002",term:"民法5条（未成年者の法律行為）【条文】",body:"【条文】\n①未成年者が法律行為をするには、その法定代理人の同意を得なければならない。ただし、単に権利を得、又は義務を免れる法律行為については、この限りでない。\n②前項の規定に反する法律行為は、取り消すことができる。\n③法定代理人が目的を定めて処分を許した財産は、その目的の範囲内において、未成年者が自由に処分することができる。目的を定めないで処分を許した財産を処分するときも、同様とする。\n\n【未成年者＝18歳未満】（4条、令和4年4月1日から成年年齢18歳）\n\n【単独で確定的に有効な行為の例外】\n①単に権利を得・義務を免れる行為\n②目的を定めて処分を許した財産（お使い）\n③目的を定めない処分許可財産（小遣い）\n④許可された営業（6条）\n\n【詐術を用いた場合】取消し不可（21条）",tags:["総則","条文","民法5条","未成年者","行為能力","取消し"],createdAt:1700002002000},
-  {id:"c003",term:"民法90条（公序良俗）【条文】",body:"【条文】\n公の秩序又は善良の風俗に反する法律行為は、無効とする。\n\n【法律要件】\n公序良俗違反の法律行為\n\n【法律効果】\n絶対的無効（追認不可）\n\n【平成29年改正のポイント】\n旧「事項を目的とする」を削除→内容だけでなく過程・動機・目的も含めて広く考慮することを明確化\n\n【典型的な違反類型】\n・暴利行為（窮迫・軽率・無経験を利用した著しく過当な利益）\n・性的不倫契約・妾契約\n・人身の自由を極度に制限する契約\n・賭博・射倖行為（賭博資金と知る金銭消費貸借も無効）\n・犯罪関与\n\n【代表判例】\n大判昭9.5.1（暴利行為）\n最判昭61.9.4（賭博資金と知ってする消費貸借）\n\n【契約自由（521条）との関係】\n521条2項「法令の制限内において内容を自由に決定」の制限として機能",tags:["総則","条文","民法90条","公序良俗","無効"],createdAt:1700002003000},
-  {id:"c004",term:"民法93条（心裡留保）【条文】",body:"【条文】\n①意思表示は、表意者がその真意ではないことを知ってしたときであっても、そのためにその効力を妨げられない。ただし、相手方がその意思表示が表意者の真意ではないことを知り、又は知ることができたときは、その意思表示は、無効とする。\n②前項ただし書の規定による意思表示の無効は、善意の第三者に対抗することができない。\n\n【意義】\n冗談・芝居など、表意者が真意でないと知りながらする意思表示。\n\n【原則・例外】\n原則：有効（相手方保護）\n例外：相手方が悪意または有過失→無効\n\n【第三者保護（2項・平成29年改正で新設）】\n善意の第三者には無効を対抗できない（無過失不要）\n\n【94条との違い】\n93条：単独の虚偽（相手方は欺かれていない）\n94条：相手方との通謀あり",tags:["総則","条文","民法93条","心裡留保","意思表示"],createdAt:1700002004000},
-  {id:"c005",term:"民法94条（虚偽表示）【条文・基本】",body:"【条文】\n①相手方と通じてした虚偽の意思表示は、無効とする。\n②前項の規定による意思表示の無効は、善意の第三者に対抗することができない。\n\n【法律要件】\n①虚偽の意思表示②相手方との通謀\n\n【法律効果】\n当事者間では無効。善意の第三者には無効を対抗できない（2項）。\n\n【第三者の要件】\n当事者・包括承継人以外で虚偽表示に基づき新たに利害関係に入った者。\n・善意で足りる（無過失不要）\n・対抗要件の具備は不要（最判昭44.5.27）\n例：仮装譲受人からの不動産買主、差押債権者\n\n【93条との対比】\n93条：単独虚偽・相手方が悪意または有過失で無効\n94条：通謀虚偽・絶対無効（ただし善意第三者保護）",tags:["総則","条文","民法94条","虚偽表示","通謀"],createdAt:1700002005000},
-  {id:"c006",term:"民法94条2項類推適用【権利外観法理】",body:"【意義】\n通謀がない場合でも、虚偽の外観を信頼した善意の第三者を保護する判例法理。\n\n【類推適用の3要件】\n①虚偽の外観の存在\n②本人の帰責性（外観作出への関与・黙認等）\n③第三者の信頼（外観を信頼して取引）\n\n【判例の発展】\n最判昭29.8.20：乙への移転登記を丙が承認した事案で類推\n最判昭45.9.22：不実登記を黙認し存続させた事案で類推\n最判平18.2.23（最重要）：\n本人の帰責性が低い→第三者に「善意無過失」を要求\n本人の帰責性が高い→第三者に「善意」のみで足りる\n＝94条2項・110条の類推適用で相関的判断\n\n【日本における意義】\n不動産登記に公信力がない日本で取引安全を確保する中心的判例法理",tags:["総則","民法94条","虚偽表示","類推適用","権利外観法理","判例"],createdAt:1700002006000},
-  {id:"c007",term:"民法95条（錯誤）【条文・類型】",body:"【条文・1項】\n意思表示は、次に掲げる錯誤に基づくものであって、その錯誤が法律行為の目的及び取引上の社会通念に照らして重要なものであるときは、取り消すことができる。\n一 意思表示に対応する意思を欠く錯誤（表示の錯誤）\n二 表意者が法律行為の基礎とした事情についてのその認識が真実に反する錯誤（動機の錯誤）\n\n【2項】\n前項第二号の取消しは、その事情が法律行為の基礎とされていることが表示されていたときに限り、することができる。\n\n【2類型の比較】\n表示の錯誤（1号）：意思と表示の不一致。例：100万円と書くつもりが1000万円と書いた\n動機の錯誤（2号）：意思と表示は一致するが前提事情が誤り。例：値上がりすると思って土地を買ったが値下がりした\n動機の錯誤は「表示」が必要（2項）\n\n【平成29年改正の重要変更】\n・効果：「無効」→「取消し」\n・類型を1号・2号に明文化\n・第三者保護規定（4項）を新設",tags:["総則","条文","民法95条","錯誤","取消し","動機の錯誤"],createdAt:1700002007000},
-  {id:"c008",term:"民法95条【要件・第三者保護・重過失】",body:"【取消しの要件】\n①1号または2号の錯誤\n②法律行為の目的・取引上の社会通念に照らした重要性\n③（2号の場合）基礎事情の表示\n\n【重過失による制限（3項）】\n表意者に重大な過失があれば原則取消し不可。\n例外（取消せる）：\n・相手方が表意者の錯誤を知り、または重過失で知らなかったとき（3項1号）\n・相手方が同一の錯誤に陥っていたとき（共通錯誤・3項2号）\n\n【第三者保護（4項・平成29年改正新設）】\n錯誤取消しは善意無過失の第三者に対抗不可\n※94条2項（善意のみ）・96条3項（善意無過失）と比較\n\n【重要判例】\n動機が表示されなければ要素の錯誤とならない＝最判昭29.11.26\n離婚財産分与の課税負担の錯誤は動機が表示されていれば取消可＝最判平元.9.14",tags:["総則","民法95条","錯誤","重過失","第三者保護"],createdAt:1700002008000},
-  {id:"c009",term:"民法96条1項（詐欺・強迫）【条文】",body:"【条文】\n①詐欺又は強迫による意思表示は、取り消すことができる。\n②相手方に対する意思表示について第三者が詐欺を行った場合においては、相手方がその事実を知り、又は知ることができたときに限り、その意思表示を取り消すことができる。\n③前二項の規定による詐欺による意思表示の取消しは、善意でかつ過失がない第三者に対抗することができない。\n\n【詐欺の要件】\n①欺罔行為②錯誤に陥り③意思表示\n\n【強迫の要件】\n①強迫行為②畏怖して③意思表示\n（選択の自由を完全に失う必要はない＝最判昭33.7.1）\n\n【詐欺 vs 強迫の第三者保護の差】\n詐欺取消し：善意無過失の第三者に対抗不可（3項）→表意者にも落ち度\n強迫取消し：善意無過失の第三者にも対抗可→被害者に落ち度なし\n\n【平成29年改正】\n2項：第三者詐欺の場合、相手方の有過失でも取消し可に拡大",tags:["総則","条文","民法96条","詐欺","強迫","取消し"],createdAt:1700002009000},
-  {id:"c010",term:"意思表示の瑕疵【比較表】",body:"【93〜96条の横断整理】\n\n93条（心裡留保）\n　効果：原則有効、相手方悪意・有過失なら無効\n　第三者：善意なら対抗不可（2項）\n\n94条（虚偽表示）\n　効果：無効（絶対）\n　第三者：善意なら対抗不可（無過失不要）\n\n95条（錯誤）\n　効果：取消し可\n　第三者：善意無過失なら対抗不可（4項）\n\n96条（詐欺）\n　効果：取消し可\n　第三者：善意無過失なら対抗不可（3項）\n　※強迫は第三者保護なし\n\n【第三者の主観要件まとめ】\n93条：善意のみ\n94条：善意のみ（無過失不要）★最も緩い\n95条：善意無過失\n96条（詐欺）：善意無過失",tags:["総則","意思表示","比較","取消し","無効"],createdAt:1700002010000},
-  {id:"c011",term:"民法121条（取消しの効果）・121条の2（原状回復義務）",body:"【121条・条文】\n取り消された行為は、初めから無効であったものとみなす。\n→遡及的無効\n\n【121条の2・条文（平成29年改正新設）】\n1項：無効な行為に基づく給付を受けた者は相手方を原状に復させる義務を負う。\n2項：無効な無償行為の給付受領時善意の者は現存利益のみ返還。\n3項：意思無能力者・制限行為能力者は現存利益のみ返還。\n\n【703条・704条との関係】\n121条の2は703条・704条の特則。\n善意悪意を問わず原則として完全な原状回復義務（現物返還・不能なら価額償還）。\n→強迫被害者（悪意の受益者）も704条の利息付返還にならない！\n\n【現存利益の例】\nあり：生活費・借金返済に充当した場合（負担を免れた利益が残る）\nなし：遊興費に浪費した場合（最判昭50.6.27）\n\n【相互返還と同時履行】\n双方の返還義務は同時履行関係（533条類推、最判昭47.9.7）",tags:["総則","条文","民法121条","民法121条の2","取消し","原状回復","不当利得"],createdAt:1700002011000},
-  /* ══════════════════════════════════
-     ── 物権担保：抵当権 ──
-  ══════════════════════════════════ */
-  {id:"c012",term:"民法369条（抵当権）【条文】",body:"【条文】\n①抵当権者は、債務者又は第三者が占有を移転しないで債務の担保に供した不動産について、他の債権者に先立って自己の債権の弁済を受ける権利を有する。\n②地上権及び永小作権も、抵当権の目的とすることができる。この場合においては、この章の規定を準用する。\n\n【性質】\n約定担保物権・非占有担保物権\n付従性・随伴性・不可分性・物上代位性・優先弁済的効力・追及効\n\n【重要用語】\n抵当権設定者：目的物を占有・使用収益を継続できる（質権との最大の違い）\n物上保証人：債務者以外の第三者が自己の不動産を担保に供した者\n優先弁済：他の一般債権者より先に弁済を受ける\n\n【登記との関係】\n177条の登記で第三者に対抗。順位は登記の前後（373条）\n\n【質権との対比】\n抵当権：非占有担保、不動産・地上権・永小作権\n質権：占有担保、動産・不動産・権利",tags:["物権","担保物権","条文","民法369条","抵当権"],createdAt:1700002012000},
-  /* ══════════════════════════════════
-     ── 債権：債務不履行 ──
-  ══════════════════════════════════ */
-  {id:"c013",term:"民法412条の2（履行不能）【条文】",body:"【条文】\n①債務の履行が契約その他の債務の発生原因及び取引上の社会通念に照らして不能であるときは、債権者は、その債務の履行を請求することができない。\n②契約に基づく債務の履行がその契約の成立の時に不能であったことは、第415条の規定によりその履行の不能によって生じた損害の賠償を請求することを妨げない。\n\n【平成29年改正で新設】\n・物理的不能だけでなく、受ける利益に比して過大な費用を要する場合も履行不能\n・原始的不能（契約成立時から不能）でも契約は有効（2項）→415条の損害賠償請求可\n　（従来の「原始的不能→契約無効」理論を変更）\n\n【関連条文の連鎖】\n412条の2（履行不能の確認）\n↓\n415条（損害賠償請求）\n536条（危険負担）\n542条（無催告解除）",tags:["債権","条文","民法412条の2","履行不能","債務不履行"],createdAt:1700002013000},
-  {id:"c014",term:"民法415条（債務不履行による損害賠償）【条文】",body:"【条文】\n①債務者がその債務の本旨に従った履行をしないとき又は債務の履行が不能であるときは、債権者は、これによって生じた損害の賠償を請求することができる。ただし、その債務の不履行が契約その他の債務の発生原因及び取引上の社会通念に照らして債務者の責めに帰することができない事由によるものであるときは、この限りでない。\n②…履行に代わる損害賠償（填補賠償）を請求できる場合：\n一 債務の履行が不能であるとき\n二 債務者が履行を拒絶する意思を明確に表示したとき\n三 契約が解除され、又は解除権が発生したとき",tags:["債権","条文","民法415条","債務不履行","損害賠償"],createdAt:1700002014000},
-  {id:"c015",term:"民法415条【債務不履行の類型・要件】",body:"【債務不履行の3類型（＋履行拒絶）】\n\n①履行遅滞\n　要件：履行可能なのに履行期を徒過\n　遅延損害金（419条）・解除（541条）・損害賠償\n\n②履行不能（412条の2）\n　要件：履行が不能\n　填補賠償（415条2項1号）・解除（542条）\n\n③不完全履行\n　要件：履行はされたが債務の本旨に従わない（不良品等）\n　追完請求（562条）・代金減額（563条）・損害賠償\n\n④履行拒絶（415条2項2号）\n　履行拒絶の意思を明確に表示\n\n【損害賠償の要件】\n①債務不履行の事実\n②損害の発生\n③因果関係（債務不履行→損害）\n免責事由：④債務者の帰責事由がないこと（1項ただし書）\n→帰責事由がないことの立証責任は債務者側\n\n【709条との違い】\n不法行為：被害者が故意・過失を立証\n債務不履行：債務者が帰責事由なしを立証（立証負担が逆）",tags:["債権","民法415条","債務不履行","類型","要件","損害賠償"],createdAt:1700002015000},
-  {id:"c016",term:"民法422条の2（代償請求権）【条文】",body:"【条文】\n債務者が、その債務の履行が不能となったのと同一の原因により債務の目的物の代償である権利又は利益を取得したときは、債権者は、その受けた損害の額の限度において、債務者に対し、その権利の移転又はその利益の償還を請求することができる。\n\n【平成29年改正で新設】\n最判昭41.12.23の判例法理を明文化。\n\n【要件】\n①履行不能\n②履行不能と同一原因による代償の取得（保険金・損害賠償請求権など）\n③債権者の損害\n※債務者の帰責事由の有無を問わない\n\n【効果】\n債権者は被った損害の限度で代償（保険金等）の移転・償還を請求できる。\n\n【典型例】\n目的物が第三者の不法行為で滅失\n→債務者（売主）が損害賠償請求権を取得\n→買主は代償請求権を行使し損害賠償請求権の移転を求められる",tags:["債権","条文","民法422条の2","代償請求権","履行不能"],createdAt:1700002016000},
-  /* ══════════════════════════════════
-     ── 債権：契約 ──
-  ══════════════════════════════════ */
-  {id:"c017",term:"民法521条（契約の自由）【条文】",body:"【条文】\n①何人も、法令に特別の定めがある場合を除き、契約をするかどうかを自由に決定することができる。\n②契約の当事者は、法令の制限内において、契約の内容を自由に決定することができる。\n\n【平成29年改正で新設】契約自由の原則を明文化。\n\n【契約自由の4類型】\n①締結の自由（1項）\n②相手方選択の自由（1項に含む）\n③内容の自由（2項）\n④方式の自由（522条2項）\n\n【制限（90条との関係）】\n「法令の制限内」（2項）という留保あり。\n代表的制限：90条（公序良俗）・91条（強行規定）\n→暴利行為・人権侵害的契約・反社会的契約は無効\n\n【締結・相手方選択の自由の例外】\n医師の応召義務（医師法19条）\n水道事業者の給水義務\nNHK受信契約義務（放送法64条）",tags:["債権","条文","民法521条","契約自由","私的自治"],createdAt:1700002017000},
-  {id:"c018",term:"民法555条（売買）【条文】",body:"【条文】\n売買は、当事者の一方がある財産権を相手方に移転することを約し、相手方がこれに対してその代金を支払うことを約することによって、その効力を生ずる。\n\n【性質】\n有償・双務・諾成・不要式契約\n口頭の合意でも成立（書面不要）\n\n【法律要件】\n①財産権移転の約束＋②代金支払の約束の合致\n\n【法律効果】\n売主の財産権移転義務＋買主の代金支払義務（同時履行関係・533条・573条）\n\n【重要論点】\n他人物売買も有効（561条）\n契約不適合責任（562〜564条）：追完請求・代金減額・損害賠償・解除\n\n【587条（消費貸借）との対比】\n売買：諾成契約（約束のみで成立）\n消費貸借：要物契約（目的物の交付で成立）",tags:["債権","条文","民法555条","売買","契約"],createdAt:1700002018000},
-  {id:"c019",term:"民法587条（消費貸借）【条文】",body:"【条文】\n消費貸借は、当事者の一方が種類、品質及び数量の同じ物をもって返還をすることを約して相手方から金銭その他の物を受け取ることによって、その効力を生ずる。\n\n【性質】\n要物契約（目的物の交付で成立）・原則無利息・片務契約\n\n【平成29年改正：587条の2（書面でする消費貸借）を新設】\n書面（電磁的記録を含む）でする消費貸借は諾成契約として成立。\n・借主は目的物受領まで解除可能（587条の2第2項）\n・当事者の破産で失効（同3項）\n\n【555条（売買）との対比】\n売買：諾成契約\n消費貸借：要物契約（原則）\n\n【利息】\n特約がなければ無利息（589条）。特約があれば目的物受領日から発生。\n\n【90条・708条との関係】\n賭博資金など不法な目的の消費貸借は無効（最判昭61.9.4）",tags:["債権","条文","民法587条","消費貸借","要物契約"],createdAt:1700002019000},
-  /* ══════════════════════════════════
-     ── 債権：不当利得・不法行為 ──
-  ══════════════════════════════════ */
-  {id:"c020",term:"民法703条（不当利得の返還義務）【条文】",body:"【条文】\n法律上の原因なく他人の財産又は労務によって利益を受け、そのために他人に損失を及ぼした者（受益者）は、その利益の存する限度において、これを返還する義務を負う。\n\n【法律要件】\n①受益②損失③受益と損失の因果関係④法律上の原因がないこと\n\n【法律効果】\n現存利益（その利益の存する限度）の返還\n\n【現存利益の判断】\nあり：生活費・借金返済に充当（負担を免れた分が残る）\nなし：遊興費に浪費（残っていない）\n\n【121条の2との関係】\n無効・取消しの巻き戻しには121条の2が特則として優先。\n703条は侵害利得（他人の財産の無断利用）等に適用。\n\n【重要判例】\n騙取金による弁済：社会通念上の連結があれば因果関係肯定（最判昭49.9.26）",tags:["債権","条文","民法703条","不当利得","現存利益"],createdAt:1700002020000},
-  {id:"c021",term:"民法704条（悪意の受益者）【条文】",body:"【条文】\n悪意の受益者は、その受けた利益に利息を付して返還しなければならない。この場合において、なお損害があるときは、その賠償の責任を負う。\n\n【要件・効果】\n悪意（法律上の原因がないことを知っている）の受益者：\n①受けた利益全部に利息を付して返還\n②なお損害があれば賠償責任\n\n【703条との対比】\n善意の受益者（703条）：現存利益のみ返還\n悪意の受益者（704条）：全利益＋利息＋損害賠償\n\n【121条の2との関係】\n無効・取消しの場面では121条の2が特則として優先。\n善意悪意を問わず原則として完全な原状回復義務。\n→強迫被害者が「悪意の受益者」として704条適用される不合理を回避。\n\n【判例】\n704条後段の損害賠償責任は不法行為責任の注意的規定（最判平21.11.9）\n過払金返還請求が典型的適用場面",tags:["債権","条文","民法704条","不当利得","悪意の受益者"],createdAt:1700002021000},
-  {id:"c022",term:"民法709条（不法行為）【条文】",body:"【条文】\n故意又は過失によって他人の権利又は法律上保護される利益を侵害した者は、これによって生じた損害を賠償する責任を負う。\n\n【法律効果】\n損害賠償責任\n\n【415条（債務不履行）との根本的違い】\n709条：契約関係がない者間の責任（不法行為）\n415条：契約関係がある者間の責任（債務不履行）\n医療過誤等では両者が競合（請求権競合）\n\n【消滅時効（724条）】\n被害者が損害・加害者を知った時から3年\n不法行為時から20年（除斥期間）",tags:["債権","条文","民法709条","不法行為","損害賠償"],createdAt:1700002022000},
-  {id:"c023",term:"民法709条【不法行為の成立要件】",body:"【5つの成立要件（立証責任：被害者側）】\n\n①故意・過失\n　故意：結果を認識・認容（未必の故意を含む）\n　過失：結果回避義務違反（客観的・過失の客観化）\n\n②権利・法律上保護される利益の侵害（違法性）\n　「権利」侵害から「利益」侵害へ拡大（大学湯事件・大判大14.11.28）\n　相関関係理論：侵害利益の重大性と行為態様の相関で違法性判断\n\n③損害の発生\n　財産的損害＋精神的損害（慰謝料・710条・711条）\n\n④因果関係\n　事実的因果関係（あれなければこれなし）＋相当因果関係（416条類推）\n\n⑤責任能力（明文外）\n　712条・713条。おおむね12歳前後が境界（個別判断）\n\n【違法性阻却事由（明文外）】\n正当防衛・緊急避難（720条）\n\n【立証責任：債務不履行との逆転】\n不法行為：①〜④を被害者が立証\n債務不履行（415条）：債務者が帰責事由なしを立証",tags:["債権","民法709条","不法行為","成立要件","故意","過失","因果関係"],createdAt:1700002023000},
-  /* ── 体系まとめ（債権） ── */
-  {id:"c024",term:"民法の体系【総則・債権の全体構造】",body:"【意思表示の瑕疵と救済の体系】\n93条（心裡留保）→有効/無効\n94条（虚偽表示）→無効＋類推適用\n95条（錯誤）→取消し\n96条（詐欺・強迫）→取消し\n取消しの効果：121条（遡及的無効）→121条の2（原状回復）\n\n【契約の自由と制限】\n521条（契約自由の原則）\n↓制限↓\n90条（公序良俗・無効）\n91条（強行規定）\n消費者契約法・労基法等の個別規制\n\n【債務不履行の救済体系】\n415条（損害賠償）← 412条の2（履行不能確認）\n422条の2（代償請求権）\n解除（541〜543条）\n\n【法定債権の体系】\n703条（不当利得・善意）\n704条（不当利得・悪意）\n709条（不法行為）\n\n【キーワード対比：請求権競合】\n債務不履行責任と不法行為責任は併存可能\n（医療過誤等で両方請求）",tags:["体系","総則","債権","意思表示","債務不履行","不法行為","不当利得"],createdAt:1700002024000}
+{"id": "s001", "cat": "民法の本質", "type": "用語", "term": "利益衡量", "body": "【用語解説】\n「衡」とは、はかりを意味する。衡量とは「量をはかりにかけること」をいう。\n法的判断において当事者間の相対立する利益を比較し、より大きな利益をもたらす結論を導き出す作業のこと。\n\n【ポイント】\n民法理解の最重要概念。真理は2つある（善人2人・悪人1人）という構造を理解することが民法習得の第一歩。", "tags": ["民法の本質", "用語", "基本概念"], "quiz": [{"t": "word", "q": "2つの相対立する利益を比較し、より大きな利益をもたらす結論を導く作業を何という？", "a": "利益衡量"}], "createdAt": 1700000001000},
+{"id": "s005", "cat": "物権", "type": "用語", "term": "占有", "body": "【用語解説】\n自己のためにする意思で物を所持すること。\n所持とは、物を事実上支配する状態をいう。\n\n【民法192条との関係】\n「動産の占有を始めた者」＝動産を手元に持っている者\n例：YがAから宝石の引渡しを受けている状態", "tags": ["物権", "用語", "占有", "民法192条"], "quiz": [{"t": "word", "q": "自己のためにする意思で物を所持することを何という？", "a": "占有"}], "createdAt": 1700000005000},
+{"id": "s006", "cat": "民法の本質", "type": "用語", "term": "善意・悪意", "body": "【用語解説】※日常用語と全く意味が異なる！\n\n善意＝ある事情を知らないこと\n悪意＝ある事情を知っていること\n\n【民法192条との関係】\n「善意・無過失」\n→ YがAに権利がないことを知らず（善意）、かつ知らないことに過失がない（無過失）ことが即時取得の要件", "tags": ["民法の本質", "物権", "用語", "善意", "悪意"], "quiz": [{"t": "word", "q": "民法で「ある事情を知らないこと」を指す用語は？", "a": "善意"}, {"t": "word", "q": "民法で「ある事情を知っていること」を指す用語は？", "a": "悪意"}], "createdAt": 1700000006000},
+{"id": "b001", "cat": "民法の本質", "type": "条文", "term": "民法1条【基本原則・条文】", "body": "【条文】\n①私権は、公共の福祉に適合しなければならない。\n②権利の行使及び義務の履行は、信義に従い誠実に行わなければならない。\n③権利の濫用は、これを許さない。\n\n【各項の内容】\n1項＝私権の公共性の原則\n2項＝信義誠実の原則（信義則）\n3項＝権利濫用の禁止\n\n個別の要件・効果を直接定めない一般条項。他の条文で解決できない場合に補充的に用いる。", "tags": ["民法の本質", "基本原則", "条文", "民法1条"], "quiz": [{"t": "cloze", "q": "民法1条：権利の行使及び義務の履行は、（　）に従い誠実に行わなければならない。", "a": "信義"}], "createdAt": 1700001001000},
+{"id": "b002", "cat": "民法の本質", "type": "用語", "term": "信義則（信義誠実の原則）", "body": "【根拠条文】民法1条2項\n\n【定義】\n社会生活上、相手方の信頼を裏切らないよう誠実に行動すべき原則。\n\n【派生原理】\n・禁反言（エストッペル）の法則\n・クリーンハンズの原則\n・事情変更の原則\n・権利失効の原則\n\n【90条との関係】\n90条（公序良俗）と並ぶ一般条項。最後の手段として補充的に使う。", "tags": ["民法の本質", "用語", "信義則", "民法1条"], "quiz": [{"t": "word", "q": "社会生活上、相手方の信頼を裏切らないよう誠実に行動すべき原則を何という？", "a": "信義則（信義誠実の原則）"}], "createdAt": 1700001002000},
+{"id": "b003", "cat": "民法の本質", "type": "用語", "term": "権利濫用", "body": "【根拠条文】民法1条3項\n\n【定義】\n外形上は適法な権利行使だが、社会的に許容される限度を超えるもの。\n\n【判断基準】\n客観的要因：権利行使で得る利益と相手が害される利益の比較衡量\n主観的要因：加害目的の有無\n→両者を総合判断\n\n【代表判例】\n宇奈月温泉事件（大判昭和10年10月5日）\n温泉引用管が他人の土地を通過しているとして管の撤去を求めた事案。権利濫用として請求を棄却。", "tags": ["民法の本質", "用語", "権利濫用", "民法1条"], "quiz": [{"t": "word", "q": "外形上は適法な権利行使だが社会的に許容される限度を超えるものを何という？", "a": "権利濫用"}, {"t": "ox", "q": "宇奈月温泉事件は権利濫用を認めた判例である。", "a": "○", "exp": "温泉引用管の撤去請求を権利濫用として棄却した。"}], "createdAt": 1700001003000},
+{"id": "b004", "cat": "物権", "type": "条文", "term": "民法175条（物権法定主義）【条文】", "body": "【条文】\n物権は、この法律その他の法律に定めるもののほか、創設することができない。\n\n【法律要件・効果】\n法律に定めのない物権を創設しようとしても無効（強行規定）。\n\n【趣旨】\n物権は排他的・絶対的な強力な権利であるため、根拠を法律に求める。\n\n【例外：判例が承認する慣習法上の物権】\n・流水利用権\n・温泉専用権（温泉権）\n・譲渡担保権", "tags": ["物権", "条文", "民法175条", "物権法定主義"], "quiz": [{"t": "word", "q": "物権は法律に定めるもののほか創設できないとする原則は？", "a": "物権法定主義"}], "createdAt": 1700001004000},
+{"id": "b005", "cat": "物権", "type": "用語", "term": "物権法定主義・一物一権主義", "body": "【物権法定主義】（民法175条）\n物権の種類・内容は法律で定めるものに限る原則。\n\n【民法上の物権10種】\n＜用益物権＞占有権・所有権・地上権・永小作権・地役権・入会権\n＜担保物権＞留置権・先取特権・質権・抵当権\n\n【一物一権主義】\n一個の物に同一内容の物権は一つしか成立しない。物権の排他性に由来。\n\n【物権 vs 債権】\n物権＝絶対的・排他的・誰にでも主張可能\n債権＝相対的・特定の相手方にのみ主張可能", "tags": ["物権", "用語", "物権法定主義", "一物一権主義", "民法175条"], "quiz": [{"t": "word", "q": "一個の物に同一内容の物権は一つしか成立しないという原則は？", "a": "一物一権主義"}], "createdAt": 1700001005000},
+{"id": "b006", "cat": "物権", "type": "条文", "term": "民法176条（物権変動・意思主義）【条文】", "body": "【条文】\n物権の設定及び移転は、当事者の意思表示のみによって、その効力を生ずる。\n\n【法律要件】\n物権変動を生じさせる当事者の意思表示（契約等）\n\n【法律効果】\n意思表示のみで物権変動の効力が生じる。登記・引渡し等の形式は不要。\n\n【所有権移転時期の判例】\n特定物売買：特約なき限り契約時に移転（最判昭和33年6月20日）\n不特定物売買：目的物が特定した時に移転（最判昭和35年6月24日）\n\n【176条と177条の関係】\n176条→当事者間の成立を規律\n177条→第三者への対抗を規律（役割分担）", "tags": ["物権", "条文", "民法176条", "意思主義", "物権変動"], "quiz": [{"t": "cloze", "q": "民法176条：物権の設定及び移転は、当事者の（　）のみによって、その効力を生ずる。", "a": "意思表示"}, {"t": "word", "q": "物権変動は意思表示のみで効力を生じるという立場を何という？", "a": "意思主義"}], "createdAt": 1700001006000},
+{"id": "b007", "cat": "物権", "type": "用語", "term": "意思主義・形式主義", "body": "【意思主義】（日本・フランス法流）\n物権変動は当事者の意思表示のみで効力が生じる。根拠：民法176条\n\n【形式主義】（ドイツ法流）\n物権変動には意思表示に加えて登記や引渡しなどの形式的行為も要件とする。\n\n【意思主義の問題点と解決】\n問題：意思だけで権利が移転すると外部から権利関係が見えず第三者が不利益を受けうる。\n解決：177条・178条による対抗要件主義で補完。\n\n【体系の流れ】\n176条（成立）→ 177条/178条（対抗）", "tags": ["物権", "用語", "意思主義", "形式主義", "民法176条"], "createdAt": 1700001007000},
+{"id": "b008", "cat": "物権", "type": "条文", "term": "民法177条（不動産物権変動の対抗要件）【条文】", "body": "【条文】\n不動産に関する物権の得喪及び変更は、不動産登記法その他の登記に関する法律の定めるところに従いその登記をしなければ、第三者に対抗することができない。\n\n【法律要件】\n①不動産に関する物権の得喪及び変更があること\n②登記を備えていないこと\n③相手方が「第三者」であること\n\n【法律効果】\n登記なければ物権変動を第三者に対抗できない。当事者間では登記なしに有効。\n\n【重要】\n「得喪及び変更」全般が対象（取消・解除・相続・時効も含む＝無制限説、大連判明治41年12月15日）\n日本の不動産登記には公信力なし（通説）", "tags": ["物権", "条文", "民法177条", "対抗要件", "不動産"], "quiz": [{"t": "cloze", "q": "民法177条：不動産に関する物権の得喪及び変更は、（　）をしなければ第三者に対抗できない。", "a": "登記"}, {"t": "ox", "q": "不動産登記には公信力がある。", "a": "×", "exp": "日本の不動産登記に公信力はない（通説）。"}], "createdAt": 1700001008000},
+{"id": "b009", "cat": "物権", "type": "論点", "term": "民法177条「第三者」の範囲", "body": "【定義】（大連判明治41年12月15日・制限説）\n「当事者若クハ其包括承継人ニ非スシテ不動産ニ関スル物権ノ得喪及ヒ変更ノ登記欠缺ヲ主張スル正当ノ利益ヲ有スル者」\n\n【第三者に含まれる例】\n・二重譲受人\n・不動産の差押債権者\n・賃借人\n・単純悪意者（重要：悪意でも第三者に含まれる！）\n\n【第三者に含まれない例】\n・無権利者\n・不法占拠者\n・不法行為者\n・背信的悪意者\n\n【背信的悪意者排除の判例】\n最判昭和43年8月2日（民集22巻8号1571頁）\n「甲に高値で売りつけて利益を得る目的をもつて買い受けた丙は背信的悪意者として第三者にあたらない」\n\n【鉄則】単純悪意者は第三者に含まれる！", "tags": ["物権", "民法177条", "対抗要件", "第三者", "背信的悪意者"], "quiz": [{"t": "ox", "q": "177条の「第三者」に単純悪意者は含まれない。", "a": "×", "exp": "単純悪意者は含まれる。背信的悪意者のみ排除される。"}, {"t": "word", "q": "177条で、登記欠缺を主張する正当な利益を持たず保護されない悪意者を何という？", "a": "背信的悪意者"}], "createdAt": 1700001009000},
+{"id": "b010", "cat": "物権", "type": "条文", "term": "民法178条（動産物権変動の対抗要件）【条文】", "body": "【条文】\n動産に関する物権の譲渡は、その動産の引渡しがなければ、第三者に対抗することができない。\n\n【法律要件】\n①動産に関する物権の「譲渡」\n②引渡しを備えていないこと\n③相手方が「第三者」であること\n\n【法律効果】\n引渡しがなければ動産物権の譲渡を第三者に対抗できない。\n\n【177条との対比】\n177条＝不動産・「得喪及び変更」全般・登記で公示\n178条＝動産・「譲渡」のみ・引渡しで公示\n\n【引渡しの4類型すべてが対抗要件になる】\n現実の引渡し・簡易の引渡し・占有改定・指図による占有移転　→　全部OK\n\n【例外：登録制度があるもの】\n登録自動車・船舶・特別法上の動産→引渡しが対抗要件にならない", "tags": ["物権", "条文", "民法178条", "対抗要件", "動産"], "quiz": [{"t": "cloze", "q": "民法178条：動産に関する物権の譲渡は、その動産の（　）がなければ第三者に対抗できない。", "a": "引渡し"}], "createdAt": 1700001010000},
+{"id": "b011", "cat": "物権", "type": "用語", "term": "対抗要件・公示の原則・公信の原則", "body": "【対抗要件とは】\nすでに生じている物権変動を第三者に主張するための要件。\n\n【公示の原則とは】\n物権変動は外部から認識できる形で示さなければ第三者に対抗できないという原則。\n\n【公示方法】\n不動産→登記（177条）\n動産→引渡し（178条）\n\n【公示 vs 公信】\n公示の原則：公示があれば権利変動があったと推定できる\n公信の原則：公示を信頼した者を保護する（動産では即時取得192条として実現。不動産には公信力なし）\n\n【日本の不動産登記の特徴】\n公信力なし。登記を信頼して取引しても所有権を取得できない場合がある。\n→取引安全は94条2項類推適用で図る。", "tags": ["物権", "用語", "対抗要件", "公示の原則", "公信の原則"], "createdAt": 1700001011000},
+{"id": "b012", "cat": "物権", "type": "条文", "term": "民法182条1項（現実の引渡し）【条文】", "body": "【条文】\n占有権の譲渡は、占有物の引渡しによってする。\n\n【意義】\n占有物の現実の支配（直接占有）を物理的に移転すること。最も一般的な引渡し。\n\n【例】\n店頭で商品を手渡す、鍵を渡す。\n\n【即時取得（192条）との関係】→ 成立する ✓\n\n【引渡し4類型における位置づけ】\n物の現実の移動：あり\n関与者：二者間（譲渡人↔譲受人）", "tags": ["物権", "条文", "民法182条", "引渡し", "現実の引渡し", "占有"], "quiz": [{"t": "word", "q": "占有物の現実の支配を物理的に移転する引渡しを何という？", "a": "現実の引渡し"}], "createdAt": 1700001012000},
+{"id": "b013", "cat": "物権", "type": "条文", "term": "民法182条2項（簡易の引渡し）【条文】", "body": "【条文】\n譲受人又はその代理人が現に占有物を所持する場合には、占有権の譲渡は、当事者の意思表示のみによってすることができる。\n\n【意義】\n譲受人（またはその代理人）がすでに目的物を所持している場合に、意思表示のみで占有を移転する方法。\n\n【例】\n借りていた物を買い取る（賃借人が買主になる）\n\n【即時取得（192条）との関係】→ 成立する ✓\n\n【引渡し4類型における位置づけ】\n物の現実の移動：なし（譲受人がすでに所持）\n関与者：二者間\n\n【占有改定との違い】\n簡易の引渡し：譲受人がすでに所持\n占有改定：譲渡人が引き続き所持（方向が逆）", "tags": ["物権", "条文", "民法182条", "引渡し", "簡易の引渡し", "占有"], "quiz": [{"t": "word", "q": "譲受人が既に物を所持する場合に意思表示のみで占有を移す方法を何という？", "a": "簡易の引渡し"}], "createdAt": 1700001013000},
+{"id": "b014", "cat": "物権", "type": "条文", "term": "民法183条（占有改定）【条文】", "body": "【条文】\n代理人が自己の占有物を以後本人のために占有する意思を表示したときは、本人は、これによって占有権を取得する。\n\n【意義】\n譲渡人（代理人）が物を手元に置いたまま、以後譲受人（本人）のために占有する意思を表示することで、譲受人が占有権を取得する方法。物の現実の移動を伴わない。\n\n【例】\n売却後も売主が引き続き使用する場合、譲渡担保\n\n【即時取得（192条）との関係】★最重要★\n→ 成立しない ✗\n最判昭和35年2月11日\n「占有取得の方法が外観上の占有状態に変更を来たさない占有改定にとどまるときは、民法第192条の適用はない」\n理由：外観（物の所持）に変化がないため第三者が信頼できる外観が生じない\n\n【引渡し4類型における位置づけ】\n物の現実の移動：なし（譲渡人が引き続き所持）\n関与者：二者間", "tags": ["物権", "条文", "民法183条", "引渡し", "占有改定", "即時取得"], "quiz": [{"t": "word", "q": "譲渡人が物を手元に置いたまま以後本人のため占有する意思を表示する方法は？", "a": "占有改定"}, {"t": "ox", "q": "占有改定でも即時取得は成立する。", "a": "×", "exp": "占有改定では外観に変更がなく即時取得は成立しない（最判昭35.2.11）。"}], "createdAt": 1700001014000},
+{"id": "b015", "cat": "物権", "type": "条文", "term": "民法184条（指図による占有移転）【条文】", "body": "【条文】\n代理人によって占有をする場合において、本人がその代理人に対して以後第三者のためにその物を占有することを命じ、その第三者がこれを承諾したときは、その第三者は、占有権を取得する。\n\n【意義】\n占有代理人（直接占有者）が物を占有している状態で、本人（譲渡人）が代理人に「以後は譲受人のために占有せよ」と命じ、譲受人が承諾することで占有を移転する方法。\n\n【要件】\n①占有代理人が物を占有していること\n②本人（譲渡人）が代理人に指図すること\n③第三者（譲受人）が承諾すること\n※占有代理人の承諾は不要！\n\n【例】\n倉庫業者に預けた荷物を売却する際、倉庫業者に「以後Yのために占有せよ」と命じ、Yが承諾する。\n\n【即時取得（192条）との関係】→ 成立する ✓（最判昭和57年9月7日・民集36巻8号1527頁）\n\n【引渡し4類型における位置づけ】\n物の現実の移動：なし（占有代理人が所持）\n関与者：三者間（唯一の三者間方式）\n\n【頻出ひっかけ】\n指図するのは→譲渡人（本人）\n承諾するのは→譲受人（第三者）\n※主体を入れ替えた選択肢に注意！", "tags": ["物権", "条文", "民法184条", "引渡し", "指図による占有移転", "即時取得"], "quiz": [{"t": "word", "q": "占有代理人に「以後第三者のため占有せよ」と命じ第三者が承諾する引渡し方法は？", "a": "指図による占有移転"}, {"t": "ox", "q": "指図による占有移転では即時取得が成立する。", "a": "○", "exp": "最判昭57.9.7。"}], "createdAt": 1700001015000},
+{"id": "b016", "cat": "物権", "type": "体系", "term": "引渡しの4類型【比較表】", "body": "【4類型と即時取得の可否・一覧】\n\n①現実の引渡し（182条1項）\n　物の移動：あり　即時取得：○　関与者：二者\n\n②簡易の引渡し（182条2項）\n　物の移動：なし（譲受人が所持済）　即時取得：○　関与者：二者\n\n③占有改定（183条）\n　物の移動：なし（譲渡人が所持継続）　即時取得：✗　関与者：二者\n\n④指図による占有移転（184条）\n　物の移動：なし（占有代理人が所持）　即時取得：○　関与者：三者\n\n【鉄則】\n占有改定だけが即時取得を生じさせない！\n理由：外観に変更がなく第三者が信頼できる外観が生じないから\n\n【178条の対抗要件】\n4類型すべてが178条の「引渡し」に含まれる（対抗要件としてはすべてOK）", "tags": ["物権", "引渡し", "即時取得", "比較", "民法182条", "民法183条", "民法184条"], "quiz": [{"t": "ox", "q": "引渡しの4類型のうち、即時取得が成立しないのは占有改定だけである。", "a": "○"}], "createdAt": 1700001016000},
+{"id": "s002", "cat": "物権", "type": "条文", "term": "民法192条（即時取得）【条文】", "body": "【条文】\n取引行為によって、平穏に、かつ、公然と動産の占有を始めた者は、善意であり、かつ、過失がないときは、即時にその動産について行使する権利を取得する。\n\n【趣旨】\n民法の原則「無からは無しか生じない」の例外。動産取引における取引の安全を守るための制度（公信の原則）。", "tags": ["物権", "即時取得", "条文", "民法192条"], "quiz": [{"t": "cloze", "q": "民法192条：取引行為によって、平穏に、かつ、公然と動産の占有を始めた者は、（　）であり、かつ、過失がないときは、即時にその動産について行使する権利を取得する。", "a": "善意"}], "createdAt": 1700000002000},
+{"id": "b017", "cat": "物権", "type": "条文", "term": "民法192条（即時取得）【要件・効果】", "body": "【法律要件】\n①動産であること\n②有効な取引行為による取得（相続等の包括承継・事実行為は不可）\n③前主が無権利者・無権限者であること\n④平穏・公然・善意・無過失\n⑤占有を取得したこと\n\n【法律効果】\n所有権または質権を原始取得する。前主に付着していた負担は消滅。\n\n【適用対象外】\n・金銭（最判昭和39年1月24日）\n・登録自動車（最判昭和62年4月24日）\n・有価証券（別途善意取得制度）\n・伐採前の立木（不動産）\n\n【善意・無過失の推定】\n186条1項で平穏・公然・善意が推定\n188条により無過失も推定（最判昭和41年6月9日）", "tags": ["物権", "条文", "民法192条", "即時取得", "要件"], "quiz": [{"t": "ox", "q": "即時取得は金銭にも適用される。", "a": "×", "exp": "金銭には適用されない（最判昭39.1.24）。"}, {"t": "ox", "q": "登録自動車は即時取得の対象となる。", "a": "×", "exp": "登録自動車は対象外（最判昭62.4.24）。"}], "createdAt": 1700001017000},
+{"id": "s003", "cat": "物権", "type": "論点", "term": "民法192条（即時取得）【成立要件・構造】", "body": "【3要件すべてそろうと「無から有」が生じる】\n\n① 帰責事由：X→A→Yという流れで、Xに帰責事由がある\n② 取引の安全：動産の取引行為・平穏・公然\n③ 善意・無過失：YがAを権利者だと過失なく誤信\n\n【構造図】\nX（真の権利者）→ A（無権利者）→ Y（取得者）\n\n【争いの帰趨】\nYに過失あり→Xの勝ち\nYに過失なし→Yの勝ち", "tags": ["物権", "即時取得", "要件", "民法192条"], "quiz": [{"t": "cloze", "q": "即時取得の3要件：帰責事由・取引の安全・（　）", "a": "善意・無過失"}], "createdAt": 1700000003000},
+{"id": "s004", "cat": "物権", "type": "問題", "term": "民法192条（即時取得）【参考問題】", "body": "【問題1】（S63-10-4改）\n立木法で登記された丙所有の樹木を無権利者乙から譲り受け伐採した場合、即時取得できるか？\n→ × 立木法で登記された立木は不動産。不動産には公信力なし（192条の適用なし）。\n\n【問題2】（H13-7-ア改）\n他人の山林を自分のものと誤信して立木を伐採した場合、即時取得が成立するか？\n→ × 伐採は事実行為。「取引行為」ではないので即時取得は成立しない。", "tags": ["物権", "即時取得", "参考問題", "民法192条"], "quiz": [{"t": "ox", "q": "立木法で登記された立木は即時取得できる。", "a": "×", "exp": "登記された立木は不動産扱い。192条の適用なし。"}, {"t": "ox", "q": "他人の山林と誤信して立木を伐採した場合、即時取得が成立する。", "a": "×", "exp": "伐採は事実行為で「取引行為」ではない。"}], "createdAt": 1700000004000},
+{"id": "s007", "cat": "物権", "type": "論点", "term": "即時取得が成立しない場合", "body": "【適用除外のケース】\n\n① 不動産には適用されない\n　根拠：192条に相当する規定が不動産には存在しない\n　例：立木法で登記された立木（不動産扱い）→ ×\n\n② 「取引行為」でない事実行為には適用されない\n　例：他人の山林の立木を伐採 → 事実行為 → ×\n\n③ 占有改定による取得には適用されない（最判昭和35年2月11日）\n　理由：外観上の占有状態に変更がないため\n\n【鉄則】動産の取引行為にのみ適用", "tags": ["物権", "即時取得", "例外", "民法192条"], "quiz": [{"t": "ox", "q": "即時取得は不動産にも適用される。", "a": "×", "exp": "動産の取引行為にのみ適用。"}], "createdAt": 1700000007000},
+{"id": "b018", "cat": "物権", "type": "条文", "term": "民法193条（盗品・遺失物の回復）【条文】", "body": "【条文】\n前条の場合において、占有物が盗品又は遺失物であるときは、被害者又は遺失者は、盗難又は遺失の時から二年間、占有者に対してその物の回復を請求することができる。\n\n【法律要件】\n①192条の即時取得が成立していること（前提）\n②占有物が「盗品又は遺失物」であること\n③盗難・遺失時から2年以内\n④請求権者が「被害者又は遺失者」\n⑤相手方が「占有者」\n\n【法律効果】\n被害者・遺失者は占有者に対し物の回復を請求できる（即時取得の例外）\n\n【起算点】\n「盗難又は遺失の時」が起算点（占有者が占有を始めた時ではない！）\n\n【適用外】\n詐欺・恐喝・横領など原権利者の意思に基づき占有が移転した場合は適用なし（大判明治41年10月8日）\n\n【関連：194条】\n競売・公の市場・同種物を販売する商人から善意で買い受けた場合→代価弁償が必要", "tags": ["物権", "条文", "民法193条", "盗品", "遺失物", "即時取得"], "quiz": [{"t": "cloze", "q": "民法193条：占有物が盗品又は遺失物であるときは、被害者又は遺失者は、盗難又は遺失の時から（　）間、回復を請求できる。", "a": "二年"}, {"t": "ox", "q": "193条の2年間の起算点は、占有者が占有を始めた時である。", "a": "×", "exp": "「盗難又は遺失の時」が起算点。"}], "createdAt": 1700001018000},
+{"id": "b019", "cat": "物権", "type": "用語", "term": "盗品・遺失物（用語）", "body": "【盗品】\n窃盗・強盗により占有者の意思に反して占有を奪われた物。\n→193条の適用あり\n\n【遺失物】\n窃盗・強盗以外の方法で意思によらず占有を離れた物。\n→193条の適用あり\n\n【適用なし（意思に基づく離脱）】\n詐欺・恐喝・横領など原権利者の意思に基づいて占有が移転した場合\n→193条は適用されない（大判明治41年10月8日）\n→即時取得（192条）の要件を満たせば取得者が保護される\n\n【被害者・遺失者の範囲】\n所有者に限らず、賃借人・受寄者など占有権原のある者も含む（大判昭和4年12月11日）", "tags": ["物権", "用語", "民法193条", "盗品", "遺失物"], "quiz": [{"t": "ox", "q": "詐欺・横領により占有が移転した物にも193条が適用される。", "a": "×", "exp": "意思に基づく移転には適用なし。盗品・遺失物のみ。"}], "createdAt": 1700001019000},
+{"id": "s008", "cat": "物権", "type": "条文", "term": "民法188条（権利適法推定）【条文】", "body": "【条文】\n占有者が占有物について行使する権利は、適法に有するものと推定する。\n\n【趣旨】\n占有している者はその物について正当な権利を持つと法律上推定される。\n\n【民法192条との関係】\nAが占有しているという事実 → Yが「Aは権利者」と信頼することに合理性あり（188条の推定が働く）→ Yの善意・無過失が推定されやすい（最判昭和41年6月9日）", "tags": ["物権", "占有", "条文", "民法188条"], "quiz": [{"t": "cloze", "q": "民法188条：占有者が占有物について行使する権利は、（　）に有するものと推定する。", "a": "適法"}], "createdAt": 1700000008000},
+{"id": "b020", "cat": "相続", "type": "条文", "term": "民法896条（相続の一般的効力）【条文】", "body": "【条文】\n相続人は、相続開始の時から、被相続人の財産に属した一切の権利義務を承継する。ただし、被相続人の一身に専属したものは、この限りでない。\n\n【法律要件】\n相続の開始（被相続人の死亡）\n\n【法律効果】\n相続人は相続開始時から被相続人の財産上の一切の権利義務を包括承継する。\n一身専属権は承継されない。\n\n【一身専属権の例】\n扶養請求権、生活保護受給権、委任契約上の地位（653条）\n\n【相続と対抗要件（177条との関係）】\n法定相続分の範囲内→登記なしに対抗可\n法定相続分を超える部分→登記等の対抗要件を備えなければ第三者に対抗できない（899条の2）", "tags": ["相続", "条文", "民法896条", "包括承継", "一身専属権"], "quiz": [{"t": "cloze", "q": "民法896条：相続人は、相続開始の時から、被相続人の財産に属した（　）の権利義務を承継する。", "a": "一切"}, {"t": "word", "q": "その人個人にのみ帰属し相続されない権利を何という？", "a": "一身専属権"}], "createdAt": 1700001020000},
+{"id": "b021", "cat": "相続", "type": "用語", "term": "包括承継・特定承継", "body": "【包括承継（一般承継）】\n個々の権利義務を個別にではなく一括して承継すること。\n例：相続（896条）、合併\n→個別の移転行為が不要\n\n【特定承継】\n個々の権利義務を個別の行為（売買・贈与等）で承継すること。\n例：売買、贈与\n→個別の移転行為が必要\n\n【承継と対抗要件】\n包括承継人は177条の「第三者」に含まれない。\nただし法定相続分超過部分の取得は対抗要件が必要（899条の2）。\n\n【占有権も相続される】\n相続人は被相続人の占有を承継できる（187条）。", "tags": ["物権", "相続", "用語", "包括承継", "特定承継", "民法896条"], "quiz": [{"t": "word", "q": "個々の権利義務を一括して承継すること（相続・合併）を何という？", "a": "包括承継（一般承継）"}], "createdAt": 1700001021000},
+{"id": "b022", "cat": "物権", "type": "体系", "term": "物権変動の体系【全体構造】", "body": "【体系の流れ】\n175条（物権法定主義）\n↓\n176条（意思主義：契約のみで物権変動）\n↓\n177条・178条（対抗要件主義：公示なければ第三者に対抗不可）\n↓\n182〜184条（引渡しの4類型：対抗要件の具体的方法）\n↓\n192条（公信の原則：動産の即時取得）\n↓\n193条（盗品・遺失物：即時取得の例外）\n\n【二段構えの構造】\n①成立（176条）：意思表示のみでOK\n②対抗（177/178条）：公示が必要\n→矛盾ではなく役割分担\n\n【不動産 vs 動産の対比】\n不動産：登記（公信力なし）・177条\n動産　：引渡し（公信力あり＝192条）・178条", "tags": ["物権", "体系", "物権変動", "対抗要件", "即時取得"], "createdAt": 1700001022000},
+{"id": "c001", "cat": "総則", "type": "条文", "term": "民法3条の2（意思能力）【条文】", "body": "【条文】\n法律行為の当事者が意思表示をした時に意思能力を有しなかったときは、その法律行為は、無効とする。\n\n【法律要件】\n①法律行為時に②意思能力を有しなかったこと\n\n【法律効果】\n絶対的無効（追認不可）\n\n【意思能力とは】\n自己の行為の法的な結果を認識・判断できる能力。おおむね7〜10歳程度の判断力が基準。幼児・重度の認知症・泥酔状態などは欠如する。\n\n【改正のポイント】\n平成29年改正で新設（従来は大判明治38年5月11日の判例法理のみ）。\n\n【5条との違い】\n意思能力：個別的・実質的判断\n行為能力（5条）：年齢による画一的・形式的保護\n\n【返還範囲】\n意思無能力無効に基づく返還は現存利益に限定（121条の2第3項）", "tags": ["総則", "条文", "民法3条の2", "意思能力", "無効"], "quiz": [{"t": "word", "q": "自己の行為の法的結果を認識・判断できる能力を何という？", "a": "意思能力"}, {"t": "ox", "q": "意思能力を欠く者の法律行為は取り消すことができる。", "a": "×", "exp": "無効である（3条の2）。取消しではない。"}], "createdAt": 1700002001000},
+{"id": "c002", "cat": "総則", "type": "条文", "term": "民法5条（未成年者の法律行為）【条文】", "body": "【条文】\n①未成年者が法律行為をするには、その法定代理人の同意を得なければならない。ただし、単に権利を得、又は義務を免れる法律行為については、この限りでない。\n②前項の規定に反する法律行為は、取り消すことができる。\n③法定代理人が目的を定めて処分を許した財産は、その目的の範囲内において、未成年者が自由に処分することができる。目的を定めないで処分を許した財産を処分するときも、同様とする。\n\n【未成年者＝18歳未満】（4条、令和4年4月1日から成年年齢18歳）\n\n【単独で確定的に有効な行為の例外】\n①単に権利を得・義務を免れる行為\n②目的を定めて処分を許した財産（お使い）\n③目的を定めない処分許可財産（小遣い）\n④許可された営業（6条）\n\n【詐術を用いた場合】取消し不可（21条）", "tags": ["総則", "条文", "民法5条", "未成年者", "行為能力", "取消し"], "quiz": [{"t": "ox", "q": "未成年者が単に権利を得る法律行為には法定代理人の同意が必要である。", "a": "×", "exp": "単に権利を得・義務を免れる行為は同意不要（5条1項但書）。"}], "createdAt": 1700002002000},
+{"id": "c003", "cat": "総則", "type": "条文", "term": "民法90条（公序良俗）【条文】", "body": "【条文】\n公の秩序又は善良の風俗に反する法律行為は、無効とする。\n\n【法律要件】\n公序良俗違反の法律行為\n\n【法律効果】\n絶対的無効（追認不可）\n\n【平成29年改正のポイント】\n旧「事項を目的とする」を削除→内容だけでなく過程・動機・目的も含めて広く考慮することを明確化\n\n【典型的な違反類型】\n・暴利行為（窮迫・軽率・無経験を利用した著しく過当な利益）\n・性的不倫契約・妾契約\n・人身の自由を極度に制限する契約\n・賭博・射倖行為（賭博資金と知る金銭消費貸借も無効）\n・犯罪関与\n\n【代表判例】\n大判昭9.5.1（暴利行為）\n最判昭61.9.4（賭博資金と知ってする消費貸借）\n\n【契約自由（521条）との関係】\n521条2項「法令の制限内において内容を自由に決定」の制限として機能", "tags": ["総則", "条文", "民法90条", "公序良俗", "無効"], "quiz": [{"t": "cloze", "q": "民法90条：公の秩序又は善良の風俗に反する法律行為は、（　）とする。", "a": "無効"}, {"t": "word", "q": "他人の窮迫・軽率・無経験を利用して著しく過当な利益を得る行為を何という？", "a": "暴利行為"}], "createdAt": 1700002003000},
+{"id": "c004", "cat": "総則", "type": "条文", "term": "民法93条（心裡留保）【条文】", "body": "【条文】\n①意思表示は、表意者がその真意ではないことを知ってしたときであっても、そのためにその効力を妨げられない。ただし、相手方がその意思表示が表意者の真意ではないことを知り、又は知ることができたときは、その意思表示は、無効とする。\n②前項ただし書の規定による意思表示の無効は、善意の第三者に対抗することができない。\n\n【意義】\n冗談・芝居など、表意者が真意でないと知りながらする意思表示。\n\n【原則・例外】\n原則：有効（相手方保護）\n例外：相手方が悪意または有過失→無効\n\n【第三者保護（2項・平成29年改正で新設）】\n善意の第三者には無効を対抗できない（無過失不要）\n\n【94条との違い】\n93条：単独の虚偽（相手方は欺かれていない）\n94条：相手方との通謀あり", "tags": ["総則", "条文", "民法93条", "心裡留保", "意思表示"], "quiz": [{"t": "word", "q": "表意者が真意でないと知りながらする意思表示を何という？", "a": "心裡留保"}, {"t": "ox", "q": "心裡留保は原則として無効である。", "a": "×", "exp": "原則有効。相手方が悪意・有過失なら無効（93条但書）。"}], "createdAt": 1700002004000},
+{"id": "c005", "cat": "総則", "type": "条文", "term": "民法94条（虚偽表示）【条文・基本】", "body": "【条文】\n①相手方と通じてした虚偽の意思表示は、無効とする。\n②前項の規定による意思表示の無効は、善意の第三者に対抗することができない。\n\n【法律要件】\n①虚偽の意思表示②相手方との通謀\n\n【法律効果】\n当事者間では無効。善意の第三者には無効を対抗できない（2項）。\n\n【第三者の要件】\n当事者・包括承継人以外で虚偽表示に基づき新たに利害関係に入った者。\n・善意で足りる（無過失不要）\n・対抗要件の具備は不要（最判昭44.5.27）\n例：仮装譲受人からの不動産買主、差押債権者\n\n【93条との対比】\n93条：単独虚偽・相手方が悪意または有過失で無効\n94条：通謀虚偽・絶対無効（ただし善意第三者保護）", "tags": ["総則", "条文", "民法94条", "虚偽表示", "通謀"], "quiz": [{"t": "word", "q": "相手方と通じてした虚偽の意思表示を何という？", "a": "虚偽表示（通謀虚偽表示）"}, {"t": "ox", "q": "94条の第三者が保護されるには善意かつ無過失が必要である。", "a": "×", "exp": "善意で足り、無過失は不要。"}], "createdAt": 1700002005000},
+{"id": "c006", "cat": "総則", "type": "論点", "term": "民法94条2項類推適用【権利外観法理】", "body": "【意義】\n通謀がない場合でも、虚偽の外観を信頼した善意の第三者を保護する判例法理。\n\n【類推適用の3要件】\n①虚偽の外観の存在\n②本人の帰責性（外観作出への関与・黙認等）\n③第三者の信頼（外観を信頼して取引）\n\n【判例の発展】\n最判昭29.8.20：乙への移転登記を丙が承認した事案で類推\n最判昭45.9.22：不実登記を黙認し存続させた事案で類推\n最判平18.2.23（最重要）：\n本人の帰責性が低い→第三者に「善意無過失」を要求\n本人の帰責性が高い→第三者に「善意」のみで足りる\n＝94条2項・110条の類推適用で相関的判断\n\n【日本における意義】\n不動産登記に公信力がない日本で取引安全を確保する中心的判例法理", "tags": ["総則", "民法94条", "虚偽表示", "類推適用", "権利外観法理", "判例"], "quiz": [{"t": "ox", "q": "94条2項類推適用では、本人の帰責性が低いほど第三者に重い主観要件（無過失）が要求される。", "a": "○", "exp": "最判平18.2.23。94条2項・110条の類推。"}], "createdAt": 1700002006000},
+{"id": "c007", "cat": "総則", "type": "条文", "term": "民法95条（錯誤）【条文・類型】", "body": "【条文・1項】\n意思表示は、次に掲げる錯誤に基づくものであって、その錯誤が法律行為の目的及び取引上の社会通念に照らして重要なものであるときは、取り消すことができる。\n一 意思表示に対応する意思を欠く錯誤（表示の錯誤）\n二 表意者が法律行為の基礎とした事情についてのその認識が真実に反する錯誤（動機の錯誤）\n\n【2項】\n前項第二号の取消しは、その事情が法律行為の基礎とされていることが表示されていたときに限り、することができる。\n\n【2類型の比較】\n表示の錯誤（1号）：意思と表示の不一致。例：100万円と書くつもりが1000万円と書いた\n動機の錯誤（2号）：意思と表示は一致するが前提事情が誤り。例：値上がりすると思って土地を買ったが値下がりした\n動機の錯誤は「表示」が必要（2項）\n\n【平成29年改正の重要変更】\n・効果：「無効」→「取消し」\n・類型を1号・2号に明文化\n・第三者保護規定（4項）を新設", "tags": ["総則", "条文", "民法95条", "錯誤", "取消し", "動機の錯誤"], "quiz": [{"t": "word", "q": "意思形成の前提事情の認識が真実に反する錯誤を何という？", "a": "動機の錯誤（基礎事情の錯誤）"}, {"t": "ox", "q": "動機の錯誤は、その事情が表示されていなくても取消しできる。", "a": "×", "exp": "基礎事情として表示されていた場合に限る（95条2項）。"}], "createdAt": 1700002007000},
+{"id": "c008", "cat": "総則", "type": "論点", "term": "民法95条【要件・第三者保護・重過失】", "body": "【取消しの要件】\n①1号または2号の錯誤\n②法律行為の目的・取引上の社会通念に照らした重要性\n③（2号の場合）基礎事情の表示\n\n【重過失による制限（3項）】\n表意者に重大な過失があれば原則取消し不可。\n例外（取消せる）：\n・相手方が表意者の錯誤を知り、または重過失で知らなかったとき（3項1号）\n・相手方が同一の錯誤に陥っていたとき（共通錯誤・3項2号）\n\n【第三者保護（4項・平成29年改正新設）】\n錯誤取消しは善意無過失の第三者に対抗不可\n※94条2項（善意のみ）・96条3項（善意無過失）と比較\n\n【重要判例】\n動機が表示されなければ要素の錯誤とならない＝最判昭29.11.26\n離婚財産分与の課税負担の錯誤は動機が表示されていれば取消可＝最判平元.9.14", "tags": ["総則", "民法95条", "錯誤", "重過失", "第三者保護"], "quiz": [{"t": "ox", "q": "表意者に重過失があれば、相手方が同一の錯誤に陥っていても取消しできない。", "a": "×", "exp": "共通錯誤の場合は取消し可（95条3項2号）。"}], "createdAt": 1700002008000},
+{"id": "c009", "cat": "総則", "type": "条文", "term": "民法96条1項（詐欺・強迫）【条文】", "body": "【条文】\n①詐欺又は強迫による意思表示は、取り消すことができる。\n②相手方に対する意思表示について第三者が詐欺を行った場合においては、相手方がその事実を知り、又は知ることができたときに限り、その意思表示を取り消すことができる。\n③前二項の規定による詐欺による意思表示の取消しは、善意でかつ過失がない第三者に対抗することができない。\n\n【詐欺の要件】\n①欺罔行為②錯誤に陥り③意思表示\n\n【強迫の要件】\n①強迫行為②畏怖して③意思表示\n（選択の自由を完全に失う必要はない＝最判昭33.7.1）\n\n【詐欺 vs 強迫の第三者保護の差】\n詐欺取消し：善意無過失の第三者に対抗不可（3項）→表意者にも落ち度\n強迫取消し：善意無過失の第三者にも対抗可→被害者に落ち度なし\n\n【平成29年改正】\n2項：第三者詐欺の場合、相手方の有過失でも取消し可に拡大", "tags": ["総則", "条文", "民法96条", "詐欺", "強迫", "取消し"], "quiz": [{"t": "ox", "q": "強迫による取消しは善意無過失の第三者にも対抗できる。", "a": "○", "exp": "強迫は被害者に落ち度がないため。詐欺は対抗不可。"}, {"t": "ox", "q": "第三者による詐欺の場合、相手方が善意無過失でも取消しできる。", "a": "×", "exp": "相手方が悪意または有過失のときに限る（96条2項）。"}], "createdAt": 1700002009000},
+{"id": "c010", "cat": "総則", "type": "体系", "term": "意思表示の瑕疵【比較表】", "body": "【93〜96条の横断整理】\n\n93条（心裡留保）\n　効果：原則有効、相手方悪意・有過失なら無効\n　第三者：善意なら対抗不可（2項）\n\n94条（虚偽表示）\n　効果：無効（絶対）\n　第三者：善意なら対抗不可（無過失不要）\n\n95条（錯誤）\n　効果：取消し可\n　第三者：善意無過失なら対抗不可（4項）\n\n96条（詐欺）\n　効果：取消し可\n　第三者：善意無過失なら対抗不可（3項）\n　※強迫は第三者保護なし\n\n【第三者の主観要件まとめ】\n93条：善意のみ\n94条：善意のみ（無過失不要）★最も緩い\n95条：善意無過失\n96条（詐欺）：善意無過失", "tags": ["総則", "意思表示", "比較", "取消し", "無効"], "createdAt": 1700002010000},
+{"id": "c011", "cat": "総則", "type": "条文", "term": "民法121条（取消しの効果）・121条の2（原状回復義務）", "body": "【121条・条文】\n取り消された行為は、初めから無効であったものとみなす。\n→遡及的無効\n\n【121条の2・条文（平成29年改正新設）】\n1項：無効な行為に基づく給付を受けた者は相手方を原状に復させる義務を負う。\n2項：無効な無償行為の給付受領時善意の者は現存利益のみ返還。\n3項：意思無能力者・制限行為能力者は現存利益のみ返還。\n\n【703条・704条との関係】\n121条の2は703条・704条の特則。\n善意悪意を問わず原則として完全な原状回復義務（現物返還・不能なら価額償還）。\n→強迫被害者（悪意の受益者）も704条の利息付返還にならない！\n\n【現存利益の例】\nあり：生活費・借金返済に充当した場合（負担を免れた利益が残る）\nなし：遊興費に浪費した場合（最判昭50.6.27）\n\n【相互返還と同時履行】\n双方の返還義務は同時履行関係（533条類推、最判昭47.9.7）", "tags": ["総則", "条文", "民法121条", "民法121条の2", "取消し", "原状回復", "不当利得"], "quiz": [{"t": "cloze", "q": "民法121条：取り消された行為は、（　）から無効であったものとみなす。", "a": "初め"}, {"t": "ox", "q": "制限行為能力者の原状回復義務は現存利益に限られる。", "a": "○", "exp": "121条の2第3項。"}], "createdAt": 1700002011000},
+{"id": "c012", "cat": "物権", "type": "条文", "term": "民法369条（抵当権）【条文】", "body": "【条文】\n①抵当権者は、債務者又は第三者が占有を移転しないで債務の担保に供した不動産について、他の債権者に先立って自己の債権の弁済を受ける権利を有する。\n②地上権及び永小作権も、抵当権の目的とすることができる。この場合においては、この章の規定を準用する。\n\n【性質】\n約定担保物権・非占有担保物権\n付従性・随伴性・不可分性・物上代位性・優先弁済的効力・追及効\n\n【重要用語】\n抵当権設定者：目的物を占有・使用収益を継続できる（質権との最大の違い）\n物上保証人：債務者以外の第三者が自己の不動産を担保に供した者\n優先弁済：他の一般債権者より先に弁済を受ける\n\n【登記との関係】\n177条の登記で第三者に対抗。順位は登記の前後（373条）\n\n【質権との対比】\n抵当権：非占有担保、不動産・地上権・永小作権\n質権：占有担保、動産・不動産・権利", "tags": ["物権", "担保物権", "条文", "民法369条", "抵当権"], "quiz": [{"t": "cloze", "q": "民法369条：抵当権者は、債務者又は第三者が（　）を移転しないで担保に供した不動産について、他の債権者に先立って弁済を受ける権利を有する。", "a": "占有"}, {"t": "ox", "q": "抵当権は占有を移転する担保物権である。", "a": "×", "exp": "非占有担保物権。設定者が使用収益を続ける。"}], "createdAt": 1700002012000},
+{"id": "c013", "cat": "債権", "type": "条文", "term": "民法412条の2（履行不能）【条文】", "body": "【条文】\n①債務の履行が契約その他の債務の発生原因及び取引上の社会通念に照らして不能であるときは、債権者は、その債務の履行を請求することができない。\n②契約に基づく債務の履行がその契約の成立の時に不能であったことは、第415条の規定によりその履行の不能によって生じた損害の賠償を請求することを妨げない。\n\n【平成29年改正で新設】\n・物理的不能だけでなく、受ける利益に比して過大な費用を要する場合も履行不能\n・原始的不能（契約成立時から不能）でも契約は有効（2項）→415条の損害賠償請求可\n　（従来の「原始的不能→契約無効」理論を変更）\n\n【関連条文の連鎖】\n412条の2（履行不能の確認）\n↓\n415条（損害賠償請求）\n536条（危険負担）\n542条（無催告解除）", "tags": ["債権", "条文", "民法412条の2", "履行不能", "債務不履行"], "quiz": [{"t": "ox", "q": "原始的不能の契約は無効である。", "a": "×", "exp": "改正後は有効。415条で損害賠償請求可（412条の2第2項）。"}], "createdAt": 1700002013000},
+{"id": "c014", "cat": "債権", "type": "条文", "term": "民法415条（債務不履行による損害賠償）【条文】", "body": "【条文】\n①債務者がその債務の本旨に従った履行をしないとき又は債務の履行が不能であるときは、債権者は、これによって生じた損害の賠償を請求することができる。ただし、その債務の不履行が契約その他の債務の発生原因及び取引上の社会通念に照らして債務者の責めに帰することができない事由によるものであるときは、この限りでない。\n②…履行に代わる損害賠償（填補賠償）を請求できる場合：\n一 債務の履行が不能であるとき\n二 債務者が履行を拒絶する意思を明確に表示したとき\n三 契約が解除され、又は解除権が発生したとき", "tags": ["債権", "条文", "民法415条", "債務不履行", "損害賠償"], "quiz": [{"t": "cloze", "q": "民法415条：債務者がその債務の本旨に従った履行をしないとき…債権者は、これによって生じた（　）の賠償を請求できる。", "a": "損害"}], "createdAt": 1700002014000},
+{"id": "c015", "cat": "債権", "type": "論点", "term": "民法415条【債務不履行の類型・要件】", "body": "【債務不履行の3類型（＋履行拒絶）】\n\n①履行遅滞\n　要件：履行可能なのに履行期を徒過\n　遅延損害金（419条）・解除（541条）・損害賠償\n\n②履行不能（412条の2）\n　要件：履行が不能\n　填補賠償（415条2項1号）・解除（542条）\n\n③不完全履行\n　要件：履行はされたが債務の本旨に従わない（不良品等）\n　追完請求（562条）・代金減額（563条）・損害賠償\n\n④履行拒絶（415条2項2号）\n　履行拒絶の意思を明確に表示\n\n【損害賠償の要件】\n①債務不履行の事実\n②損害の発生\n③因果関係（債務不履行→損害）\n免責事由：④債務者の帰責事由がないこと（1項ただし書）\n→帰責事由がないことの立証責任は債務者側\n\n【709条との違い】\n不法行為：被害者が故意・過失を立証\n債務不履行：債務者が帰責事由なしを立証（立証負担が逆）", "tags": ["債権", "民法415条", "債務不履行", "類型", "要件", "損害賠償"], "quiz": [{"t": "ox", "q": "債務不履行の損害賠償では、債権者が債務者の帰責事由を立証しなければならない。", "a": "×", "exp": "帰責事由がないことの立証責任は債務者側。"}], "createdAt": 1700002015000},
+{"id": "c016", "cat": "債権", "type": "条文", "term": "民法422条の2（代償請求権）【条文】", "body": "【条文】\n債務者が、その債務の履行が不能となったのと同一の原因により債務の目的物の代償である権利又は利益を取得したときは、債権者は、その受けた損害の額の限度において、債務者に対し、その権利の移転又はその利益の償還を請求することができる。\n\n【平成29年改正で新設】\n最判昭41.12.23の判例法理を明文化。\n\n【要件】\n①履行不能\n②履行不能と同一原因による代償の取得（保険金・損害賠償請求権など）\n③債権者の損害\n※債務者の帰責事由の有無を問わない\n\n【効果】\n債権者は被った損害の限度で代償（保険金等）の移転・償還を請求できる。\n\n【典型例】\n目的物が第三者の不法行為で滅失\n→債務者（売主）が損害賠償請求権を取得\n→買主は代償請求権を行使し損害賠償請求権の移転を求められる", "tags": ["債権", "条文", "民法422条の2", "代償請求権", "履行不能"], "quiz": [{"t": "word", "q": "履行不能と同一原因で債務者が得た代償の移転を請求できる権利を何という？", "a": "代償請求権"}], "createdAt": 1700002016000},
+{"id": "c017", "cat": "債権", "type": "条文", "term": "民法521条（契約の自由）【条文】", "body": "【条文】\n①何人も、法令に特別の定めがある場合を除き、契約をするかどうかを自由に決定することができる。\n②契約の当事者は、法令の制限内において、契約の内容を自由に決定することができる。\n\n【平成29年改正で新設】契約自由の原則を明文化。\n\n【契約自由の4類型】\n①締結の自由（1項）\n②相手方選択の自由（1項に含む）\n③内容の自由（2項）\n④方式の自由（522条2項）\n\n【制限（90条との関係）】\n「法令の制限内」（2項）という留保あり。\n代表的制限：90条（公序良俗）・91条（強行規定）\n→暴利行為・人権侵害的契約・反社会的契約は無効\n\n【締結・相手方選択の自由の例外】\n医師の応召義務（医師法19条）\n水道事業者の給水義務\nNHK受信契約義務（放送法64条）", "tags": ["債権", "条文", "民法521条", "契約自由", "私的自治"], "quiz": [{"t": "word", "q": "契約をするかどうか・内容を自由に決められる原則を何という？", "a": "契約自由の原則"}], "createdAt": 1700002017000},
+{"id": "c018", "cat": "債権", "type": "条文", "term": "民法555条（売買）【条文】", "body": "【条文】\n売買は、当事者の一方がある財産権を相手方に移転することを約し、相手方がこれに対してその代金を支払うことを約することによって、その効力を生ずる。\n\n【性質】\n有償・双務・諾成・不要式契約\n口頭の合意でも成立（書面不要）\n\n【法律要件】\n①財産権移転の約束＋②代金支払の約束の合致\n\n【法律効果】\n売主の財産権移転義務＋買主の代金支払義務（同時履行関係・533条・573条）\n\n【重要論点】\n他人物売買も有効（561条）\n契約不適合責任（562〜564条）：追完請求・代金減額・損害賠償・解除\n\n【587条（消費貸借）との対比】\n売買：諾成契約（約束のみで成立）\n消費貸借：要物契約（目的物の交付で成立）", "tags": ["債権", "条文", "民法555条", "売買", "契約"], "quiz": [{"t": "ox", "q": "売買契約は書面がなければ成立しない。", "a": "×", "exp": "諾成・不要式契約。口頭でも成立。"}, {"t": "ox", "q": "他人物売買は無効である。", "a": "×", "exp": "他人物売買も有効（561条）。"}], "createdAt": 1700002018000},
+{"id": "c019", "cat": "債権", "type": "条文", "term": "民法587条（消費貸借）【条文】", "body": "【条文】\n消費貸借は、当事者の一方が種類、品質及び数量の同じ物をもって返還をすることを約して相手方から金銭その他の物を受け取ることによって、その効力を生ずる。\n\n【性質】\n要物契約（目的物の交付で成立）・原則無利息・片務契約\n\n【平成29年改正：587条の2（書面でする消費貸借）を新設】\n書面（電磁的記録を含む）でする消費貸借は諾成契約として成立。\n・借主は目的物受領まで解除可能（587条の2第2項）\n・当事者の破産で失効（同3項）\n\n【555条（売買）との対比】\n売買：諾成契約\n消費貸借：要物契約（原則）\n\n【利息】\n特約がなければ無利息（589条）。特約があれば目的物受領日から発生。\n\n【90条・708条との関係】\n賭博資金など不法な目的の消費貸借は無効（最判昭61.9.4）", "tags": ["債権", "条文", "民法587条", "消費貸借", "要物契約"], "quiz": [{"t": "ox", "q": "消費貸借は原則として目的物の交付がなければ成立しない。", "a": "○", "exp": "要物契約。ただし書面でする場合は諾成（587条の2）。"}], "createdAt": 1700002019000},
+{"id": "c020", "cat": "債権", "type": "条文", "term": "民法703条（不当利得の返還義務）【条文】", "body": "【条文】\n法律上の原因なく他人の財産又は労務によって利益を受け、そのために他人に損失を及ぼした者（受益者）は、その利益の存する限度において、これを返還する義務を負う。\n\n【法律要件】\n①受益②損失③受益と損失の因果関係④法律上の原因がないこと\n\n【法律効果】\n現存利益（その利益の存する限度）の返還\n\n【現存利益の判断】\nあり：生活費・借金返済に充当（負担を免れた分が残る）\nなし：遊興費に浪費（残っていない）\n\n【121条の2との関係】\n無効・取消しの巻き戻しには121条の2が特則として優先。\n703条は侵害利得（他人の財産の無断利用）等に適用。\n\n【重要判例】\n騙取金による弁済：社会通念上の連結があれば因果関係肯定（最判昭49.9.26）", "tags": ["債権", "条文", "民法703条", "不当利得", "現存利益"], "quiz": [{"t": "cloze", "q": "民法703条：法律上の原因なく利益を受けた者は、その利益の（　）する限度において返還義務を負う。", "a": "存"}, {"t": "word", "q": "法律上の原因なく利益を受け他人に損失を及ぼすことを何という？", "a": "不当利得"}], "createdAt": 1700002020000},
+{"id": "c021", "cat": "債権", "type": "条文", "term": "民法704条（悪意の受益者）【条文】", "body": "【条文】\n悪意の受益者は、その受けた利益に利息を付して返還しなければならない。この場合において、なお損害があるときは、その賠償の責任を負う。\n\n【要件・効果】\n悪意（法律上の原因がないことを知っている）の受益者：\n①受けた利益全部に利息を付して返還\n②なお損害があれば賠償責任\n\n【703条との対比】\n善意の受益者（703条）：現存利益のみ返還\n悪意の受益者（704条）：全利益＋利息＋損害賠償\n\n【121条の2との関係】\n無効・取消しの場面では121条の2が特則として優先。\n善意悪意を問わず原則として完全な原状回復義務。\n→強迫被害者が「悪意の受益者」として704条適用される不合理を回避。\n\n【判例】\n704条後段の損害賠償責任は不法行為責任の注意的規定（最判平21.11.9）\n過払金返還請求が典型的適用場面", "tags": ["債権", "条文", "民法704条", "不当利得", "悪意の受益者"], "quiz": [{"t": "ox", "q": "悪意の受益者は受けた利益に利息を付して返還しなければならない。", "a": "○", "exp": "704条。"}], "createdAt": 1700002021000},
+{"id": "c022", "cat": "債権", "type": "条文", "term": "民法709条（不法行為）【条文】", "body": "【条文】\n故意又は過失によって他人の権利又は法律上保護される利益を侵害した者は、これによって生じた損害を賠償する責任を負う。\n\n【法律効果】\n損害賠償責任\n\n【415条（債務不履行）との根本的違い】\n709条：契約関係がない者間の責任（不法行為）\n415条：契約関係がある者間の責任（債務不履行）\n医療過誤等では両者が競合（請求権競合）\n\n【消滅時効（724条）】\n被害者が損害・加害者を知った時から3年\n不法行為時から20年（除斥期間）", "tags": ["債権", "条文", "民法709条", "不法行為", "損害賠償"], "quiz": [{"t": "cloze", "q": "民法709条：（　）又は過失によって他人の権利又は法律上保護される利益を侵害した者は、これによって生じた損害を賠償する責任を負う。", "a": "故意"}], "createdAt": 1700002022000},
+{"id": "c023", "cat": "債権", "type": "論点", "term": "民法709条【不法行為の成立要件】", "body": "【5つの成立要件（立証責任：被害者側）】\n\n①故意・過失\n　故意：結果を認識・認容（未必の故意を含む）\n　過失：結果回避義務違反（客観的・過失の客観化）\n\n②権利・法律上保護される利益の侵害（違法性）\n　「権利」侵害から「利益」侵害へ拡大（大学湯事件・大判大14.11.28）\n　相関関係理論：侵害利益の重大性と行為態様の相関で違法性判断\n\n③損害の発生\n　財産的損害＋精神的損害（慰謝料・710条・711条）\n\n④因果関係\n　事実的因果関係（あれなければこれなし）＋相当因果関係（416条類推）\n\n⑤責任能力（明文外）\n　712条・713条。おおむね12歳前後が境界（個別判断）\n\n【違法性阻却事由（明文外）】\n正当防衛・緊急避難（720条）\n\n【立証責任：債務不履行との逆転】\n不法行為：①〜④を被害者が立証\n債務不履行（415条）：債務者が帰責事由なしを立証", "tags": ["債権", "民法709条", "不法行為", "成立要件", "故意", "過失", "因果関係"], "quiz": [{"t": "ox", "q": "不法行為の成立要件のうち、過失の立証責任は加害者側にある。", "a": "×", "exp": "被害者が故意・過失を立証する（債務不履行と逆）。"}], "createdAt": 1700002023000},
+{"id": "c024", "cat": "総則", "type": "体系", "term": "民法の体系【総則・債権の全体構造】", "body": "【意思表示の瑕疵と救済の体系】\n93条（心裡留保）→有効/無効\n94条（虚偽表示）→無効＋類推適用\n95条（錯誤）→取消し\n96条（詐欺・強迫）→取消し\n取消しの効果：121条（遡及的無効）→121条の2（原状回復）\n\n【契約の自由と制限】\n521条（契約自由の原則）\n↓制限↓\n90条（公序良俗・無効）\n91条（強行規定）\n消費者契約法・労基法等の個別規制\n\n【債務不履行の救済体系】\n415条（損害賠償）← 412条の2（履行不能確認）\n422条の2（代償請求権）\n解除（541〜543条）\n\n【法定債権の体系】\n703条（不当利得・善意）\n704条（不当利得・悪意）\n709条（不法行為）\n\n【キーワード対比：請求権競合】\n債務不履行責任と不法行為責任は併存可能\n（医療過誤等で両方請求）", "tags": ["体系", "総則", "債権", "意思表示", "債務不履行", "不法行為", "不当利得"], "createdAt": 1700002024000},
+{"id": "t001", "cat": "民法の本質", "type": "用語", "term": "物権", "body": "【定義】\n物を直接に支配し、利益を享受する権利。\n\n【4つの性質】\n①直接性：他人の行為を介さず物から利益を得られる\n②絶対性：誰に対しても主張できる（対世効）\n③排他性：同一の物に同一内容の物権は1つだけ（一物一権主義）\n④優先性：債権に優先する\n\n【債権との対比】\n物権＝物に対する支配権・絶対権\n債権＝人に対する請求権・相対権\n\n【具体例】\n所有権、占有権、地上権、抵当権など（民法上10種）", "tags": ["物権", "用語", "基本概念", "絶対権"], "quiz": [{"t": "word", "q": "物を直接に支配し利益を享受する、誰に対しても主張できる権利を何という？", "a": "物権"}, {"t": "ox", "q": "物権は特定の人に対してのみ主張できる相対的な権利である。", "a": "×", "exp": "物権は誰に対しても主張できる絶対権。相対権は債権。"}], "createdAt": 1700003000000},
+{"id": "t002", "cat": "民法の本質", "type": "用語", "term": "債権", "body": "【定義】\n特定の人（債務者）に対して、一定の行為（給付）を請求できる権利。\n\n【性質】\n①相対性：特定の債務者にのみ主張できる（対人効）\n②非排他性：両立しない同一内容の債権も複数成立しうる\n　例：同じ部屋を複数人に二重に貸す契約も両方有効\n③物権に劣後する\n\n【物権との対比】\n債権＝人に対する請求権・相対権\n物権＝物に対する支配権・絶対権\n\n【「売買は賃貸借を破る」】\n賃借権（債権）は新所有者に対抗できないのが原則（借地借家法で修正）", "tags": ["債権", "用語", "基本概念", "相対権"], "quiz": [{"t": "word", "q": "特定の人に対して一定の行為を請求できる権利を何という？", "a": "債権"}, {"t": "ox", "q": "同じ部屋を複数人に貸す契約は、債権の性質上どちらも有効に成立しうる。", "a": "○", "exp": "債権には排他性がないため両立しない債権も成立する。"}], "createdAt": 1700003001000},
+{"id": "t003", "cat": "債権", "type": "用語", "term": "債務", "body": "【定義】\n特定の人（債権者）に対して、一定の行為（給付）をしなければならない義務。債権の裏返し。\n\n【債権と債務の関係】\n同じ法律関係を…\n債権者の側から見る→債権\n債務者の側から見る→債務\n\n【債務の種類】\n・作為債務：積極的に行為する（物の引渡しなど）\n・不作為債務：一定の行為をしない\n・与える債務：権利や物を移転する（売主の引渡義務）\n・なす債務：債務者の行為そのもの（労働の提供など）\n\n【債務不履行】\n本旨に従った履行をしないこと→損害賠償（415条）", "tags": ["債権", "用語", "基本概念", "債務"], "quiz": [{"t": "word", "q": "特定の債権者に対して一定の給付をしなければならない義務を何という？", "a": "債務"}, {"t": "ox", "q": "債権と債務は同じ法律関係を別の立場から見たものである。", "a": "○", "exp": "債権者から見れば債権、債務者から見れば債務。"}], "createdAt": 1700003002000},
+{"id": "t004", "cat": "民法の本質", "type": "用語", "term": "請求権", "body": "【定義】\n他人に対して特定の作為または不作為を要求できる権利。\n\n【主な請求権の種類】\n・債権的請求権：債権に基づく（代金支払請求権など）\n・物権的請求権：物権に基づく（返還・妨害排除・妨害予防請求権）\n・不当利得返還請求権（703条）\n・損害賠償請求権（415条・709条）\n\n【支配権との対比】\n支配権：物を直接支配（物権・所有権）\n請求権：人に行為を要求する（債権が典型）\n\n【物権的請求権】\n物権の円満な状態が妨げられたとき、妨害の除去等を請求できる権利。明文はないが当然に認められる。", "tags": ["民法の本質", "用語", "基本概念", "請求権"], "quiz": [{"t": "word", "q": "他人に対して特定の作為・不作為を要求できる権利を総称して何という？", "a": "請求権"}, {"t": "word", "q": "物権の円満な状態が妨げられたとき妨害除去等を求められる権利を何という？", "a": "物権的請求権"}], "createdAt": 1700003003000},
+{"id": "t005", "cat": "債権", "type": "用語", "term": "契約", "body": "【定義】\n対立する2つ以上の意思表示（申込みと承諾）の合致によって成立する法律行為。債権発生の最も重要な原因。\n\n【契約の成立】\n申込み＋承諾の合致（522条）。原則として諾成・不要式。\n\n【債権の発生原因】\n①契約（最重要）\n②事務管理\n③不当利得\n④不法行為\n→①は当事者の意思に基づく、②〜③は法律の規定による（法定債権）\n\n【典型契約（13種）】\n売買・贈与・交換・消費貸借・使用貸借・賃貸借・雇用・請負・委任・寄託・組合・終身定期金・和解\n\n【契約自由の原則（521条）】\n締結・相手方・内容・方式の自由", "tags": ["債権", "用語", "基本概念", "契約"], "quiz": [{"t": "word", "q": "申込みと承諾という対立する意思表示の合致で成立する法律行為を何という？", "a": "契約"}, {"t": "ox", "q": "契約は債権の発生原因の一つである。", "a": "○", "exp": "契約・事務管理・不当利得・不法行為が債権の発生原因。"}], "createdAt": 1700003004000},
+{"id": "t006", "cat": "民法の本質", "type": "用語", "term": "私的自治の原則", "body": "【定義】\n個人は自らの意思に基づいて自由に法律関係を形成できるという、民法の最も基本的な原則。\n\n【3つの現れ】\n①契約自由の原則（521条）：契約を自由に結べる\n②所有権絶対の原則：所有権を自由に行使できる\n③過失責任の原則：故意・過失がなければ責任を負わない\n\n【制限】\n無制限ではなく、公共の福祉（1条1項）・公序良俗（90条）・信義則（1条2項）等による制限を受ける。\n\n【私法の基本理念】\n近代市民社会を支える「個人の自由・平等」の法的表現。", "tags": ["民法の本質", "用語", "基本概念", "私的自治"], "quiz": [{"t": "word", "q": "個人が自らの意思で自由に法律関係を形成できるという民法の基本原則は？", "a": "私的自治の原則"}, {"t": "ox", "q": "私的自治の原則は無制限であり、公序良俗による制限を受けない。", "a": "×", "exp": "公共の福祉・公序良俗・信義則による制限を受ける。"}], "createdAt": 1700003005000},
+{"id": "t007", "cat": "債権", "type": "用語", "term": "諾成契約・要物契約", "body": "【諾成契約】\n当事者の合意（意思表示の合致）だけで成立する契約。\n例：売買（555条）、賃貸借、贈与\n→大多数の契約はこれ\n\n【要物契約】\n合意に加えて物の引渡し等が成立要件となる契約。\n例：（改正前の）消費貸借（587条）\n→ただし書面でする消費貸借は諾成（587条の2）\n\n【要式契約・不要式契約】\n要式契約：書面など一定の方式が必要（保証契約446条2項など）\n不要式契約：方式不要（多くの契約）\n\n【対比の軸】\n成立に「物の交付」が要るか → 諾成 vs 要物\n成立に「方式」が要るか → 不要式 vs 要式", "tags": ["債権", "用語", "基本概念", "諾成契約", "要物契約", "契約"], "quiz": [{"t": "word", "q": "当事者の合意だけで成立する契約を何という？", "a": "諾成契約"}, {"t": "word", "q": "合意に加えて物の引渡しが成立要件となる契約を何という？", "a": "要物契約"}, {"t": "ox", "q": "売買契約は要物契約である。", "a": "×", "exp": "売買は諾成契約。合意のみで成立する。"}], "createdAt": 1700003006000},
+{"id": "t008", "cat": "民法の本質", "type": "用語", "term": "実体法・手続法", "body": "【実体法】\n権利義務の発生・変更・消滅など、法律関係の内容そのものを定める法。\n例：民法、刑法、商法\n\n【手続法】\n実体法上の権利を実現するための手続を定める法。\n例：民事訴訟法、刑事訴訟法、民事執行法\n\n【関係】\n実体法：「何が権利か」を定める\n手続法：「どうやって実現するか」を定める\n→民法（実体法）で認められた権利も、相手が任意に履行しなければ民事訴訟法・民事執行法（手続法）を使って強制的に実現する\n\n【民法の位置づけ】\n私人間の権利義務を定める実体法であり、私法の一般法。", "tags": ["民法の本質", "用語", "基本概念", "実体法", "手続法"], "quiz": [{"t": "word", "q": "権利義務の内容そのものを定める法を何という？", "a": "実体法"}, {"t": "word", "q": "実体法上の権利を実現する手続を定める法を何という？", "a": "手続法"}, {"t": "ox", "q": "民法は手続法である。", "a": "×", "exp": "民法は実体法。手続法は民事訴訟法など。"}], "createdAt": 1700003007000},
+{"id": "t009", "cat": "総則", "type": "用語", "term": "瑕疵", "body": "【定義】\n「かし」と読む。欠陥・キズ・不完全な点のこと。\n\n【意思表示の瑕疵】\n意思表示の成立過程に問題があること。\n・心裡留保（93条）\n・虚偽表示（94条）\n・錯誤（95条）\n・詐欺・強迫（96条）\n→「瑕疵ある意思表示」として取消し・無効の対象\n\n【補足：改正による用語変更】\n旧法の「瑕疵担保責任」は、改正により「契約不適合責任」（562条〜）に変更された。\n\n【関連語】\n瑕疵ある占有：平穏・公然・善意・無過失でない占有", "tags": ["総則", "用語", "基本概念", "瑕疵", "意思表示"], "quiz": [{"t": "word", "q": "欠陥・不完全な点を指す民法用語を何という（読み：かし）？", "a": "瑕疵"}, {"t": "ox", "q": "心裡留保・虚偽表示・錯誤・詐欺・強迫はいずれも意思表示の瑕疵に関する制度である。", "a": "○", "exp": "93〜96条が意思表示の瑕疵の規定。"}], "createdAt": 1700003008000},
+{"id": "t010", "cat": "総則", "type": "用語", "term": "錯誤（基礎概念）", "body": "【定義】\n表意者が、その意思表示の内容について事実と異なる認識をしていること。「思い違い・勘違い」。\n\n【2つの類型（95条1項）】\n①表示の錯誤（1号）：意思と表示の不一致\n　例：100万円のつもりが1000万円と書いた\n②動機の錯誤＝基礎事情の錯誤（2号）：前提となる事情の認識が誤り\n　例：値上がりすると思って土地を買ったが値下がりした\n\n【効果】\n取消し（改正で「無効」から変更）。\n動機の錯誤は、その事情が表示されていた場合に限り取消し可（95条2項）。\n\n【他の瑕疵との違い】\n錯誤：自分の勘違い\n詐欺：他人にだまされた\n→錯誤は表意者側の事情、詐欺は相手方の働きかけ", "tags": ["総則", "用語", "基本概念", "錯誤", "意思表示", "民法95条"], "quiz": [{"t": "word", "q": "意思表示の内容について事実と異なる認識（思い違い）をしていることを何という？", "a": "錯誤"}, {"t": "ox", "q": "錯誤は他人にだまされた場合を指し、自分の勘違いは含まない。", "a": "×", "exp": "錯誤は表意者自身の思い違い。だまされたのは詐欺。"}], "createdAt": 1700003009000},
+{"id": "t011", "cat": "民法の本質", "type": "用語", "term": "法律行為・意思表示", "body": "【意思表示】\n一定の法律効果の発生を欲する意思を外部に表示する行為。法律行為の構成要素。\n\n【法律行為】\n意思表示を要素とし、その意思の内容どおりの法律効果を生じさせる行為。\n\n【法律行為の3類型】\n①単独行為：一方的な意思表示（取消し・解除・遺言）\n②契約：対立する意思表示の合致（売買など）\n③合同行為：同方向の意思表示の合致（社団の設立）\n\n【意思表示の構造】\n動機 → 効果意思 → 表示意思 → 表示行為\n\n【関連】\n法律行為が有効に成立するには、当事者に意思能力・行為能力が必要。", "tags": ["民法の本質", "用語", "基本概念", "法律行為", "意思表示"], "quiz": [{"t": "word", "q": "一定の法律効果の発生を欲する意思を外部に表示する行為を何という？", "a": "意思表示"}, {"t": "word", "q": "取消し・解除・遺言のように一方的な意思表示でなされる法律行為を何という？", "a": "単独行為"}], "createdAt": 1700003010000},
+{"id": "t012", "cat": "民法の本質", "type": "用語", "term": "善意・悪意・無過失（横断整理）", "body": "【善意】\nある事情を知らないこと（※良い心の意味ではない）\n\n【悪意】\nある事情を知っていること\n\n【過失・無過失】\n過失：不注意（知らないことに落ち度がある）\n無過失：注意を尽くしても知り得なかった\n\n【組み合わせ】\n・善意無過失：知らず、知らないことに落ち度もない（最も保護される）\n・善意有過失：知らないが落ち度がある\n・悪意：知っている\n\n【保護の強さ】\n各制度で第三者保護の要件が異なる：\n94条（虚偽表示）：善意のみ\n95条（錯誤）・96条（詐欺）：善意無過失\n192条（即時取得）：善意無過失", "tags": ["民法の本質", "用語", "基本概念", "善意", "悪意", "無過失"], "quiz": [{"t": "cloze", "q": "民法で「ある事情を知らないこと」を（　）、「知っていること」を悪意という。", "a": "善意"}, {"t": "ox", "q": "94条の虚偽表示で保護される第三者は善意無過失でなければならない。", "a": "×", "exp": "94条は善意で足りる。無過失まで要するのは95条・96条・192条。"}], "createdAt": 1700003011000},
+{"id": "t013", "cat": "物権", "type": "用語", "term": "公信力・公信の原則", "body": "【公信力とは】\n真実の権利関係と異なる公示（外観）を信頼して取引した者を保護し、公示どおりの権利取得を認める効力。\n\n【公信の原則】\n公示を信頼した者に、公示どおりの権利を取得させる原則。\n\n【動産と不動産の違い（重要）】\n動産：公信力あり → 即時取得（192条）として実現\n不動産：公信力なし → 登記を信頼しても所有権を取得できないのが原則\n\n【公示の原則との違い】\n公示の原則：権利変動には公示が必要（なければ対抗できない）\n公信の原則：公示を信頼した者を保護する\n→公示は「権利を主張する側」、公信は「信頼した側」の保護\n\n【不動産で信頼者を救う方法】\n94条2項類推適用で取引の安全を図る", "tags": ["物権", "用語", "基本概念", "公信力", "公信の原則"], "quiz": [{"t": "word", "q": "真実と異なる公示を信頼した者に公示どおりの権利取得を認める効力を何という？", "a": "公信力"}, {"t": "ox", "q": "日本の不動産登記には公信力がある。", "a": "×", "exp": "不動産登記に公信力はない。動産は即時取得として公信力が認められる。"}, {"t": "ox", "q": "動産の即時取得は公信の原則の現れである。", "a": "○", "exp": "動産取引では占有を信頼した者が保護される（192条）。"}], "createdAt": 1700004000000},
+{"id": "t014", "cat": "民法の本質", "type": "用語", "term": "推定・みなす", "body": "【推定（すいてい）】\n一応そうだと扱うが、反対の証拠（反証）があればくつがえる。\n例：\n・占有者の権利は適法と推定（188条）\n・占有は善意・平穏・公然と推定（186条1項）\n→反証により覆せる\n\n【みなす（擬制）】\n反対の証拠があっても、法律上そう扱うと確定させる。くつがえせない。\n例：\n・取り消された行為は初めから無効と「みなす」（121条）\n・失踪宣告を受けた者は死亡したものと「みなす」（31条）\n\n【決定的な違い】\n推定：反証で覆る（「〜と推定する」）\nみなす：反証で覆らない（「〜とみなす」）\n→条文の語尾に注目！\n\n【関連】\n「推定する」の典型は嫡出推定（772条）", "tags": ["民法の本質", "用語", "基本概念", "推定", "みなす"], "quiz": [{"t": "word", "q": "一応そう扱うが反証があればくつがえる法的扱いを何という？", "a": "推定"}, {"t": "ox", "q": "「みなす」は反対の証拠があればくつがえせる。", "a": "×", "exp": "「みなす」は反証で覆らない（擬制）。覆るのは「推定」。"}], "createdAt": 1700004001000},
+{"id": "t015", "cat": "物権", "type": "用語", "term": "果実（天然果実・法定果実）", "body": "【果実とは】\n元物（がんぶつ）から生じる収益。\n\n【天然果実（88条1項）】\n物の用法に従い収取する産出物。\n例：果樹の実、牛乳、鉱物、家畜の子\n→分離の時に収取権者に帰属（89条1項）\n\n【法定果実（88条2項）】\n物の使用の対価として受ける金銭その他の物。\n例：家賃（賃料）、地代、貸金の利息\n→収取権の存続期間に応じ日割りで取得（89条2項）\n\n【元物（がんぶつ）】\n果実を生み出すもとの物。\n例：果樹（元物）→実（果実）、建物（元物）→家賃（果実）\n\n【対比】\n天然果実：物から自然に生じる「もの」\n法定果実：使用の対価として受ける「金銭等」", "tags": ["物権", "用語", "基本概念", "果実", "天然果実", "法定果実"], "quiz": [{"t": "word", "q": "果樹の実や家畜の子のように、物の用法に従い収取する産出物を何という？", "a": "天然果実"}, {"t": "word", "q": "家賃や利息のように、物の使用の対価として受ける金銭等を何という？", "a": "法定果実"}, {"t": "ox", "q": "家賃は天然果実である。", "a": "×", "exp": "家賃は使用の対価なので法定果実。"}], "createdAt": 1700004002000},
+{"id": "t016", "cat": "債権", "type": "用語", "term": "特定物債権・種類債権", "body": "【特定物債権】\n物の個性に着目し「まさにこの物」を引き渡す債権。\n例：この絵画、この中古車、この土地\n→債務者は引渡しまで善管注意義務を負う（400条）\n\n【種類債権（不特定物債権・401条）】\n一定種類の物の一定量の引渡しを目的とする債権。個性に着目しない。\n例：ビール1ダース、米10kg\n→原則として履行不能が生じにくい（同種の物で調達できる）\n\n【種類債権の特定（集中）】\n①債務者が給付に必要な行為を完了\n②債権者の同意を得て給付物を指定\nのいずれかで「特定」が生じる（401条2項）。\n特定後は特定物債権と同様に扱われ、善管注意義務が生じる。\n\n【制限種類債権（限定種類債権）】\n種類をさらに一定範囲に限定したもの。\n例：「この倉庫内の米10kg」", "tags": ["債権", "用語", "基本概念", "種類債権", "特定物債権", "民法401条"], "quiz": [{"t": "word", "q": "ビール1ダースのように一定種類・一定量の引渡しを目的とする債権を何という？", "a": "種類債権（不特定物債権）"}, {"t": "word", "q": "種類債権で具体的にどの物を給付するか確定することを何という？", "a": "特定（集中）"}, {"t": "cloze", "q": "種類債権で品質を定められないとき、債務者は（　）の品質の物を給付しなければならない（401条1項）。", "a": "中等"}, {"t": "ox", "q": "種類債権は特定が生じると特定物債権と同様に扱われ、善管注意義務が生じる。", "a": "○", "exp": "特定後は400条の善管注意義務を負う。"}], "createdAt": 1700004003000},
+{"id": "t017", "cat": "債権", "type": "用語", "term": "保証人・連帯保証", "body": "【保証人】\n主たる債務者が債務を履行しない場合に、その履行の責任を負う者（446条）。\n→保証契約は債権者と保証人の間で結ぶ。書面（電磁的記録）が必要（446条2項・要式契約）\n\n【保証債務の性質】\n①付従性：主債務が消滅すれば保証債務も消滅\n②随伴性：主債務が移転すれば保証債務も移転\n③補充性：主債務者が履行しない場合に初めて履行（後述の2つの抗弁）\n\n【単純保証人の2つの抗弁（補充性）】\n①催告の抗弁（452条）：まず主債務者に催告せよと主張できる\n②検索の抗弁（453条）：主債務者に弁済資力があると主張できる\n\n【連帯保証】\n保証人が主債務者と連帯して債務を負う保証。\n→補充性がない＝催告の抗弁・検索の抗弁が使えない\n→債権者はいきなり連帯保証人に全額請求できる（454条）\n\n【対比】\n単純保証：補充性あり（2つの抗弁が使える）\n連帯保証：補充性なし（抗弁が使えない・債権者に有利）", "tags": ["債権", "用語", "基本概念", "保証人", "連帯保証", "保証債務"], "quiz": [{"t": "word", "q": "主債務者が履行しない場合にその履行責任を負う者を何という？", "a": "保証人"}, {"t": "word", "q": "主債務者と連帯して債務を負い、催告・検索の抗弁を持たない保証を何という？", "a": "連帯保証"}, {"t": "ox", "q": "連帯保証人は催告の抗弁・検索の抗弁を行使できる。", "a": "×", "exp": "連帯保証には補充性がなく、両抗弁を行使できない。単純保証なら可。"}, {"t": "ox", "q": "保証契約は口頭でも有効に成立する。", "a": "×", "exp": "保証契約は書面（電磁的記録）が必要な要式契約（446条2項）。"}], "createdAt": 1700004004000},
+{"id": "t018", "cat": "債権", "type": "用語", "term": "善管注意義務・自己の財産と同一の注意", "body": "【善管注意義務】\n「善良な管理者の注意義務」の略。その人の職業・地位・専門性から客観的に要求される高度な注意義務。\n例：\n・特定物の引渡し債務者（400条）\n・受任者（644条）\n・受寄者のうち有償寄託（400条）\n\n【自己の財産と同一の注意義務】\n自分の物に対するのと同程度の注意でよい、軽減された注意義務。\n例：\n・無償受寄者（659条）\n・親権者の財産管理（827条）\n\n【注意義務の重さ】\n善管注意義務 ＞ 自己の財産と同一の注意義務\n→善管注意義務のほうが重い（より高い注意が必要）\n\n【関連】\n注意義務に違反して損害が生じれば債務不履行（415条）の責任", "tags": ["債権", "用語", "基本概念", "善管注意義務"], "quiz": [{"t": "word", "q": "職業・地位から客観的に要求される高度な注意義務を何という？", "a": "善管注意義務"}, {"t": "ox", "q": "善管注意義務は「自己の財産と同一の注意義務」より軽い。", "a": "×", "exp": "善管注意義務のほうが重い（高い注意が必要）。"}], "createdAt": 1700004005000}
 ];
 
 function load(){
   try{cards=JSON.parse(localStorage.getItem(SK)||'[]')}catch{cards=[]}
-  if(cards.length===0){
-    cards=[...SEED];
-    save();
-  }
+  if(cards.length===0){cards=JSON.parse(JSON.stringify(SEED));save()}
   renderAll();
 }
 function save(){localStorage.setItem(SK,JSON.stringify(cards))}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 function hl(t,q){if(!q)return esc(t);return esc(t).replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`,'gi'),'<mark>$1</mark>')}
-function allTags(){const s=new Set();cards.forEach(c=>(c.tags||[]).forEach(t=>s.add(t)));return[...s].sort()}
+const CATS=['民法の本質','総則','物権','債権','相続','その他'];
+function usedCats(){const s=new Set(cards.map(c=>c.cat||'その他'));return CATS.filter(c=>s.has(c))}
+function usedTypes(){const s=new Set(cards.map(c=>c.type||'論点'));return ['条文','用語','論点','体系','問題'].filter(t=>s.has(t))}
 function shuf(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b}
 
 function sw(name){
@@ -492,75 +485,54 @@ function sw(name){
   document.getElementById('tab-'+name).classList.add('on');
   if(name==='quiz')renderQSetup();
   if(name==='list')renderAll();
+  if(name==='data')renderData();
 }
 
-function doImport(){
-  const raw=document.getElementById('importJson').value.trim();
-  const st=document.getElementById('importStatus');
-  if(!raw){st.textContent='JSONを貼り付けてください';st.style.color='var(--ng)';return}
-  let parsed;
-  try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim())}
-  catch(e){st.textContent='JSONの形式が正しくありません：'+e.message;st.style.color='var(--ng)';return}
-  const arr=Array.isArray(parsed)?parsed:[parsed];
-  let added=0,skipped=0;
-  arr.forEach(d=>{
-    if(!d.term){skipped++;return}
-    const exists=cards.some(c=>c.term===d.term);
-    if(exists){skipped++;return}
-    cards.unshift({
-      id:d.id||uid(),
-      term:d.term,
-      body:d.body||'',
-      tags:Array.isArray(d.tags)?d.tags:[],
-      createdAt:d.createdAt||Date.now()
-    });
-    added++;
-  });
-  save();
-  st.textContent=`✅ ${added}件を登録しました${skipped>0?'（'+skipped+'件スキップ）':''}`;
-  st.style.color='var(--ok)';
+/* ---- LIST ---- */
+function renderAll(){renderCatRow();renderTypeRow();renderCards()}
+function renderCatRow(){
+  document.getElementById('catRow').innerHTML=
+    `<span class="chip ${activeCat===''?'on':''}" onclick="setCat('')">すべて</span>`+
+    usedCats().map(c=>`<span class="chip ${activeCat===c?'on':''}" onclick="setCat('${esc(c)}')">${esc(c)}</span>`).join('');
 }
-
-function doExport(){
-  const json=JSON.stringify(cards,null,2);
-  const btn=document.querySelector('#importPage button[onclick="doExport()"]');
-  const st=document.getElementById('exportStatus');
-  navigator.clipboard.writeText(json)
-    .then(()=>{st.textContent='✅ コピーしました（'+cards.length+'件）'})
-    .catch(()=>{
-      const ta=document.createElement('textarea');
-      ta.value=json;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-      st.textContent='✅ コピーしました（'+cards.length+'件）';
-    });
-  setTimeout(()=>st.textContent='',3000);
+function renderTypeRow(){
+  document.getElementById('typeRow').innerHTML=
+    `<span class="tchip ${activeType===''?'on':''}" onclick="setType('')">全種別</span>`+
+    usedTypes().map(t=>`<span class="tchip ${activeType===t?'on':''}" onclick="setType('${esc(t)}')">${esc(t)}</span>`).join('');
 }
+function setCat(c){activeCat=c;renderAll()}
+function setType(t){activeType=t;renderAll()}
 
-function renderAll(){renderTagRow();renderCards()}
-
-function renderTagRow(){
-  const tags=allTags();
-  document.getElementById('tagRow').innerHTML=
-    `<span class="chip ${activeTag===''?'on':''}" onclick="ftag('')">すべて</span>`+
-    tags.map(t=>`<span class="chip ${activeTag===t?'on':''}" onclick="ftag('${esc(t)}')">${esc(t)}</span>`).join('');
-}
-function ftag(t){activeTag=t;renderAll()}
-
-function renderCards(){
+function filterCards(){
   const q=searchQ.trim().toLowerCase();
-  const shown=cards.filter(c=>{
-    if(activeTag&&!(c.tags||[]).includes(activeTag))return false;
+  return cards.filter(c=>{
+    if(activeCat&&(c.cat||'その他')!==activeCat)return false;
+    if(activeType&&(c.type||'論点')!==activeType)return false;
     if(!q)return true;
     return(c.term+' '+(c.body||'')+' '+(c.tags||[]).join(' ')).toLowerCase().includes(q);
   });
+}
+function renderCards(){
+  const q=searchQ.trim().toLowerCase();
+  const shown=filterCards();
   document.getElementById('cnt').textContent=shown.length+'件';
   const el=document.getElementById('clist');
-  if(!shown.length){el.innerHTML=`<div class="empty"><div class="big">📜</div><p>${q?'検索結果なし':'＋でカードを追加してください'}</p></div>`;return}
-  el.innerHTML=shown.map(c=>`<div class="card" onclick="openDet('${c.id}')">
-    <div class="c-term">${hl(c.term,q)}</div>
-    <div class="c-tags">${(c.tags||[]).map(t=>`<span class="c-tag">${esc(t)}</span>`).join('')}</div>
-    <div class="c-body">${hl(c.body||'',q)}</div>
-  </div>`).join('');
+  if(!shown.length){el.innerHTML=`<div class="empty"><div class="big">📜</div><p>${q?'検索結果なし':'＋でカードを追加'}</p></div>`;return}
+  el.innerHTML=shown.map(c=>{
+    const qn=(c.quiz||[]).length;
+    return `<div class="card" onclick="openDet('${c.id}')">
+      <div class="card-badges">
+        <span class="badge cat">${esc(c.cat||'その他')}</span>
+        <span class="badge type">${esc(c.type||'論点')}</span>
+        ${qn?`<span class="badge hasq">Q${qn}</span>`:''}
+      </div>
+      <div class="c-term">${hl(c.term,q)}</div>
+      <div class="c-body">${hl(stripBody(c.body||''),q)}</div>
+    </div>`;
+  }).join('');
 }
+function nl(s){return String(s||'').replace(/\\n/g,'\n')} /* リテラル\nを実改行に正規化（保険） */
+function stripBody(b){return nl(b).replace(/【[^】]*】/g,'').replace(/\n+/g,' ').trim()}
 
 document.getElementById('si').addEventListener('input',e=>{
   searchQ=e.target.value;
@@ -569,17 +541,92 @@ document.getElementById('si').addEventListener('input',e=>{
 });
 function clrSearch(){document.getElementById('si').value='';searchQ='';document.getElementById('clr').style.display='none';renderCards()}
 
+/* ---- SHEETS ---- */
 function openOv(id){document.getElementById(id).classList.add('open')}
 function closeOv(id){document.getElementById(id).classList.remove('open')}
 function bgClick(e,id){if(e.target===document.getElementById(id))closeOv(id)}
 
+/* ---- DETAIL with collapsible sections ---- */
+function parseSections(bodyRaw){
+  const body=nl(bodyRaw);
+  // 【見出し】... の形式をセクションに分割
+  const parts=[];
+  const re=/【([^】]+)】/g;
+  let m,last=0,lastTitle=null;
+  const matches=[];
+  while((m=re.exec(body))!==null){matches.push({title:m[1],start:m.index,end:m.index+m[0].length})}
+  if(matches.length===0)return null;
+  // 最初の見出しより前のテキスト
+  if(matches[0].start>0){const pre=body.slice(0,matches[0].start).trim();if(pre)parts.push({title:null,text:pre})}
+  for(let i=0;i<matches.length;i++){
+    const cur=matches[i];
+    const nextStart=(i+1<matches.length)?matches[i+1].start:body.length;
+    const text=body.slice(cur.end,nextStart).trim();
+    parts.push({title:cur.title,text:text});
+  }
+  return parts;
+}
+function openDet(id){
+  detailId=id;const c=cards.find(x=>x.id===id);if(!c)return;
+  document.getElementById('dBadges').innerHTML=
+    `<span class="badge cat">${esc(c.cat||'その他')}</span><span class="badge type">${esc(c.type||'論点')}</span>`;
+  document.getElementById('dTerm').textContent=c.term;
+  const secs=parseSections(c.body||'');
+  const cont=document.getElementById('dSections');
+  if(secs){
+    cont.innerHTML=secs.map((s,i)=>{
+      if(!s.title)return `<div class="d-plain">${esc(s.text)}</div>`;
+      const open=i<2; // 最初の2セクションは開く
+      return `<div class="d-section">
+        <div class="d-sec-head ${open?'':'closed'}" onclick="toggleSec(this)">【${esc(s.title)}】<span class="arr">▼</span></div>
+        <div class="d-sec-body ${open?'':'hidden'}">${esc(s.text)}</div>
+      </div>`;
+    }).join('');
+  }else{
+    cont.innerHTML=`<div class="d-plain">${esc(nl(c.body)||'（内容なし）')}</div>`;
+  }
+  const qn=(c.quiz||[]).length;
+  const qi2=document.getElementById('dQuizInfo');
+  const qbtn=document.getElementById('dQuizBtn');
+  if(qn){
+    qi2.style.display='flex';qi2.innerHTML=`🎯 この項目には ${qn} 問のクイズがあります`;
+    qbtn.style.display='block';
+  }else{
+    qi2.style.display='none';qbtn.style.display='none';
+  }
+  document.getElementById('dTags').innerHTML=(c.tags||[]).map(t=>`<span class="c-tag">${esc(t)}</span>`).join('');
+  openOv('detOv');
+}
+function toggleSec(head){
+  head.classList.toggle('closed');
+  head.nextElementSibling.classList.toggle('hidden');
+}
+function editFD(){if(detailId)openEdit(detailId)}
+function quizThisCard(){
+  const c=cards.find(x=>x.id===detailId);
+  if(!c||!(c.quiz||[]).length)return;
+  const d=c.quiz.map(q=>({...q,card:c}));
+  closeOv('detOv');
+  sw('quiz');
+  startDeck(d);
+}
+function delFD(){
+  if(!detailId)return;
+  const c=cards.find(x=>x.id===detailId);
+  if(!confirm(`「${c?.term}」を削除しますか？`))return;
+  cards=cards.filter(x=>x.id!==detailId);save();closeOv('detOv');renderAll();
+}
+
+/* ---- ADD / EDIT ---- */
 function openAdd(){
   editingId=null;
   document.getElementById('edTitle').textContent='カードを追加';
-  ['fTerm','fBody','fTags','fSrc','fAR','fTA','fGA'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('fBA').value='';
+  ['fTerm','fBody','fTags','fQuiz','fSrc','fAR'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fCat').value='物権';
+  document.getElementById('fType').value='条文';
   document.getElementById('aiPrev').style.display='none';
   document.getElementById('pbox').style.display='none';
+  aiParsed=null;
   sitab('text');openOv('editOv');
 }
 function openEdit(id){
@@ -587,8 +634,11 @@ function openEdit(id){
   editingId=id;
   document.getElementById('edTitle').textContent='カードを編集';
   document.getElementById('fTerm').value=c.term;
+  document.getElementById('fCat').value=c.cat||'物権';
+  document.getElementById('fType').value=c.type||'条文';
   document.getElementById('fBody').value=c.body||'';
   document.getElementById('fTags').value=(c.tags||[]).join(', ');
+  document.getElementById('fQuiz').value=(c.quiz||[]).map(q=>[q.t,q.q,q.a,q.exp||''].filter((v,i)=>i<3||v).join('|')).join('\n');
   sitab('text');closeOv('detOv');openOv('editOv');
 }
 function sitab(t){
@@ -598,104 +648,182 @@ function sitab(t){
   document.getElementById('itText').classList.toggle('on',t==='text');
   document.getElementById('itAI').classList.toggle('on',t==='ai');
 }
+function parseQuizText(txt){
+  const out=[];
+  txt.split('\n').forEach(line=>{
+    line=line.trim();if(!line)return;
+    const p=line.split('|');
+    if(p.length<3)return;
+    const t=p[0].trim();
+    if(!['word','cloze','ox'].includes(t))return;
+    const q={t:t,q:p[1].trim(),a:p[2].trim()};
+    if(p[3]&&p[3].trim())q.exp=p[3].trim();
+    out.push(q);
+  });
+  return out;
+}
 function saveCard(){
-  let term,body,tags;
-  if(inputTab==='ai'&&document.getElementById('aiPrev').style.display!=='none'){
-    term=document.getElementById('fTA').value.trim();
-    body=document.getElementById('fBA').value.trim();
-    tags=document.getElementById('fGA').value.split(/[,、]/).map(t=>t.trim()).filter(Boolean);
-  }else{
-    term=document.getElementById('fTerm').value.trim();
-    body=document.getElementById('fBody').value.trim();
-    tags=document.getElementById('fTags').value.split(/[,、]/).map(t=>t.trim()).filter(Boolean);
+  if(inputTab==='ai'&&aiParsed){
+    const d=aiParsed;
+    if(!d.term){alert('用語がありません');return}
+    cards.unshift({id:uid(),cat:d.cat||'その他',type:d.type||'論点',term:d.term,body:d.body||'',tags:Array.isArray(d.tags)?d.tags:[],quiz:Array.isArray(d.quiz)?d.quiz:[],createdAt:Date.now()});
+    save();closeOv('editOv');renderAll();return;
   }
+  const term=document.getElementById('fTerm').value.trim();
   if(!term){alert('用語を入力してください');return}
-  if(editingId){const i=cards.findIndex(x=>x.id===editingId);if(i>-1)cards[i]={...cards[i],term,body,tags,updatedAt:Date.now()}}
-  else{cards.unshift({id:uid(),term,body,tags,createdAt:Date.now()})}
+  const body=document.getElementById('fBody').value.trim();
+  const cat=document.getElementById('fCat').value;
+  const type=document.getElementById('fType').value;
+  const tags=document.getElementById('fTags').value.split(/[,、]/).map(t=>t.trim()).filter(Boolean);
+  const quiz=parseQuizText(document.getElementById('fQuiz').value);
+  if(editingId){
+    const i=cards.findIndex(x=>x.id===editingId);
+    if(i>-1)cards[i]={...cards[i],term,body,cat,type,tags,quiz,updatedAt:Date.now()};
+  }else{
+    cards.unshift({id:uid(),cat,type,term,body,tags,quiz,createdAt:Date.now()});
+  }
   save();closeOv('editOv');renderAll();
 }
 
+/* ---- AI prompt ---- */
 function genPrompt(){
   const src=document.getElementById('fSrc').value.trim();
   if(!src){alert('テキストを貼り付けてください');return}
-  const p=`以下の民法テキストを読み、学習カードとしてJSON形式で整理してください。\nJSON以外は出力しないでください（説明・マークダウン不要）。\n\n形式:\n{"term":"用語または条文番号","body":"定義や説明","tags":["タグ1","タグ2"]}\n\nタグは1〜3個（例: 総則, 物権, 債権, 条文, 判例, 用語）\n\n--- テキスト ---\n${src}`;
+  const p=`以下の民法テキストを読み、学習カードとしてJSON形式で整理してください。JSON以外は出力しないでください。\n\n形式:\n{"term":"用語または条文番号","cat":"民法の本質|総則|物権|債権|相続 のいずれか","type":"条文|用語|論点|体系 のいずれか","body":"定義や説明（条文・要件・効果などは【見出し】を付けて整理）","tags":["細目タグ"],"quiz":[{"t":"word","q":"用語を問う質問","a":"答え"},{"t":"cloze","q":"穴埋め文。空欄は（　）","a":"空欄の答え"},{"t":"ox","q":"正誤を問う文","a":"○または×","exp":"解説"}]}\n\nquizは復習用に2〜4問。word=用語暗記、cloze=穴埋め、ox=正誤問題。\n\n--- テキスト ---\n${src}`;
   document.getElementById('ptxt').textContent=p;
   document.getElementById('pbox').style.display='block';
 }
 function copyP(){
   const t=document.getElementById('ptxt').textContent;
   const btn=document.querySelector('.cpbtn');
-  navigator.clipboard.writeText(t).then(()=>{btn.textContent='✅ コピーしました';setTimeout(()=>btn.textContent='📋 プロンプトをコピー',2000)})
-  .catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);btn.textContent='✅ コピーしました';setTimeout(()=>btn.textContent='📋 プロンプトをコピー',2000)});
+  const done=()=>{btn.textContent='✅ コピーしました';setTimeout(()=>btn.textContent='📋 プロンプトをコピー',2000)};
+  navigator.clipboard.writeText(t).then(done).catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done()});
 }
 function parseAR(){
   const raw=document.getElementById('fAR').value.trim();
-  if(!raw){document.getElementById('aiPrev').style.display='none';return}
+  const prev=document.getElementById('aiPrev');
+  if(!raw){prev.style.display='none';aiParsed=null;return}
   try{
     const d=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    document.getElementById('fTA').value=d.term||'';
-    document.getElementById('fBA').value=d.body||'';
-    document.getElementById('fGA').value=(d.tags||[]).join(', ');
-    document.getElementById('aiPrev').style.display='block';
-  }catch{document.getElementById('aiPrev').style.display='none'}
+    aiParsed=d;
+    document.getElementById('aiPrevContent').innerHTML=
+      `<b>${esc(d.term||'')}</b><br><span style="color:var(--ink-faint)">${esc(d.cat||'?')} / ${esc(d.type||'?')}</span><br>`+
+      `<span style="color:var(--ok)">クイズ ${(d.quiz||[]).length}問</span>`;
+    prev.style.display='block';
+  }catch{prev.style.display='none';aiParsed=null}
 }
 
-function openDet(id){
-  detailId=id;const c=cards.find(x=>x.id===id);if(!c)return;
-  document.getElementById('dTerm').textContent=c.term;
-  document.getElementById('dBody').textContent=c.body||'（内容なし）';
-  document.getElementById('dTags').innerHTML=(c.tags||[]).map(t=>`<span class="c-tag">${esc(t)}</span>`).join('');
-  openOv('detOv');
+/* ---- QUIZ ---- */
+function toggleQType(t){
+  quizTypes[t]=!quizTypes[t];
+  document.querySelector(`.qtype-btn[data-t="${t}"]`).classList.toggle('on',quizTypes[t]);
+  updateQAvail();
 }
-function editFD(){if(detailId)openEdit(detailId)}
-function delFD(){
-  if(!detailId)return;
-  const c=cards.find(x=>x.id===detailId);
-  if(!confirm(`「${c?.term}」を削除しますか？`))return;
-  cards=cards.filter(x=>x.id!==detailId);save();closeOv('detOv');renderAll();
+function buildQuizPool(){
+  const cat=document.getElementById('qcat').value;
+  const pool=[];
+  cards.forEach(c=>{
+    if(cat&&(c.cat||'その他')!==cat)return;
+    (c.quiz||[]).forEach(q=>{
+      if(quizTypes[q.t])pool.push({...q,card:c});
+    });
+  });
+  return pool;
 }
-
+function updateQAvail(){
+  const n=buildQuizPool().length;
+  document.getElementById('qavail').textContent=`出題可能：${n}問`;
+  document.getElementById('startBtn').disabled=n===0;
+}
 function renderQSetup(){
   document.getElementById('qSetup').style.display='block';
   document.getElementById('qPlay').style.display='none';
   document.getElementById('qRes').style.display='none';
-  const sel=document.getElementById('qts'),cur=sel.value;
-  sel.innerHTML='<option value="">すべて</option>'+allTags().map(t=>`<option value="${esc(t)}" ${cur===t?'selected':''}>${esc(t)}</option>`).join('');
+  const sel=document.getElementById('qcat'),cur=sel.value;
+  sel.innerHTML='<option value="">すべて</option>'+usedCats().map(c=>`<option value="${esc(c)}" ${cur===c?'selected':''}>${esc(c)}</option>`).join('');
+  updateQAvail();
 }
 function startQuiz(){
-  const tag=document.getElementById('qts').value,cnt=parseInt(document.getElementById('qc').value)||0;
-  let pool=tag?cards.filter(c=>(c.tags||[]).includes(tag)):[...cards];
-  if(!pool.length){alert('カードがありません');return}
+  let pool=buildQuizPool();
+  if(!pool.length){alert('出題できるクイズがありません。形式や範囲を見直してください。');return}
+  const cnt=parseInt(document.getElementById('qc').value)||0;
   pool=shuf(pool);
-  deck=(cnt>0?pool.slice(0,cnt):pool).map(c=>({...c,dir:Math.random()<.5?0:1}));
-  qi=0;qOk=0;qNg=0;
+  deck=cnt>0?pool.slice(0,cnt):pool;
+  qi=0;qOk=0;qNg=0;wrongCards=[];
   document.getElementById('qSetup').style.display='none';
   document.getElementById('qPlay').style.display='block';
   document.getElementById('qRes').style.display='none';
-  renderQCard();
+  showQ();
 }
-function renderQCard(){
-  const c=deck[qi],tot=deck.length,fwd=c.dir===0;
+function startDeck(d){
+  deck=shuf(d);qi=0;qOk=0;qNg=0;wrongCards=[];
+  document.getElementById('qSetup').style.display='none';
+  document.getElementById('qPlay').style.display='block';
+  document.getElementById('qRes').style.display='none';
+  showQ();
+}
+function showQ(){
+  curQ=deck[qi];
+  const tot=deck.length;
   document.getElementById('pf').style.width=(qi/tot*100)+'%';
   document.getElementById('pt').textContent=`${qi+1} / ${tot}`;
-  document.getElementById('qm').textContent=fwd?'用語 → 説明':'説明 → 用語';
-  document.getElementById('qq').textContent=fwd?c.term:(c.body||'（内容なし）');
-  document.getElementById('qat').textContent=fwd?(c.body||'（内容なし）'):c.term;
+  const badge=document.getElementById('qbadge');
+  const labels={word:'用語',cloze:'穴埋め',ox:'◯×'};
+  badge.className='qbadge '+curQ.t;
+  badge.textContent=labels[curQ.t];
+  document.getElementById('qfrom').textContent='出典：'+curQ.card.term;
+  // 質問表示（clozeは空欄を装飾）
+  let qhtml=esc(curQ.q);
+  if(curQ.t==='cloze')qhtml=qhtml.replace(/（\s*）|\(\s*\)/g,'<span class="blank">　？　</span>');
+  document.getElementById('qq').innerHTML=qhtml;
+  // UI切替
   document.getElementById('qans').classList.remove('show');
-  document.getElementById('qtap').style.display='block';
-  document.getElementById('qbtns').style.display='none';
-  qShown=false;
+  document.getElementById('qaExp').style.display='none';
+  if(curQ.t==='ox'){
+    document.getElementById('oxBtns').style.display='flex';
+    document.getElementById('revealBtn').style.display='none';
+  }else{
+    document.getElementById('oxBtns').style.display='none';
+    document.getElementById('revealBtn').style.display='block';
+  }
 }
-function reveal(){
-  if(qShown)return;qShown=true;
-  document.getElementById('qans').classList.add('show');
-  document.getElementById('qtap').style.display='none';
-  document.getElementById('qbtns').style.display='flex';
+function showAnsBlock(resultText,resultClass,showGrade){
+  const ans=document.getElementById('qans');
+  document.getElementById('qaText').textContent=curQ.a;
+  const res=document.getElementById('qaResult');
+  if(resultText){res.style.display='block';res.textContent=resultText;res.className='qa-result '+resultClass}
+  else{res.style.display='none'}
+  const exp=document.getElementById('qaExp');
+  if(curQ.exp){exp.style.display='block';exp.textContent=curQ.exp}else{exp.style.display='none'}
+  document.getElementById('gradeBtns').style.display=showGrade?'flex':'none';
+  document.getElementById('oxBtns').style.display='none';
+  document.getElementById('revealBtn').style.display='none';
+  ans.classList.add('show');
 }
-function judge(ok){
-  if(ok)qOk++;else qNg++;qi++;
-  if(qi>=deck.length)showRes();else renderQCard();
+// word/cloze: 自己採点
+function revealAns(){showAnsBlock('','',true)}
+// ox: 即時判定
+function answerOX(choice){
+  const correct=(choice===curQ.a);
+  if(correct){qOk++}else{qNg++;wrongCards.push(curQ)}
+  showAnsBlock(correct?'正解！':'不正解',correct?'ok':'ng',false);
+  // 次へボタンを兼ねる
+  setTimeout(()=>{
+    document.getElementById('gradeBtns').style.display='flex';
+    document.getElementById('gradeBtns').innerHTML=`<button class="gbtn ok" style="flex:1" onclick="nextQ()">次へ →</button>`;
+  },50);
 }
+function grade(ok){
+  if(ok)qOk++;else{qNg++;wrongCards.push(curQ)}
+  nextQ();
+}
+function nextQ(){
+  // gradeBtnsを元に戻す
+  document.getElementById('gradeBtns').innerHTML=`<button class="gbtn ng" onclick="grade(false)">✗ 間違えた</button><button class="gbtn ok" onclick="grade(true)">✓ 正解</button>`;
+  qi++;
+  if(qi>=deck.length)showRes();else showQ();
+}
+function openDetFromQuiz(){if(curQ&&curQ.card)openDet(curQ.card.id)}
 function showRes(){
   document.getElementById('qPlay').style.display='none';
   document.getElementById('qRes').style.display='block';
@@ -704,8 +832,63 @@ function showRes(){
   document.getElementById('rok').textContent=qOk;
   document.getElementById('rng').textContent=qNg;
   document.getElementById('rt').textContent=tot;
+  document.getElementById('reviewBtn').style.display=wrongCards.length?'block':'none';
 }
+function reviewWrong(){if(wrongCards.length)startDeck([...wrongCards])}
 function resetQ(){renderQSetup()}
+
+/* ---- DATA ---- */
+function renderData(){
+  document.getElementById('statTotal').textContent=cards.length;
+  document.getElementById('statQuiz').textContent=cards.reduce((s,c)=>s+(c.quiz||[]).length,0);
+  document.getElementById('expStatus').textContent='';
+  document.getElementById('impStatus').textContent='';
+}
+function exportCopy(){
+  const json=JSON.stringify(cards,null,2);
+  const st=document.getElementById('expStatus');
+  const done=()=>{st.style.color='var(--ok)';st.textContent='✅ コピーしました（'+cards.length+'件）'};
+  navigator.clipboard.writeText(json).then(done).catch(()=>{const ta=document.createElement('textarea');ta.value=json;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done()});
+}
+function exportFile(){
+  const json=JSON.stringify(cards,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const d=new Date();
+  const stamp=`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  a.href=url;a.download=`minpo-note-${stamp}.json`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  document.getElementById('expStatus').style.color='var(--ok)';
+  document.getElementById('expStatus').textContent='✅ ダウンロードしました';
+}
+function doImport(){
+  const raw=document.getElementById('importJson').value.trim();
+  const st=document.getElementById('impStatus');
+  if(!raw){st.style.color='var(--ng)';st.textContent='JSONを貼り付けてください';return}
+  let parsed;
+  try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim())}
+  catch(e){st.style.color='var(--ng)';st.textContent='JSON形式エラー: '+e.message;return}
+  const arr=Array.isArray(parsed)?parsed:[parsed];
+  let added=0,skipped=0;
+  arr.forEach(d=>{
+    if(!d.term){skipped++;return}
+    if(cards.some(c=>c.term===d.term)){skipped++;return}
+    cards.unshift({id:d.id||uid(),cat:d.cat||'その他',type:d.type||'論点',term:d.term,body:d.body||'',tags:Array.isArray(d.tags)?d.tags:[],quiz:Array.isArray(d.quiz)?d.quiz:[],createdAt:d.createdAt||Date.now()});
+    added++;
+  });
+  save();renderData();
+  st.style.color='var(--ok)';
+  st.textContent=`✅ ${added}件を登録${skipped?'（'+skipped+'件スキップ）':''}`;
+}
+function resetAll(){
+  if(!confirm('すべてのカードを削除して初期状態に戻します。よろしいですか？'))return;
+  if(!confirm('本当に削除しますか？この操作は元に戻せません。'))return;
+  localStorage.removeItem(SK);
+  cards=JSON.parse(JSON.stringify(SEED));save();renderData();renderAll();
+  alert('初期状態に戻しました。');
+}
 
 load();
 </script>
